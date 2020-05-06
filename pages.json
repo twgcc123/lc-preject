@@ -1,0 +1,720 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/found/found",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView":false,
+				     "bounce": "none",
+					 "titleColor":"#ffffff"
+				}
+			}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView":false,
+				     "bounce": "none",
+					 "titleColor":"#ffffff"
+				}
+			}
+		},
+		{
+			"path": "pages/found/youjuvedeo/youjuVideo", // 优居列表视频
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView":false,
+				     "bounce": "none",
+					 "titleColor":"#ffffff"
+				}
+			}
+		},
+		{
+			"path": "pages/found/youju/roomDetail", // 房源列表页面
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/found/youju/roomOrderPay", // 支付页面
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/found/youju/roomDetailAddGuest", // 添加成员信息页面
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "default",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/found/youju/roomDetailAddGuestInfo", // 新增入住人信息
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "default",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/found/youju/roomDetailEditGuest", // 编辑入住人信息
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "default",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/found/youju/roomDetailNotice", // 房间注意事项
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "default",
+				"navigationBarTitleText": ""
+			}
+		},
+
+		{
+			"path": "pages/found/youju/roomOrderPaySuccess", // 支付成功页面
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/found/youju/roomOrderCenter", // 支付页面
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/found/youju/roomOrderCenterScore", // 评分页面
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/found/youju/roomOrderPayExpenses", // 费用和税收明细
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "费用和税收明细"
+			}
+		},
+		{
+			"path": "pages/found/youju/roomOrderDrawBill",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "开票申请"
+			}
+		},
+		{
+			"path": "pages/found/youju/roomOrderDrawBillEdit",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "开票申请"
+			}
+		},
+		{
+			"path": "pages/found/youju/room",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/found/youju/youju",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/dynamic/dynamic",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+				// "navigationBarBackgroundColor": "#F3F3F3",
+				// "navigationBarTitleText": "",
+				// "app-plus": {
+				// 	"fontWeight":"bold"
+				// }
+			}
+		},{
+			"path": "pages/interact/interact",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/interact/interactPage/interactDetail",
+			"style": {
+				// "navigationBarTextStyle": "black",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"scrollIndicator":"none"
+				}
+				
+			}
+		},
+		{
+			"path": "pages/interact/interactPage/interactDetailMap",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/interact/interactConmmon/concomDetailUserList",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/interact/interactPage/interactPersonaHome",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/add/add",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		
+		// 我的页面
+		{
+			"path": "pages/mine/mineFile/mineEdit", // 编辑社交资料
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineAllOrder", // 我的订单
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "我的订单"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/minePersonalData", // 完善个人资料
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "完善个人资料"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/minePersonalDataChange", // 更改个人资料 请选择
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "请选择"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineSet", // 设置中心
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "亲情账号"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineFeedback", // 意见反馈
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "意见反馈"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineAboutUs", // 关于爸妈都好 
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "关于爸妈都好"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineSecuritySetting", // 安全设置
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "安全设置"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineSunTechCard", // 森特卡
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "余额"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineSunTechCardRecharge", // 充值
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "充值"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineSunTechCardWithdrawal", // 取现
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "取现"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineBillRecord", // 账单
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "账单"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineBillRecordDetail1", // 账单详情 - 消费
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "账单详情"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineBillRecordDetail2", // 账单详情 - 存款
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "账单详情"
+			}
+		},
+		{
+			"path": "pages/mine/mineFile/mineBillRecordDetail3", // 账单详情 - 退款中
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "账单详情"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineDailySign", // 日签
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineLianXiRen", // 联系人
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "联系人"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineLifeRecord", // 人生记录
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "人生记录"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineFaPiao", // 发票
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "发票"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineKefu", // 优居客服
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineFind", // 我的收藏
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "我的收藏"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineKaJuan", // 卡卷
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "卡卷"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineUsedInformation", // 常用信息
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "常用信息"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineHuDong", // 我的互动
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		
+		// 助理页面assistant
+		{
+			"path": "pages/assistant/assistant",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantConmon/assistantAddressSearch", // 互动受理地址搜索
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantCreateHudong", // 创建互动
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom",
+				    "app-plus": {
+				        "animationType": "slide-in-bottom",
+				        "animationDuration": 300
+				    }
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantHudongGuanli", // 创建互动
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantHudongGuanliQueue", // 队员列表
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantHudongGuanliQueueApply", // 申请队列
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantHudongStop", // 终止互动 反馈界面
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantCreateHudonglist", // 创建活动，队员列表界面
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantCreateHudonglist2", // 创建活动，选择队员
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantCreateHudonglist2Type", // 创建活动，选择互动类型
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantCreateHudongDetail", // 创建活动详情主要页面
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantCreateSexData", // 创建活动性别选择页面
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantCreateYearData", // 创建活动年份选择页面
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/assistant/assistantPage/assistantHudongEdit", // 修改互动活动
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},{
+			"path": "pages/assistant/assistantPage/selectActivityType", // 选择活动分类页面
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		
+		// 登录页面
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/login/loginPhone",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		},
+		
+		
+		{
+			"path": "pages/found/youju/showmore/showFac",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		}, {
+			"path": "pages/found/youju/showmore/cancellation",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		}, {
+			"path": "pages/found/youju/showmore/baseRequire",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+		}, {
+			"path": "pages/found/tuijian/com-popup",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"animationType": "fade-in",
+					"background": "transparent",
+					"backgroundColor": "rgba(0,0,0,0)",
+					"popGesture": "none"
+				}
+			}
+		}
+	    ,{
+            "path" : "pages/found/search/search",
+            "style" : {
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/dynamic/heartSign",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/dynamic/writeHeartSign",
+            "style" : {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+        }
+        ,{
+            "path" : "pages/dynamic/collectionSign",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "我的收藏"
+			}
+        }
+        ,{
+            "path" : "pages/dynamic/mySign",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "我的心签"
+			}
+        }
+        ,{
+            "path" : "pages/interact/interactPage/moreAction",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "更多操作"
+			}
+        }
+        ,{
+            "path" : "pages/interact/interactPage/setNickname",
+            "style" : {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+        }
+        ,{
+            "path" : "pages/interact/interactPage/relation",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "关系"
+			}
+        }
+        ,{
+            "path" : "pages/interact/interactPage/noticer",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "关注者"
+			}
+        }
+        ,{
+            "path" : "pages/interact/interactPage/focusOn",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "关注中"
+			}
+        }
+        ,{
+            "path" : "pages/interact/interactPage/personalDynamics",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+        },{
+            "path" : "pages/interact/interactPage/selectActivityTypeMore",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/dynamic/eventDetail",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/dynamic/imgPreview",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/dynamic/likes",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "点赞的人",
+				"navigationBarBackgroundColor": "#F3f3f3"
+			}
+        }
+        ,{
+            "path" : "pages/add/publish",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": ""
+			}
+        }
+        ,{
+            "path" : "pages/add/citylist",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/add/authors",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/add/tags",
+            "style" : {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+        }
+    ],
+	"globalStyle": {
+		// 2/26 更换  李明桓
+		"navigationStyle": "default",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarTextStyle": "white",
+		"backgroundTextStyle": "light",
+		"app-plus": {
+		     "bounce": "none",
+			 "scrollIndicator":"none"
+		}
+	},
+	"tabBar": {
+		"borderStyle": "black",
+		"backgroundColor": "#333333",
+		"color": "#A7A8AD",
+		"selectedColor": "#FFFFFF",
+		"fontSize":"12px",
+		"iconWidth":"22px",
+		"list": [{
+				"pagePath": "pages/found/found",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/homeactive.png",
+				"text": "发现"
+			},
+			{
+				"pagePath": "pages/dynamic/dynamic",
+				"iconPath": "static/tabbar/guanzhu.png",
+				"selectedIconPath": "static/tabbar/guanzhuactive.png",
+				"text": "动态"
+			},
+			{
+				"pagePath": "pages/add/add",
+				"iconPath": "static/tabbar/add.png",
+				"selectedIconPath": "static/tabbar/addactive.png"
+			},
+			{
+				"pagePath": "pages/interact/interact",
+				"text": "互动",
+				"iconPath": "static/tabbar/news.png",
+				"selectedIconPath": "static/tabbar/newsactive.png"
+				
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的",
+				"iconPath": "static/tabbar/me.png",
+				"selectedIconPath": "static/tabbar/meactive.png"
+			}
+		]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+
+
+}

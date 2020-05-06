@@ -1,0 +1,137 @@
+<template>
+	<div class="youjuList">
+		<cover-view class="go-back" @tap="goBack">
+			<uni-icons style="font-weight: 100;" type="closeempty" color="#ffffff" size="40"></uni-icons>
+			</cover-view>
+		<!-- 优居视频 -->
+		<you-video :hide_avatar="hideAvatar" :show_video="showVideo" :videoList="videoLists"></you-video>
+	</div>
+</template>
+
+<script>
+import YouVideo from './you-video.nvue';
+import config from '@/utils/config.js';
+import uniIcons from '@/components/uni-icons/uni-icons.vue';
+export default {
+	components: {
+		YouVideo,
+		uniIcons
+	},
+	data() {
+		return {
+			baseURL: config.baseURL,
+			videoList: [],
+			hideAvatar: false,
+			videoLists: [
+				{
+					id: 1,
+					video_key: 'http://bmdh.lcpower.cn/b5684202004131517199391.mp4',
+					"surface_image": "http://bmdh.lcpower.cn/cde03202004171629299269.png",
+					title: '@牛头村梦涵',
+					desc: '关注优居住生活',
+					is_recommend: 1,
+					video_image:"http://bmdh.lcpower.cn/b5684202004131517199391.mp4?vframe/jpg/offset/0",
+					status: 1,
+					community_id: 0,
+					flag:false,
+					house_id: 0,
+					favorite_num: 0,
+					look_num: 0,
+					createtime: 1585328310,
+					updatetime: 1585378982
+				},
+				{
+					id: 2,
+					video_key: 'http://bmdh.lcpower.cn/d0a6d202004131346116797.mp4',
+					"surface_image": "http://bmdh.lcpower.cn/e21f5202004171630348446.png",
+					title: '@优居 网红',
+					desc: '这是一个“话题”的示范，示范了内容的字体间隔、段落。如果最多，可以拥有3行',
+					is_recommend: 1,
+					video_image:"http://bmdh.lcpower.cn/d0a6d202004131346116797.mp4?vframe/jpg/offset/0",
+					flag:false,
+					status: 1,
+					community_id: 0,
+					house_id: 0,
+					favorite_num: 0,
+					look_num: 0,
+					createtime: 1585328310,
+					updatetime: 1585378982
+				},
+			]
+		};
+	},
+	onLoad(options) {
+		this.hideAvatar = options.hideAvatar ? options.hideAvatar: false;
+		console.log('手机型号：', uni.getSystemInfoSync().model);
+		// this.getHotelList();
+		// this.getVideoList();
+		this.videoLists.forEach(item =>{
+			item.flag = true;
+			this.showVideo = true;
+		})
+	},
+	onShow() {
+		uni.setStorage({
+			key: 'videoPause',
+			data: false,
+			success() {}
+		});
+		this.videoLists.forEach(item =>{
+			item.flag = true;
+			this.showVideo = true;
+		})
+	},
+	onHide() {
+		uni.setStorage({
+			key: 'videoPause',
+			data: true,
+			success() {}
+		});
+		this.videoLists.forEach(item =>{
+			item.flag = false;
+			this.showVideo = false;
+		})
+	},
+	methods: {
+		/**
+		 * @desc 获取视频列表
+		 */
+		// getVideoList() {
+		// 	let promise = new Promise((resolve, reject) => {
+		// 		uni.request({
+		// 			url: this.baseURL + '/api/video/getList',
+		// 			success: res => {
+		// 				res.data.data.list.map(item => {
+		// 					item.flag = false;
+		// 				});
+		// 				this.videoList = res.data.data.list[0];
+		// 				console.log(res.data.data);
+		// 				this.showVideo = true;
+		// 				resolve();
+		// 			}
+		// 		});
+		// 	});
+		// 	return promise;
+		// },
+		goBack() {
+			uni.navigateBack({});
+		}
+	}
+};
+</script>
+
+<style lang="less" scoped>
+.youjuList {
+	position: relative;
+	background-color: #151619;
+}
+.go-back {
+	position: fixed;
+	height: 45px;
+	width: 50px;
+	margin-top: 44px;
+	left: 10px;
+	z-index: 999;
+	font-weight: normal;
+}
+</style>

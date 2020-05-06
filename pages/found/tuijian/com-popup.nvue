@@ -1,0 +1,346 @@
+<template>
+	<view class="mask">
+		<view class="uni-padding-wrap" :style="{height: height + 'px'}">
+			<text class="uni-comment-total">{{ count }}条评论</text>
+			<view @click="close" class="uni-comment-close">
+				<uni-icons type="closeempty" color="#ffffff" size="30"></uni-icons>
+			</view>
+			<uni-list :scroll-y="true" style="margin-top: 40upx;">
+				<uni-cell v-for="(item,index) in commentList" :key="index">
+
+					<view class="uni-comment-list">
+						<view class="uni-comment-face">
+							<image class="uni-comment-face-image" :src="item.image_app" mode="scaleToFill"></image>
+						</view>
+						<view class="uni-comment-body">
+							<view class="uni-comment-top">
+								<text class="username">{{ item.nickname }}</text>
+							</view>
+							<view class="uni-comment-text">
+								<text class="uni-comment-content">{{ item.desc }}</text>
+								<text class="uni-comment-date"> {{ item.add_time }}</text>
+							</view>
+							
+						</view>
+					</view>
+				</uni-cell>
+			</uni-list>
+		</view>
+		<view class="footer-input" :style="{bottom: keyboard_height}">
+			<view class="uni-form-item uni-column footer-left">
+				<input class="uni-input" adjust-position="false" @focus="onFocus" @blur="onBlur" type="text" @confirm="sendMessge" v-model="content" :focus="focus" placeholder="请文明评论,说点好听的～" />
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	import uniList from "@/components/uni-list/uni-list.vue"
+	import uniCell from "@/components/uni-cell/uni-cell.vue"
+	import config from "@/utils/config.js"
+	import helper from "@/utils/helper.js"
+	
+	export default {
+		components: {
+			uniIcons,
+			uniList,
+			uniCell
+		},
+		data() {
+			return {
+				baseURL: config.baseURL,
+				count: 6,
+				height: '',
+				token: '',
+				content: '',
+				keyboard_height: 0,
+				video_id: null,
+				focus: false, //是否自动聚焦输入框
+				commentList: []
+			}
+		},
+		onLoad(option) {
+			this.video_id = option.video_id;
+			let user = uni.getStorageSync('USERINFO');
+			if(user && user.token){
+				this.token = user.token;
+			}
+			this.getCommentList();
+		},
+		created() {
+			console.log(uni.getSystemInfoSync().screenHeight)
+			this.height = `${uni.getSystemInfoSync().screenHeight * 0.68}`;
+		},
+		methods: {
+			onBlur(e){
+				this.keyboard_height = 0 + 'px';
+				console.log('this.keyboard_height',this.keyboard_height)
+			},
+			onFocus(e){
+				const that = this;
+				setTimeout(function(){
+					that.keyboard_height = e.detail.height-34 + 'px';
+					console.log('this.keyboard_height',that.keyboard_height)
+				},250)
+				
+			},
+			/**
+			 * @param {Object} id 视频id
+			 * @desc 获取评论列表
+			 */
+			getCommentList() {
+				let param = helper.setConfig('&id=' + this.video_id);
+				let promise = new Promise((resolve, reject) => {
+					uni.request({
+						url: this.baseURL + '/index/Lists/video_comment_list',
+						method: 'get',
+						data: {
+							signature: param.signature,
+							timestamp: param.timestamp,
+							id: this.video_id
+						},
+						success: (res) => {
+							res.data.data.map((item) => {
+								item.add_time = helper.timestampToDate(item.add_time*1000);
+							})
+							this.commentList = res.data.data;
+							this.count = this.commentList.length;
+							console.log('评论列表：',this.commentList)
+							resolve()
+						}
+					})
+				})
+				return promise
+			},
+			/**
+			 * @desc 发送评论
+			 * @param {Object} id 视频id
+			 * @param {Object} desc 评论内容
+			 */
+			async sendMessge() {
+				const that = this;
+				let param = helper.setConfig('&token=' + this.token + '&id=' + this.video_id + '&desc=' + this.content);
+				let promise = new Promise((resolve, reject) => {
+					uni.request({
+						url: this.baseURL + '/index/Video/video_comment',
+						method: 'post',
+						data: {
+							signature: param.signature,
+							timestamp: param.timestamp,
+							token: this.token,
+							id: this.video_id,
+							desc: this.content
+						},
+						success: (res) => {
+							console.log('评论成功：',res)
+							uni.hideKeyboard();
+							that.content = '';
+							that.getCommentList();
+							resolve()
+						},
+						fail: (err) => {
+							console.log(err)
+						}
+					})
+				})
+				return promise
+			},
+			/**
+			 * @desc 
+			 */
+			onClick(e) {
+				uni.showToast({
+					title: "点击蒙层关闭"
+				})
+				// #ifdef APP-NVUE
+				e.stopPropagation()
+				// #endif
+			},
+			/**
+			 * @desc 关闭评论框
+			 */
+			close() {
+				uni.navigateBack()
+			}
+		}
+	}
+</script>
+
+<style lang="less">
+	.mask {
+		position: fixed;
+		left: 0;
+		/* top: 0; */
+		right: 0;
+		bottom: 0;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		justify-content: center;
+		align-items: center;
+		background-color: #2C2C2C;
+	}
+
+	.footer-left {
+		flex: 1;
+		background-color: #151619;
+		// padding: 20upx;
+	}
+
+	.footer-right {
+		width: 150upx;
+		background-color: #2C2C2C;
+		padding: 20upx;
+	}
+
+	.uni-input {
+		color: #FFFFFF;
+		font-size: 30upx;
+		height: 50px;
+	}
+
+	.footer-right-send {
+		color: #FFFFFF;
+	}
+
+	.footer-input {
+		flex-direction: row;
+		width: 750upx;
+		color: #FFFFFF;
+		position: fixed;
+		padding: 0px 50upx;
+		left: 0;
+		/* top: 0; */
+		right: 0;
+		bottom: 0;
+		height: 170upx;
+		background-color: #151619;
+		z-index: 3;
+	}
+
+	.uni-padding-wrap {
+		position: fixed;
+		left: 0;
+		padding: 0 30upx;
+		/* top: 0; */
+		right: 0;
+		bottom: 168upx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		justify-content: center;
+		/* #endif */
+		align-items: center;
+		background-color: #2C2C2C;
+		border-top-left-radius: 20upx;
+		border-top-right-radius: 20upx;
+		height: 700upx;
+		z-index: 1,
+	}
+
+	.uni-comment {
+		/* #ifndef APP-PLUS-NVUE */
+		display: flex;
+		flex-grow: 1;
+		/* #endif*/
+		padding: 5upx 0;
+		flex-direction: column;
+		/* flex: 1; */
+	}
+
+	.uni-comment-total {
+		height: 80upx;
+		line-height: 80upx;
+		color: #e8e8e8;
+		font-size: 30upx;
+		text-align: center;
+		// border-color: #ff0000;
+		// border-width: 1px;
+		// border-style: solid;
+	}
+
+	.uni-comment-close {
+		position: absolute;
+		width: 70upx;
+		right: 30upx;
+		top: 10upx;
+	}
+
+	.uni-comment-list {
+		/* #ifndef APP-PLUS-NVUE */
+		display: flex;
+		/* #endif*/
+		flex-wrap: nowrap;
+		width: 670upx;
+		margin-bottom: 32upx;
+		flex-direction: row;
+	}
+
+	.uni-comment-face {
+		width: 90upx;
+		height: 90upx;
+		border-radius: 50%;
+		margin-right: 20upx;
+		// flex-shrink: 0;
+		overflow: hidden;
+	}
+
+	.uni-comment-face-image {
+		border-radius: 100%;
+		width: 90upx;
+		height: 90upx;
+		border-radius: 50%;
+	}
+
+	.uni-comment-body {
+		// width: 350upx;
+		flex: 1;
+		flex-wrap: wrap ;
+		padding-right: 50upx;
+		text-overflow: ellipsis;
+		lines: 3;
+	}
+
+	.uni-comment-top {
+		line-height: 1.5em;
+		justify-content: space-between;
+	}
+
+	.username {
+		color: #999999;
+		font-size: 24upx;
+	}
+	.uni-comment-text{
+		width: 550upx;
+		flex-direction: row;
+		flex-wrap: wrap ;
+		// border-color: #ff0000;
+		// border-width: 1px;
+		// border-style: solid;
+	}
+	.uni-comment-content {
+		width: 550upx;
+		line-height: 28upx;
+		font-size: 26upx;
+		padding: 8upx 0;
+		color: #ffffff;
+		// border-color: #ff0000;
+		// border-width: 1px;
+		// border-style: solid;
+	}
+
+	.uni-comment-date {
+		color: #999999;
+		font-size: 24upx;
+	}
+
+	.uni-comment-replay-btn {
+		background-color: #FFFFFF;
+		font-size: 24upx;
+		line-height: 28upx;
+		padding: 5upx 20upx;
+		border-radius: 30upx;
+		color: #333 !important;
+		margin: 0 10upx;
+	}
+</style>

@@ -1,0 +1,455 @@
+<template>
+	<!-- v-if="show_video" -->
+	<div class="page">
+		<div class="cover-view-center">
+			<div :style="{ height: height, width: width }" ref="touch" @click="videoPlay(index)" @touchstart="ListTouchStart" @touchmove="ListTouchMove">
+				<div class="cover-view-right1" v-if="distanceX == 0">
+					<div class="img" style="height: 140upx;" @click.stop="tapAvater"></div>
+					<div class="img" @click.stop="tapLove"></div>
+					<div class="img" @click.stop="tapMsg"></div>
+					<div class="img" @click.stop="tapShare"></div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper" ref="swiper">
+			<block v-for="(item, idx) in videoList" :key="idx">
+				<div class="video-box" :style="{ height: height }">
+					<block v-if="Math.abs(index - idx) <= 1">
+						<chunlei-video
+							class="video"
+							:onTimeUpdateCallBack="onTimeUpdate"
+							:src="item.video_url"
+							:height="height"
+							:width="width"
+							:play="item.flag"
+							:gDuration="item.duration"
+							:objectFit="item.objectFit"
+							:poster="item.video_image"
+							:initialTime="item.initialTime"
+							@pause="pauseVideo"
+						></chunlei-video>
+
+						<cover-view class="cover-view-left" :style="isIphoneX ? 'bottom:' + '190upx': '128upx'">
+							<cover-view style="flex-direction: row;">
+								<text class="left-title">@{{ item.nickname }}</text>
+								<text class="left-follow">已关注</text>
+							</cover-view>
+
+							<text class="left-text">{{ item.desc }}</text>
+
+							<cover-view style="flex-direction: row;margin-bottom: 14upx;">
+								<cover-view style="text-align: center;flex-direction: row;background-color: rgba(0, 0, 0, 0.3);padding-top: 10upx; padding-bottom: 10upx;padding-left: 16upx;padding-right: 16upx;border-radius: 30upx;flex: 0.27;">
+									<cover-image class="left-location" src="../../static/youju/location.png"></cover-image>
+									<text class="left-address">潮州</text>
+								</cover-view>
+								<cover-view style="text-align: center; flex-direction: row;background-color: rgba(0, 0, 0, 0.3);padding-top: 10upx; padding-bottom: 10upx;padding-left: 16upx;padding-right:16upx;border-radius: 30upx;margin-left: 25upx;flex: 0.5;" >
+									<cover-image class="left-location" src="../../static/youju/jing.png"></cover-image>
+									<text class="left-tip">深圳四季如春</text>
+								</cover-view>
+							</cover-view>
+						</cover-view>
+
+						<cover-view class="cover-view-right" :style="isIphoneX ? 'bottom:' + '350upx':'280upx'">
+							
+							<cover-view class="img" style="height: 140upx;" @click.stop="tapAvater">
+								<cover-image :src="item.image_app" class="avater"></cover-image>
+								<text class="right-text-avater">+</text>
+								<text class="right-text"></text>
+							</cover-view>
+							
+							<cover-view @click.stop="tapLove" class="img" style="margin-top: 40upx;">
+								<cover-image class="right-icon" :src="item.check ? '../../static/youju/love.png' : '../../static/youju/love_red.png'"></cover-image>
+								<text class="mask-right-text">2.4w</text>
+								<text class="right-text">2.4w</text>
+							</cover-view>
+							<cover-view class="img" @click.stop="tapMsg">
+								<cover-image class="right-icon" src="../../static/youju/comment.png"></cover-image>
+								<text class="mask-right-text">768</text>
+								<text class="right-text">768</text>
+							</cover-view>
+							<cover-view class="img" @click.stop="tapShare">
+								<image class="right-icon" src="../../static/youju/share.png"></image>
+								<text class="mask-right-text">768</text>
+								<text class="right-text">768</text>
+							</cover-view>
+						</cover-view>
+					</block>
+				</div>
+			</block>
+
+			<cover-view
+				class="left-div"
+				:style="{ height: height, width: width, left: `${-parseInt(width)}px` }"
+				ref="left"
+				@touchstart="ListTouchStart"
+				@touchmove="ListTouchMove"
+			>
+				<text class="title-text" @click="clickbt">{{ videoList[index].title }}</text>
+			</cover-view>
+			<cover-view
+				class="right-div"
+				:style="{ height: height, width: width, right: `${-parseInt(width)}px` }"
+				ref="right"
+				@touchstart="ListTouchStart"
+				@touchmove="ListTouchMove"
+			>
+				<text class="title-text">{{ videoList[index].desc }}</text>
+			</cover-view>
+		</div>
+	</div>
+</template>
+
+<script>
+import chunleiVideo from '@/components/chunlei-video/chunlei-video.vue';
+import scrollMixins from '@/utils/scrollMixins';
+import config from '@/utils/config.js';
+import uniIcons from '@/components/uni-icons/uni-icons.vue';
+// #ifdef APP-PLUS
+const BindingX = uni.requireNativePlugin('bindingx');
+const animation = weex.requireModule('animation');
+const modal = weex.requireModule('modal');
+// #endif
+
+export default {
+	props: {
+		videoList: {
+			type: Array,
+			default: () => []
+		},
+		show_video: {
+			type: Boolean,
+			default: false
+		}
+		// currentVideo: {
+		// 	type: Number,
+		// 	default: 0
+		// }
+	},
+	mixins: [scrollMixins],
+	components: {
+		chunleiVideo,
+		uniIcons
+	},
+	data() {
+		return {
+			isIphoneX: false,
+			baseURL: config.baseURL,
+			show_mask: false
+		};
+	},
+	async mounted() {
+		// this.videoPlay(this.index)
+		// await this.getVideoList()
+		this.bindCurrentX(0, 300);
+	},
+	beforeDestroy() {
+		this.show_mask = true;
+		console.log('-------beforeDestroy-----');
+	},
+	destroyed() {
+		console.log('-------destroyed-----');
+		this.doPause();
+	},
+	async created() {
+		// let timestamp = (new Date()).getTime()
+		// let appid = 'bmdh00ecfbc943a124151'
+		// let str= 'timestamp='+ timestamp +'&key=' + appid + '&page=1'+'&token=' + token + '&id=' + id 
+		// let signature= md5(str).toUpperCase();
+		
+		console.log('手机型号：',uni.getSystemInfoSync().model)
+		if(uni.getSystemInfoSync().model == 'iPhoneX' || uni.getSystemInfoSync().model == 'iPhoneXR' || uni.getSystemInfoSync().model == 'iPhoneXS'){
+			this.isIphoneX = true;
+		}
+		this.init();
+		//#ifdef APP-PLUS
+		plus.screen.lockOrientation('portrait-primary');
+		//#endif
+		this.sysheight = uni.getSystemInfoSync().screenHeight;
+		this.height = `${this.sysheight}px`;
+		let width = uni.getSystemInfoSync().screenWidth;
+		this.width = `${width}px`;
+	},
+	methods: {
+		doPlay() {
+			this.videoPlay(this.index);
+		},
+		doPause() {
+			// console.log("doPause: do pause video")
+			for (let item of this.videoList) {
+				item.flag = false;
+			}
+		},
+		onTimeUpdate() {
+			let that = this;
+			uni.getStorage({
+				key: 'videoPause',
+				success: res => {
+					if (res.data === true) {
+						that.doPause();
+					}
+				}
+			});
+		},
+		hideComment() {
+			this.show_comment = false;
+		},
+		clickbt() {
+			console.log(11);
+		},
+		//设置参数
+		init() {
+			this.typeX = true; //开启左右滑动
+			this.playCount = 2; //剩余多少视频加载视频列表
+			this.startDistance = 5; //判断左右上下拖动的启动距离 px
+			this.minTime = 300; //判断快速滑动的时间,该时间内无视回弹距离判断
+			this.backDistance = 200; //判断上下滑动的回弹距离 px
+		},
+		tapRight(e){
+			e.stopPropagation();
+		},
+		tapLove(e) {
+			e.stopPropagation();
+			if (this.distanceX != 0) return;
+			this.videoList[this.index].check = !this.videoList[this.index].check;
+			this.videoList = [...this.videoList];
+		},
+
+		tapAvater(e) {
+			e.stopPropagation();
+			console.log('this.index:',this.index)
+			uni.navigateTo({
+				url: `/pages/found/youju/youju?id=${this.index + 1}`
+			});
+		},
+
+		tapMsg(e) {
+			e.stopPropagation();
+			uni.navigateTo({
+				url: '/pages/found/tuijian/com-popup?video_id=' + this.videoList[this.index].id
+			});
+		},
+
+		tapShare(e) {
+			e.stopPropagation();
+			if (this.distanceX != 0) return;
+			uni.showToast({
+				icon: 'none',
+				title: `分享索引为${this.index}的视频`
+			});
+		}
+	}
+};
+</script>
+
+<style lang="scss" scoped>
+.page {
+	flex: 1;
+	overflow: hidden;
+	position: relative;
+	background-color: #333333;
+}
+.mask-right-text{
+	color: #999999;
+	text-align: center;
+	font-size: 14px;
+	// font-weight: 500;
+	position: relative;
+	top: 2px;
+	right: -1px;
+}
+.right-text {
+	position: relative;
+	top: -42upx;
+	margin-top: 14upx;
+	text-align: center;
+	font-size: 14px;
+	color: #ffffff;
+	// margin-bottom: 46upx;
+	// font-weight: 600;
+}
+.swiper {
+	position: relative;
+	top: 0px;
+}
+.cover-view-center {
+	top: 176upx;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	z-index: 999;
+}
+.left-div {
+	position: absolute;
+	// top: 44px;
+	justify-content: center;
+	align-items: center;
+	// background-color: #ff0000;
+}
+.right-div {
+	position: absolute;
+	// top: 44px;
+	justify-content: center;
+	align-items: center;
+}
+.title-text {
+	font-size: 32upx;
+	color: #000000;
+	line-height: 32upx;
+}
+.video-box {
+	position: relative;
+	// background-color: #ff0000;
+}
+.cover-view-left {
+	position: absolute;
+	margin-left: 24upx;
+	width: 500upx;
+	bottom: 128upx;
+	z-index: 9999;
+	// background-color: #ff0000;
+}
+.left-text {
+	font-size: 30upx;
+	color: #ffffff;
+	font-weight: 400;
+	margin-bottom: 32upx;
+	lines: 3;
+	text-overflow: ellipsis;
+	line-height: 40upx;
+	// letter-spacing: 2.2upx;
+}
+.left-follow {
+	position: relative;
+	border-width: 1upx;
+	border-color: #ffffff;
+	border-style: solid;
+	color: #ffffff;
+	border-radius: 40upx;
+	font-size: 26upx;
+	width: 104upx;
+	height: 44upx;
+	margin-left: 44upx;
+	line-height: 44upx;
+	text-align: center;
+}
+
+.left-title {
+	font-size: 32upx;
+	color: #ffffff;
+	margin-bottom: 40upx;
+	margin-top: 6upx;
+	font-weight: 900;
+	line-height: 32upx;
+}
+.left-location{
+	margin-top: 4upx;
+	width: 30upx;
+	height: 30upx;
+	background-color: #FFFFFF;
+	border-radius: 100%;
+}
+.left-address{
+	color: #FFFFFF;
+	font-size: 26upx;
+	font-weight: 500;
+	margin-left: 10upx;
+	margin-top:6upx;
+}
+.left-tip {
+	color: #ffffff;
+	font-size: 26upx;
+	font-weight: 500;
+	margin-left: 10upx;
+	margin-top: 6upx;
+}
+.avater {
+	border-radius: 100%;
+	border-color: #fff;
+	border-style: solid;
+	border-width: 2upx;
+	height: 96upx;
+	width: 96upx;
+	padding: 6upx;
+}
+.right-icon{
+	width: 72upx;
+	height: 72upx;
+}
+.cover-view-right {
+	position: absolute;
+	bottom: 350upx;
+	right: 20upx;
+	z-index: 9999;
+}
+.cover-view-right1 {
+	position: absolute;
+	bottom: 526upx;
+	right: 20upx;
+	z-index: 9999;
+}
+.right-text-avater {
+	position: relative;
+	font-size: 36upx;
+	font-weight: bold;
+	top: -16upx;
+	// left: 30upx;
+	height: 40upx;
+	width: 40upx;
+	background-color: #dd524d;
+	color: #ffffff;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 40upx;
+	z-index: 999;
+}
+
+.avater-icon {
+	height: 40upx;
+	width: 40upx;
+	color: #fff;
+	background-color: #dd524d;
+	border-radius: 50%;
+	position: absolute;
+	left: 30upx;
+	top: -20upx;
+}
+
+.img {
+	height: 110upx;
+	width: 110upx;
+	align-items: center;
+	margin-top: 40upx; 
+	// border-width: 1upx;
+	// border-style: solid;
+	// border-color: #ff0000;
+	// opacity: 0.9;
+}
+
+// /*iphone 6p/7p/8p */
+@media screen and (min-width: 375px) and (max-height: 813px) {
+	
+	
+}
+@media screen and (min-width: 414px) and (max-height: 897px) {
+ .cover-view-right1 {
+ 	bottom: 430upx;
+ }
+
+}
+
+/* x xs */
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+  
+}
+
+/* xr */
+@media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) {
+   
+}
+
+/* xs max */
+@media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+    
+}
+
+</style>
