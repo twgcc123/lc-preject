@@ -29,12 +29,12 @@
 		},
 		data() {
 			return {
-				activeTab: 0,
+				activeTab:2,
 				tabList: dataList.tabar,
 			}
 		},
 		onShow() {
-			this.activeTab = 0
+			this.activeTab = 2
 		},
 		onLoad() {
 			console.log(dataList.tabar)
@@ -50,7 +50,7 @@
 					uni.navigateTo({
 						url: "/pages/assistant/assistantCreateHudong"
 					});
-					this.activeTab = 0
+					this.activeTab = 2
 					return
 				}
 			},

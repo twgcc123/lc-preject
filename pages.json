@@ -310,14 +310,28 @@
 			"path": "pages/mine/mainPage/mineLianXiRen", // 联系人
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "联系人"
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineLianXiRrenTuijian", // 推荐关注
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineLianXiRrenAgree", // 亲友关系申请
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/mine/mainPage/mineLifeRecord", // 人生记录
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "人生记录"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -338,7 +352,7 @@
 			"path": "pages/mine/mainPage/mineFind", // 我的收藏
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "我的收藏"
+				"navigationStyle": "custom"
 			}
 		},
 		{

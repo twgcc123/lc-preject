@@ -4,6 +4,7 @@
 			<view class="" @tap="goBack"><uni-icons color="#707070" type="arrowleft" size="22"></uni-icons></view>
 			<view class="" @click="pageTo('/pages/interact/interactPage/moreAction')"><uni-icons color="#707070" type="more-filled" size="24"></uni-icons></view>
 		</view>
+		
 		<view class="container">
 			<!-- 头部数据 -->
 			<view class="person-info">
@@ -152,6 +153,7 @@ export default {
 	box-sizing: border-box;
 }
 .container {
+	margin-top: 10upx;
 	.person-info {
 		padding: 0 48upx;
 		display: flex;
