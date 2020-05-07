@@ -11,7 +11,7 @@
 			</view>
 			<view class="statement">
 				<label class="radio" @tap="checkeds"><radio :checked="checked" style="transform:scale(0.6)" value="r1"/></label>
-				<text>我已阅读并同意 000000<text class="cbg">用户协议</text> 和 <text class="cbg">隐私政策</text>以及 <text class="cbg">中国移动认证服务条款</text></text>
+				<text>我已阅读并同意<text class="cbg">用户协议</text> 和 <text class="cbg">隐私政策</text>以及 <text class="cbg">中国移动认证服务条款</text></text>
 			</view>
 		</view>
 		<view class="login-other" @tap="goDetail('/pages/login/loginPhone')">其他方式登录</view>
