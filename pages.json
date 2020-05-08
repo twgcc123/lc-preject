@@ -492,7 +492,13 @@
 				"navigationBarTextStyle": "black"
 			}
 		},
-		
+		{
+			"path": "pages/assistant/assistantPage/selectHuoDongType", // 创建活动选择活动分类页面
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
 		// 登录页面
 		{
 			"path": "pages/login/login",

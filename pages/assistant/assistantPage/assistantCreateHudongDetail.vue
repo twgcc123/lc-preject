@@ -36,10 +36,11 @@
 			</view>
 
 			<!-- 选择暖助分类 -->
-			<view class="choose-list">
+			<view class="choose-list" @tap="pageTo('/pages/assistant/assistantPage/selectHuoDongType')">
 				<view class="dcse">
 					<image class="reat-icons" src="/static/assistant/cengji.svg" mode=""></image>
-					<text>选择活动分类</text>
+					<text v-if="HuoDongdesc.length == ''">选择活动分类</text>
+					<text v-else>{{HuoDongdesc}}</text>
 				</view>
 				<uni-icons class="search-icon" type="arrowright" color="#ACACAC" size="18"></uni-icons>
 			</view>
@@ -195,6 +196,8 @@
 				dataHouer:"",
 				// 获取当前时间
 				newValueTime:"",
+				// 选择活动类型
+				HuoDongdesc:"",
 			}
 		},
 		onShow() {
@@ -210,9 +213,20 @@
 			console.log(newDatas)
 			this.newValueTime = newDatas.getFullYear() + "-" + (newDatas.getMonth() + 1) + "-" + newDatas.getDate();
 			console.log(this.newValueTime)
+			
+			// 获取选择活动类型
+			uni.$on('HuoDongType',(data)=>{
+				this.HuoDongdesc = data;
+				console.log(this.HuoDongdesc)
+			})
+			
 		},
 		
 		updated() {},
+		
+		mounted() {
+			
+		},
 		
 		methods: {
 			
