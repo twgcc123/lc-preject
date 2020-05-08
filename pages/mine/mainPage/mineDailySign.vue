@@ -1,13 +1,13 @@
 <template>
 	<view class="contaier">
 		<!-- 头部tab标签切换 -->
-		<view class="header" :style="[{ paddingTop: hasNotchInScreen ? '44px': '20px'}]">
+		<view class="header" :style="[{ paddingTop: hasNotchInScreen ? '88upx': '44upx'}]">
 			<view class="navbar-back" @click="pageTo()">
 				<uni-icons type="back" size="20"></uni-icons>
 			</view>
 			<view class="navbar">
 				<view class="navbar-item" @click="pageTo('/pages/dynamic/collectionSign')">收藏</view>
-				<view class="navbar-item active">精选.日签</view>
+				<view class="navbar-item active">精选 · 日签</view>
 				<view class="navbar-item" @click="pageTo('/pages/dynamic/mySign')">我的</view>
 			</view>
 		</view>
@@ -29,12 +29,10 @@
 <script>
 import heartSign from '@/components/heart-sign.vue'
 import footerBar from '@/components/footer-bar.vue'
-import uniIcons from '@/components/uni-icons/uni-icons.vue'
 export default{
 	name:"mineDailySign",
 	components:{
 		footerBar,
-		uniIcons,
 		heartSign
 	},
 	data() {
@@ -92,11 +90,12 @@ export default{
 	.header{
 		position: sticky;
 		top: 0;
+		z-index: 999;
 		background-color: #F3f3f3;
 		display: flex;
 		align-items: center;
 		.navbar-back{
-			height: 44px;
+			height: 88upx;
 			margin-left: 40upx;
 			margin-right: 113upx;
 			display: flex;
@@ -104,7 +103,7 @@ export default{
 			// background-color: #F0AD4E;
 		}
 		.navbar{
-			height: 44px;
+			height: 88upx;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
@@ -112,17 +111,17 @@ export default{
 		.navbar-item{
 			// background-color: #F43F3B;
 			margin-right: 50upx;
-			font-size: 32upx;
+			font-size: 36upx;
 			color: #666666;
 			line-height: 44upx;
 		}
 		.active{
 			color: #333333;
-			font-weight: 500;
+			font-weight: bold;
 		}
 	}
 	.content{
-		padding-bottom: 100px;
+		padding-bottom: 200upx;
 	}
 	.swiper-tab {
 		width: 100%;
