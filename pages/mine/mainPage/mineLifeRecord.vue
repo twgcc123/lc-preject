@@ -11,7 +11,7 @@
 				<view class="header-title">人生记录</view>
 				
 				<view class="header-right">
-					<uni-icons type="plusempty" color="#565656" size="22"></uni-icons>
+					<uni-icons @tap="addLift" type="plusempty" color="#565656" size="22"></uni-icons>
 					<uni-icons  style="margin-left: 20upx;" type="search" color="#565656" size="22"></uni-icons>
 				</view>
 				
@@ -217,6 +217,12 @@ export default {
 	methods: {
 		goBack(){
 			uni.navigateBack({})
+		},
+		
+		addLift(){
+			uni.switchTab({
+				url:"/pages/add/add"
+			})
 		},
 		
 		getKeyboardHeight(val) {

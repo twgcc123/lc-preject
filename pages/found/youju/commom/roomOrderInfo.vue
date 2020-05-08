@@ -2,10 +2,11 @@
 		<view class="roomOrderInfo">
 			<view class="number">
 				订单号：<text class="nums">DKADK34924929492412</text>
-				<uni-icons type="paperclip" color="#B7B7B7" size="12"></uni-icons>
+				<!-- <uni-icons type="paperclip" color="#B7B7B7" size="12"></uni-icons> -->
+				<image style="height: 20upx;width:20upx;" src="/static/youju/fuzhi.svg"></image>
 				<text class="copy" @tap="copy"> 复制 </text>
 			</view>
-			<view class="info">
+			<view class="info" @tap="pageTo('/pages/found/youju/room')">
 				<view class="info-item">
 					<text>整住 · 1室1厅1阳1卫1床</text>
 					<text class="item-time">12月11日—12月21日 <text>共10晚</text></text>
@@ -44,10 +45,7 @@
 </template>
 
 <script>
-import uniIcons from "@/components/uni-icons/uni-icons.vue"
 export default {
-	components: {uniIcons},
-	name:"roomOrderInfo",
 	data() {
 		return {
 			title: 'map',
@@ -65,7 +63,13 @@ export default {
 		}
 	},
 	methods:{
-
+		
+		pageTo(url) {
+			uni.navigateTo({
+				url: url
+			});
+		},
+		
 		// 复制内容
 		copy(){
 			uni.setClipboardData({

@@ -53,7 +53,7 @@ export default {
 		justify-content: space-between;
 		height: 160upx;
 		text-align: center;
-		padding: 0 40upx;
+		padding-left: 40upx;
 		.list-left{
 			.advada_img{
 				height: 80upx;
@@ -69,6 +69,7 @@ export default {
 			align-items: center;
 			justify-content: space-between;
 			border-bottom: 2upx solid #f3f3f3;
+			padding-right: 40upx;
 			.name{
 				color: rgba(51, 51, 51, 1);
 				font-size: 36upx;

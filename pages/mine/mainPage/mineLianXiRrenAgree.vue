@@ -11,7 +11,7 @@
 
 		<!-- 推荐关注的人 -->
 		<view class="agree-list">
-			<view class="list-item" v-for="(item,index) in list" :key="index">
+			<view class="list-item" v-for="(item,index) in list" :key="index" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')">
 				<view class="list-left">
 					<image :src="item.advada_img" mode=""></image>
 					<text>{{item.name}}</text>
@@ -71,6 +71,12 @@ export default {
 	methods: {
 		goBack(){
 			uni.navigateBack({})
+		},
+		
+		pageTo(url) {
+			uni.navigateTo({
+				url: url
+			});
 		},
 	}
 };

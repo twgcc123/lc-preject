@@ -57,6 +57,7 @@ export default {
 	.message{
 		color: rgba(68, 68, 68, 1);
 		font-size: 56upx;
+		font-weight: bold;
 	}
 	.seft{
 		margin: 40upx 0;
@@ -77,19 +78,18 @@ export default {
 	left: 46upx;
 	right: 50upx;
 	z-index: 999;
-	bottom: 53upx;
+	bottom: 106upx;
 	width: 654upx;
 	height: 100upx;
 	line-height: 100upx;
 	border-radius: 8upx;
-	background-color: rgba(255, 255, 255, 1);
-	color: rgba(51, 51, 51, 1);
-	font-size: 32upx;
+	background-color: #EC9A44;
+	color: #FFFFFF;
+	font-size: 36upx;
+	font-weight: 500;
 	text-align: center;
 	font-family: Arial;
-	border-right: 1px solid rgba(187, 187, 187, 1);
-	border-bottom: 1px solid rgba(187, 187, 187, 1);
-	box-shadow: 1upx 1upx 3upx rgba(187, 187, 187, 1);
+	box-shadow: 1upx 1upx 2upx rgba(255, 255, 230, .5);
 }
 	
 </style>

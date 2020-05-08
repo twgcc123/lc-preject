@@ -28,7 +28,7 @@
 					<text class="dcse-title">亲友关系申请</text>
 				</view>
 				<view class="shen_right">
-					<text class="number">3</text>
+					<text class="number">5</text>
 					<uni-icons style="position: relative;top: 4upx;" type="arrowright" color="#dddddd" size="15"></uni-icons>
 				</view>
 			</view>
@@ -51,14 +51,20 @@
 		</view>
 
 		<!-- 亲友关系 -->
-		<view class="shenqing" v-if="activeTab == 1">
-			<view class="">
-				<image src="/static/nime/add_whtie.svg" mode=""></image>
-				<text>亲友关系申请</text>
+		<view class="new_followed" v-if="activeTab == 1">
+			<view class="lines2"></view>
+			<view class="followed_list shenqing" @tap="pageTo('/pages/mine/mainPage/mineLianXiRrenQinyou')">
+				<view class="shen_left">
+					<image class="xingx" src="/static/nime/xingx.svg" mode=""></image>
+					<text class="dcse-title">我的亲友</text>
+				</view>
+				<view class="shen_right">
+					<uni-icons style="position: relative;top: 4upx;" type="arrowright" color="#dddddd" size="15"></uni-icons>
+				</view>
 			</view>
-			<view class="">
-				<text></text>
-				<uni-icons type="arrowright" color="#dddddd" size="14"></uni-icons>
+			
+			<view class="all-guanzhu">
+				<qinyouList :lists="lists"></qinyouList>
 			</view>
 		</view>
 	</view>
@@ -66,12 +72,14 @@
 
 <script>
 import mayKnow from "../commom/mineLianXiRrenMayKnow.vue"
+import qinyouList from "../commom/mineLianXiRrenQinyouList.vue"
 import data from '@/utils/assistant.js';
 
 export default {
 	name: 'mineLianXiRen',
 	components:{
 		mayKnow,
+		qinyouList
 	},
 	data() {
 		return {
@@ -86,7 +94,8 @@ export default {
 					title: '已关注'
 				}
 			],
-			list:data.mineLianXiRen
+			list:data.mineLianXiRen,
+			lists:data.qinyouList
 		};
 	},
 
@@ -142,7 +151,7 @@ export default {
 
 .menu {
 	position: sticky;
-	top: 178upx;
+	top: 196upx;
 	z-index: 9999;
 	background-color: #ffffff;
 	border-top: 2upx solid #eeeeee;
@@ -179,9 +188,13 @@ export default {
 	}
 }
 
-.new_guanzhu {
+.new_guanzhu,.new_followed{
 	.lines {
 		height: 18upx;
+		background-color: #f3f3f3;
+	}
+	.lines2{
+		height: 40upx;
 		background-color: #f3f3f3;
 	}
 	.shenqing,
@@ -236,6 +249,21 @@ export default {
 			}
 		}
 	}
+}
+
+
+.new_followed{
+	.followed_list{
+		height: 88upx !important;
+	}
+	.xingx{
+		height: 32upx;
+		width: 32upx;
+	}
+	.dcse-title{
+		margin-left: 14upx !important;
+	}
+	
 }
 
 .may-nowk-title{

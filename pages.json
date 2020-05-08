@@ -328,6 +328,13 @@
 			}
 		},
 		{
+			"path": "pages/mine/mainPage/mineLianXiRrenQinyou", // 亲友关系申请
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/mine/mainPage/mineLifeRecord", // 人生记录
 			"style": {
 				"navigationBarTextStyle": "black",
@@ -338,7 +345,7 @@
 			"path": "pages/mine/mainPage/mineFaPiao", // 发票
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "发票"
+				"navigationStyle": "custom"
 			}
 		},
 		{
