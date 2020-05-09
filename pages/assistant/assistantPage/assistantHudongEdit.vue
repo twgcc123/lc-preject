@@ -7,7 +7,7 @@
 				<text class="title">修改活动</text>
 				<!-- 				<text class="title" v-if="this.dataType !==''">创建{{this.dataType}}</text>
 				<text class="title" v-else>创建活动</text> -->
-				<text class="complete" @tap="complete">完成</text>
+				<text class="complete">完成</text>
 			</view>
 		</view>
 

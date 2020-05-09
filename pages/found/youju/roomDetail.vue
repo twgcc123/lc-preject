@@ -1,7 +1,7 @@
 <template>
 <view class="detail">
 	<view class="room-detail">
-		<view class="header">订单详情</view>
+		<view class="header-title">订单详情</view>
 		<view class="detail-item" v-for="(item,index) in detailItem" :key="index">
 			<view class="img">
 				<image :src="item.img_url" mode=""></image>
@@ -21,7 +21,7 @@
 		</view>
 		<view class="line-throug"></view>
 		<view class="detail-time">
-			<view class="detail-time-item">
+			<view class="detail-time-item" style="text-align: left;">
 				<view class="title">入住日期</view>
 				<view class="into" v-for="item in detailData" :key="item.rid"> {{item.into}} </view>
 			</view>
@@ -29,21 +29,21 @@
 				<view class="title">退房日期</view>
 				<view class="out" v-for="item in detailData" :key="item.rid"> {{item.out}} </view>
 			</view>
-			<view class="detail-time-item">
+			<view class="detail-time-item" style="text-align: right;">
 				<view class="title">入住人数</view>
 				<view class="num" v-for="item in detailData" :key="item.rid"> {{item.num}} 位</view>
 			</view>
 		</view>
 		<view class="line-throug"></view>
 		<view class="detail-money">
-			<text>总额（人民币）</text>
-			<text>￥{{totalMoney}}</text>
+			<text class="detail-money-ren">总额（人民币）</text>
+			<text class="detail-money-tall">￥{{totalMoney}}</text>
 		</view>
 		<view class="line-throug"></view>
 		<view class="detail-info">
 			<view class="info">
 				<text class="dese">房客信息</text>
-				<text class="choose" @tap="pageTo('/pages/found/youju/roomDetailAddGuest')">选择</text>
+				<text class="choose" @tap="pageTo('/pages/found/youju/roomDetailAddGuest')">修改</text>
 			</view>	
 			<view class="info-add">
 				<view class="" v-for="(item,index) in userinfo" :key="index" v-if="usnerinfo.length != 0">
@@ -99,14 +99,6 @@
 						"hight_price":"200",
 						"rote":"4",
 					},
-					{
-						"rid":"02",
-						"img_url":"../../../static/youju/fangjian.jpg",
-						"room":"2室1厅1阳1卫3床",
-						"low_price":"380",
-						"hight_price":"450",
-						"rote":"5",
-					}
 				],
 				detailDcse:[
 					{	
@@ -134,12 +126,6 @@
 						"into":"12月1日",
 						"out":"12月1日",
 						"num":"2",
-					},
-					{
-						"rid":"02",
-						"into":"3月01日",
-						"out":"3月10日",
-						"num":"1",
 					}
 				]
 			};
@@ -205,17 +191,17 @@
 		background-color: #FFFFFF;
 	}
 	.room-detail{
-		padding: 20upx 40upx;
-		.header{
+		padding: 20upx 48upx;
+		.header-title{
 			color: #444444;
-			font-size: 44upx;
-			// font-weight: 500;
+			font-size: 56upx;
+			font-weight: bold;
 			text-align: left;
 			margin-bottom: 20upx;
 		}
 		.detail-item{
 			display: flex;
-			margin-top: 20upx;
+			margin-top: 58upx;
 			image{
 				width: 224upx;
 				height: 152upx;
@@ -268,22 +254,26 @@
 				text-align: center;
 				.title{
 					color: rgba(102, 102, 102, 1);
-					font-size: 22upx;
+					font-size: 30upx;
 					margin-bottom: 15upx;
 				}
 				.into,.out,.num{
 					color: rgba(0, 0, 0, 1);
-					font-size: 28upx;
+					font-size: 36upx;
+					font-weight: bold;
 				}
 			}
 		}
 		.detail-money{
-			padding: 6upx 0;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			color: rgba(51, 51, 51, 1);
-			font-size: 28upx;
+			font-size: 36upx;
+			.detail-money-tall{
+				font-weight: bold;
+				color: #000000;
+			}
 		}
 		.detail-info{
 			.info{
@@ -292,9 +282,11 @@
 				font-size: 28upx;
 				.dese{ 
 					color: rgba(51, 51, 51, 1);
+					font-size: 36upx;
 				}
 				.choose{
 					color: rgba(236, 154, 68, 1);
+					font-size: 36upx;
 				}
 			}
 			.info-add{
@@ -312,7 +304,7 @@
 		.tip{
 			margin-top: 12upx;
 			color: rgba(102, 102, 102, 1);
-			font-size: 24upx;
+			font-size: 28upx;
 			.works{
 				font-weight: bold;
 			}
@@ -325,9 +317,9 @@
 		margin-bottom: 150upx;
 	}
 	.line-throug{
-		height: 1upx;
+		height: 2upx;
 		width: 100%;
 		background-color: #DDDDDD;
-		margin: 20upx 0;
+		margin: 48upx 0;
 	}
 </style>

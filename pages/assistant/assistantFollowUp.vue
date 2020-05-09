@@ -285,6 +285,9 @@ export default {
 		}
 		.active-title {
 			color: #ff9533;
+			.tools-icon{
+				border-top: 8rpx solid #ff9533;
+			}
 		}
 	}
 }

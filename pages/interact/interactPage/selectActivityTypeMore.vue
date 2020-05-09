@@ -179,18 +179,6 @@ export default {
 				{
 					id: 7,
 					title: '体育'
-				},
-				{
-					id: 8,
-					title: '提议'
-				},
-				{
-					id: 9,
-					title: '体育'
-				},
-				{
-					id: 10,
-					title: '提议'
 				}
 			],
 

@@ -180,18 +180,6 @@
 						id: 7,
 						title: '体育'
 					},
-					{
-						id: 8,
-						title: '提议'
-					},
-					{
-						id: 9,
-						title: '体育'
-					},
-					{
-						id: 10,
-						title: '提议'
-					},
 				],
 				listItem: [{
 						id: 1,
@@ -273,11 +261,9 @@
 			},
 
 			addClick(item){
-				let ItemArr = item.text
+				let ItemArr = item
 				uni.$emit("HuoDongType",ItemArr)
-				uni.navigateTo({
-					url:"/pages/assistant/assistantPage/assistantCreateHudongDetail"
-				})
+				uni.navigateBack({})
 			}
 		},
 	}

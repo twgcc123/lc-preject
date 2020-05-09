@@ -17,7 +17,7 @@
 						:key="item.value" 
 						:class="['uni-list-cell','uni-list-cell-pd',index == 0 ? 'active-bottom':null]"
 					>
-						<view class="dcse">{{item.name}}</view>
+						<view class="dcse">{{item.gender}}</view>
 						<view class="radios">
 							<radio color="#fe7c3c" style="transform:scale(0.8);background-color: #FFFFFF;" class="check-radio" :value="item.value" :checked="index === current" />
 						</view>
@@ -43,18 +43,18 @@
 				items: [{
 						id:1,
 						value: 'A',
-						name: '性别不限',
+						gender: '性别不限',
 					},
 					{
 						id:2,
 						value: 'B',
-						name: '限女性'
+						gender: '限女性'
 						
 					},
 					{
 						id:3,
 						value: 'C',
-						name: '限男性'
+						gender: '限男性'
 					},
 				],
 				current: 0
@@ -80,7 +80,9 @@
 				for (let i = 0; i < this.items.length; i++) {
 					if (this.items[i].value === evt.target.value) {
 						this.current = i;
-						uni.navigateTo({
+						let sexType = this.items[i].gender
+						uni.$emit("sexType",sexType)
+						uni.navigateBack({
 							url: "/pages/assistant/assistantPage/assistantCreateHudongDetail"
 						})
 						break;

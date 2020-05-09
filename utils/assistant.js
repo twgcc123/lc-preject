@@ -8,6 +8,7 @@ const tabar = [{
 		id: 1,
 		title: "创建互动",
 		img_url: '/static/assistant/add.png',
+		img_url_bg: '/static/assistant/add_genjin.png',
 	},
 	{
 		id: 2,

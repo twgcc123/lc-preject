@@ -5,7 +5,7 @@
 			<view class="haed">
 				<text class="cancel" @tap="cancel">取消</text>
 				<text class="title">创建互动</text>
-				<text class="complete" @tap="complete">完成</text>
+				<text class="completev">完成</text>
 			</view>
 		</view>
 		
@@ -57,9 +57,6 @@
 				uni.navigateBack({})
 			},
 			
-			complete(){
-				
-			}
 			
 		},
 		computed: {
@@ -94,7 +91,7 @@
 					color: rgba(51, 51, 51, 1);
 					font-size: 32upx;
 				}
-				.complete {
+				.completev {
 					color: rgba(170, 170, 170, 1);
 					font-size: 32upx;
 				}
