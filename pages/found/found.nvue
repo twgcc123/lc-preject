@@ -44,94 +44,7 @@
 				baseURL: config.baseURL,
 				// hotelList:[],
 				hotelList:[
-					{	
-						id:1,
-						image:"../../static/youju/s1-1.jpg",
-						name:"福田莲花城市",
-						appraise:5,
-						community_tag:[
-							{
-								id:1,
-								name:"疗养胜地"
-							},
-							{
-								id:2,
-								name:"治愈系酒店"
-							},						{
-								id:3,
-								name:"网红酒店"
-							}
-						],
-						address:"台湾 日月台",
-						scenery:"日月潭",
-						warm:"温度特别温暖"
-					},
-					{
-						id:2,
-						image:"../../static/youju/s2-4.jpg",
-						name:"龙岗鸿荣源公园大地",
-						appraise:5,
-						community_tag:[
-							{
-								id:1,
-								name:"公园社区"
-							},
-							{
-								id:2,
-								name:"网红居住地"
-							},						{
-								id:3,
-								name:"酒店试居住"
-							}
-						],
-						address:"深圳 大地",
-						scenery:"大地公园",
-						warm:"温度特别温暖"
-					},
-					{
-						id:3,
-						image:"../../static/youju/s3-4.jpg",
-						name:"龙华金苹果社区",
-						appraise:5,
-						community_tag:[
-							{
-								id:1,
-								name:"疗养胜地"
-							},
-							{
-								id:2,
-								name:"贵族社区"
-							},						{
-								id:3,
-								name:"金苹果社区"
-							}
-						],
-						address:"台湾 日月台",
-						scenery:"日月潭",
-						warm:"温度特别温暖"
-					},
-					{
-						id:4,
-						image:"../../static/youju/s4-1.jpg",
-						name:"南山万象城社区",
-						appraise:5,
-						community_tag:[
-							{
-								id:1,
-								name:"居住圣地"
-							},
-							{
-								id:2,
-								name:"景色社区"
-							},						{
-								id:3,
-								name:"网红居住地"
-							}
-						],
-						address:"台湾 日月台",
-						scenery:"日月潭",
-						warm:"温度特别温暖"
-					},
+				
 				],
 				
 				videoList:[],
@@ -143,6 +56,7 @@
 		},
 		onLoad() {
 			this.getVideoList();
+			this.getHotelList();
 		},
 		onShow() {
 			uni.setStorage({
@@ -169,14 +83,25 @@
 			 * @desc 获取优居列表
 			 */
 			getHotelList(){	
+				let param = helper.setConfig('&page=1');
+				console.log('param',param)
 				let promise = new Promise((resolve,reject)=>{
 					uni.request({
 						url: this.baseURL + '/index/Lists/community_list',
+						method: 'POST',
+						data: {
+							signature: param.signature ,
+							timestamp: param.timestamp,
+							page: 1,
+						},
 						success: (res) => {
-							console.log('获取优居列表',res.data)
-							this.hotelList = res.data.data.list
-							this.show = true
+							if(res.data.state == 10000){
+								this.hotelList = res.data.data
+								this.show = true
+							}
 							resolve()
+						},
+						fail: (err) => {
 						}
 					})
 				}) 
@@ -205,11 +130,11 @@
 								})
 								this.videoList = res.data.data;
 								this.showVideo = true;
+								
 							}
 							resolve()
 						},
 						fail: (err) => {
-							console.log('获取优居列表',err)
 						}
 					})
 				}) 

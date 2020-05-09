@@ -1,9 +1,9 @@
 <template>
 	<view class="room">
 		<index-header bgColor="bg-index-header" index="2" fixed="true" />
-		<uni-swiper-dot :info="room.img" :current="current" field="content" :mode="mode" :dotsStyles="dotsStyles">
+		<uni-swiper-dot :info="room.img_list" field="content" :mode="mode" :dotsStyles="dotsStyles">
 		    <swiper class="swiper-box" @change="change" autoplay="true">
-		        <swiper-item v-for="(item ,i) in room.img" :key="i">
+		        <swiper-item v-for="(item ,i) in room.img_list" :key="i">
 					<image class="swiper-item" :src="item"></image>
 		        </swiper-item>
 		    </swiper>
@@ -16,12 +16,12 @@
 		>
 		</calendar>
 		<view class="room-desc">
-			<view class="room-desc-indoor">{{ room.indoor }}</view>
-			<view class="room-desc-title">{{ room.title }}</view>
+			<view class="room-desc-indoor">{{ room.type }}</view>
+			<view class="room-desc-title">{{ room.name }}</view>
 			<view class="room-desc-tag">
-				<view v-for="(item,index) in room.tag" :key="index" class="room-desc-tag-item">{{ item }}</view>
+				<view v-for="(item,index) in room.label" :key="index" class="room-desc-tag-item">{{ item }}</view>
 			</view>
-			<view class="room-desc-maxinto">最多可入住{{ room.max_into }}人</view>
+			<view class="room-desc-maxinto">最多可入住{{ room.population }}人</view>
 		</view>
 		<view class="coupon">
 			<view class="coupon-left">
@@ -145,7 +145,7 @@
 		<view class="into_need_know">
 			<view class="into_need_know-title">入住须知</view>
 			<view class="into_need_know-lable">入住退房时间</view>
-			<view class="into_need_know-content">入住：15:00后， 退房：12:00</view>
+			<view class="into_need_know-content">{{room.notice}}</view>
 		</view>
 		<view class="section">
 			<view class="section-title">取消政策</view>
@@ -165,7 +165,7 @@
 			<view class="other-title">其他房间</view>
 			<SZqianggou ref="qianggou" index="2" :list2="otherlist"></SZqianggou>
 		</view>
-		<comFooter old_price="200" new_price="180" rote="4" show_detail show_service></comFooter>
+		<comFooter :old_price="originalPrice" :housingID='housingID' :new_price="salesPrice" :rote="appraise"  show_detail show_service></comFooter>
 	</view>
 </template>
 
@@ -199,83 +199,74 @@
 					selectedBorder:'1px rgba(250, 250, 250, 0) solid',
 				},
 				room:{
-					img: [
-						'../../../static/youju/s1-1.jpg',
-						'../../../static/youju/s1-2.jpg',
-						'../../../static/youju/s1-3.jpg'
-					],
-					title:'深圳万象城周边欢乐园/背山面湖/十分干净',
-					tag: ['天字一号','背山面湖','有洗衣机','有洗衣机','可以做饭'],
-					max_into: 2,
-					indoor: '1室1厅1阳1卫1床',
-					
 				},
 				detailList:[
-					{
-						title: '整个房源',
-						desc: '独享整个房源，无需与他人共住'
-					},
-					{
-						title: '视频介绍',
-						desc: '小视频，秒懂此居'
-					},
-					{
-						title: '卧室1',
-						desc: '1张1.8米的双人床'
-					},
-					{
-						title: '阳台',
-						desc: '洗衣机'
-					},
-					{
-						title: '卫生间',
-						desc: '24小时热水供应'
-					}
+					
 				],
 				daysCount: 130,
 				//初始日期
 				initStartDate: '2019-12-06',
 				initEndDate: '2019-12-07',
 				otherlist:[
-					{
-						id: 1,
-						room: '1室1厅1阳1卫1床',
-						img: '/static/youju/f5.jpg',
-						title: '深圳万象城周边欢乐园/背山面湖/十分干净',
-						price: '¥ 222 /晚',
-						rote: '四星评价'
-					},
-					{
-						id: 2,
-						room: '1室1厅1阳1卫1床',
-						img: '/static/youju/s6-3.jpg',
-						title: '深圳万象城周边欢乐园/背山面湖/十分干净',
-						price: '¥ 222 /晚',
-						rote: '四星评价'
-					},
-					{
-						id: 3,
-						room: '1室1厅1阳1卫1床',
-						img: '/static/youju/s6-4.jpg',
-						title: '深圳万象城周边欢乐园/背山面湖/十分干净',
-						price: '¥ 222 /晚',
-						rote: '四星评价'
-					},
-				]
+				],
+				originalPrice:'',
+				salesPrice:'',
+				appraise:'',
+				housingID:''
 			};
 		},
+		onLoad: function(option) {
+			console.log('9999999',option)
+			let did = (option.id = '' ? '1' : option.id);
+			this.getParticularsList(did);
+	
+		},
 		methods:{
+		
 			/**
 			 * @desc 选择入住日期
 			 * @param choiceDate 时间区间（开始时间和结束时间）
 			 * @param dayCount 共多少晚
 			 */
 			changeDays({ choiceDate, dayCount }) {
+				uni.setStorage({
+				    key: 'timeDate',
+				    data: choiceDate,
+				    success: function () {
+				        console.log('success');
+				    }
+				});
+				console.log(choiceDate[0].re + '  到 ' + choiceDate[1].re)
 				console.log(choiceDate[0].re + '  到 ' + choiceDate[1].re + '  共 ' + dayCount + ' 晚');
 			},
 			change(e) {
 				this.current = e.detail.current;
 			},
+				//获取订单详情
+						async getParticularsList(id){
+							let param = this.$helper.setConfig('&id=' + id);
+							console.log(param.signature,param.timestamp)
+							let res = await this.$http.request({
+								method: 'post',
+								url: '/index/Community/get_house_particulars',
+								data: {
+									signature: param.signature,
+									timestamp: param.timestamp,
+									id: id,
+								}
+							});
+							if(res.state == 10000){
+								this.room=res.data.house;
+								this.detailList=res.data.house.details_attr
+								this.otherlist=res.data.directs
+								this.originalPrice=res.data.house.original_price
+								this.salesPrice=res.data.house.sales_price
+								this.appraise=res.data.house.appraise
+								this.housingID=res.data.house.id
+								console.log('888888',res)
+							
+						}
+					},
 			/**
 			 * @desc 跳转页面
 			*/
@@ -290,7 +281,9 @@
 					url:url
 				})
 			}
-		}
+		},
+		
+	   
 	}
 </script>
 
