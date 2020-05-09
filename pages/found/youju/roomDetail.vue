@@ -10,7 +10,7 @@
 				<view class="detail-item-text-info">
 					<view class="text-title">整住：{{item.room}}</view>
 					<view class="text-money">
-						<text class="text-low-money" ref="price">￥{{item.low_price}}</text><text class="text-height-money">￥{{item.hight_price}}</text><text class="night">/ 晚</text>
+						<text class="text-low-money" ref="price">￥{{item.low_price}}</text><text class="text-height-money">￥{{item.hight_price}}</text><text class="night"> / 晚</text>
 					</view>
 				</view>
 				<view class="detail-item-pj">
@@ -212,37 +212,39 @@
 				margin-left: 20upx;
 				.text-title{
 					color: rgba(16, 16, 16, 1);
-					font-size: 24upx;
+					font-size: 28upx;
 				}
 				.text-money{
-					margin:6upx 0;
+					margin:18upx 0;
 					.text-low-money{
 						color: rgba(51, 51, 51, 1);
-						font-size: 26upx;
+						font-size: 32upx;
 						margin-right: 10upx;
 						font-weight: bold;
 					}
 					.text-height-money{
 						color: rgba(153, 153, 153, 1);
-						font-size: 22upx;
+						font-size: 24upx;
 						text-decoration: line-through;
 						margin-right: 5upx;
 					}
 					.night{
 						color: rgba(153, 153, 153, 1);
-						font-size: 22upx;
+						font-size: 24upx;
+						color: #666666;
+						font-weight: bold;
 					}
 				}
 				.detail-item-pj{
 					display: flex;
 					align-items: center;
+					font-size: 24upx;
 					.uni-rate{
 						margin-top: 3upx;
 					}
 					.rote{
 						margin-left: 10upx;
 						color: rgba(85, 85, 85, 1);
-						font-size: 22upx;
 					}
 				}
 			}
