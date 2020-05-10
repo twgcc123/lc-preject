@@ -2,9 +2,9 @@
 	<view class="">
 		<!-- 头部 -->
 		<!-- 头部 -->
-		<view class="header">
+		<view class="header" :style="[{paddingTop: hasNotchInScreen ? '88upx': '44upx'}]">
 			<view class="header-content">
-				<uni-icons class="icons-back" type="arrowleft" color="#333333" size="22" @tap="goBack"></uni-icons>
+				<uni-icons class="icons-back" type="arrowleft" color="#333333" size="22" @tap="goBack" :style="[{Top: hasNotchInScreen ? '110upx': '66upx'}]"></uni-icons>
 				<view class="header-title">亲友关系申请</view>
 			</view>
 		</view>
@@ -84,13 +84,18 @@ export default {
 
 <style lang="less" scoped>
 .header {
-	background-color: #f3f3f3;
 	position: sticky;
 	top: 0;
 	z-index: 99;
-	padding: 44px 20px 0 20px;
+	background-color: #f3f3f3;
+	/*#ifdef MP-WEIXIN*/
+		padding: 44upx 20px 0 20px;
+	/*#endif*/
+	/*#ifdef APP-PLUS*/
+		padding: 88upx 20px 0 20px;
+	/*#endif*/
 	.header-content {
-		height: 45px;
+		height: 90upx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -104,7 +109,7 @@ export default {
 		}
 		.icons-back {
 			position: fixed;
-			top: 110upx;
+			top: 66upx;
 			left: 32upx;
 		}
 	}

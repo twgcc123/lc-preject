@@ -191,13 +191,12 @@
 		background-color: #FFFFFF;
 	}
 	.room-detail{
-		padding: 20upx 48upx;
+		padding: 24upx 48upx;
 		.header-title{
+			margin-top: 24upx;
 			color: #444444;
 			font-size: 56upx;
 			font-weight: bold;
-			text-align: left;
-			margin-bottom: 20upx;
 		}
 		.detail-item{
 			display: flex;

@@ -46,18 +46,18 @@ export default {
 
 <style lang="less" scoped>
 .orderPaySuccess{
-	padding-top: 50upx;
 	background-color: #FFFFFF;
 	font-family: PingFangSC-bold;
 	height: 100vh;
 }
 .orderDetail{
 	background-color: #FFFFFF;
-	padding: 0upx 48upx;
+	padding: 24upx 48upx 0 48upx;
 	.message{
-		color: rgba(68, 68, 68, 1);
+		color: #444444;
 		font-size: 56upx;
 		font-weight: bold;
+		margin-top: 24upx;
 	}
 	.seft{
 		margin: 40upx 0;

@@ -1,7 +1,7 @@
 <template>
-	<view class="">
+	<view class="lianxiren">
 		<!-- 头部 -->
-		<view class="headers">
+		<view class="headers" :style="[{paddingTop: hasNotchInScreen ? '88upx': '44upx'}]">
 			<view class="header-content">
 				<view class="header-left" @tap="goBack"><uni-icons class="back-icons" type="arrowleft" color="#565656" size="22"></uni-icons></view>
 				<view class="header-title">联系人</view>
@@ -13,7 +13,7 @@
 		</view>
 
 		<!-- tabList -->
-		<view class="menu">
+		<view class="menu" :style="[{Top: hasNotchInScreen ? '196upx': '52upx'}]">
 			<view class="menu-item" v-for="(item, index) in tabList" :key="index" @click="handlerMenu(index)">
 				<text :class="['menu-text', activeTab == index ? 'menu-item-active' : null]">{{ item.title }}</text>
 			</view>
@@ -116,12 +116,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.lianxiren{
+	margin-bottom: 150upx;
+}
 .headers {
 	position: sticky;
 	top: 0;
 	z-index: 99;
 	background-color: #ffffff;
-	padding: 44px 20px 0 20px;
+	/*#ifdef MP-WEIXIN*/
+		padding: 44upx 20px 0 20px;
+	/*#endif*/
+	/*#ifdef APP-PLUS*/
+		padding: 88upx 20px 0 20px;
+	/*#endif*/
 	.header-content {
 		height: 112upx;
 		display: flex;
@@ -151,7 +159,7 @@ export default {
 
 .menu {
 	position: sticky;
-	top: 196upx;
+	top: 152upx;
 	z-index: 9999;
 	background-color: #ffffff;
 	border-top: 2upx solid #eeeeee;

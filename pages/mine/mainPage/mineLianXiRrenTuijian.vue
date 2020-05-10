@@ -2,9 +2,9 @@
 	<view class="">
 		<!-- 头部 -->
 		<!-- 头部 -->
-		<view class="header">
+		<view class="header" :style="[{paddingTop: hasNotchInScreen ? '88upx': '44upx'}]">
 			<view class="header-content">
-				<uni-icons class="icons-back" type="arrowleft" color="#565656" size="22" @tap="goBack"></uni-icons>
+				<uni-icons :style="[{Top: hasNotchInScreen ? '110upx': '66upx'}]" class="icons-back" type="arrowleft" color="#565656" size="22" @tap="goBack"></uni-icons>
 				<view class="header-title">推荐关注</view>
 			</view>
 		</view>
@@ -45,9 +45,15 @@ export default {
 	position: sticky;
 	top: 0;
 	z-index: 99;
-	padding: 44px 20px 0 20px;
+	/*#ifdef MP-WEIXIN*/
+		padding: 44upx 20px 0 20px;
+	/*#endif*/
+	/*#ifdef APP-PLUS*/
+		padding: 88upx 20px 0 20px;
+	/*#endif*/
+	border-bottom: 2upx solid #f3f3f3;
 	.header-content {
-		height: 45px;
+		height: 90upx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -60,10 +66,9 @@ export default {
 		}
 		.icons-back {
 			position: fixed;
-			top: 55px;
-			left: 16px;
+			top: 66upx;
+			left: 32upx;
 		}
 	}
 }
-
 </style>
