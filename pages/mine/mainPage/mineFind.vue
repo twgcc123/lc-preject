@@ -1,14 +1,14 @@
 <template>
 	<view class="mine-find">
 		<!-- 头部  :style="[{paddingTop: hasNotchInScreen ? '88upx': '44upx'}]"-->
-		<view class="header">
+		<view class="header" :style="[{ paddingTop: hasNotchInScreen ? '88upx' : '44upx' }]">
 			<view class="header-content">
-				<uni-icons class="back-icons" @tap="goBack" type="arrowleft" color="#565656" size="22" ></uni-icons>
+				<uni-icons class="back-icons" @tap="goBack" type="arrowleft" color="#565656" size="22"></uni-icons>
 				<view class="header-title">我的收藏</view>
 			</view>
 		</view>
 		
-		<view class="menu">
+		<view class="menu" :style="[{Top: hasNotchInScreen ? '178upx' : '134upx' }]">
 			<view class="menu-item" v-for="(item,index) in tabList" :key="index" @click="handlerMenu(index)">
 				<text :class="['menu-text',activeTab==index ? 'menu-item-active':null]">{{item.title}}</text>
 			</view>
@@ -148,8 +148,13 @@
 	position: sticky;
 	top: 0;
 	z-index: 99;
-	background-color: #FFFFFF;
-	padding: 88upx 32upx 0 32upx;
+	background-color: #ffffff;
+	/*#ifdef MP-WEIXIN*/
+	padding: 44upx 40upx 0 40upx;
+	/*#endif*/
+	/*#ifdef APP-PLUS*/
+	padding: 88upx 40upx 0 40upx;
+	/*#endif*/
 	.header-content {
 		height: 90upx;
 		display: flex;
@@ -158,21 +163,22 @@
 		position: relative;
 		.header-title {
 			text-align: center;
-			color: #333333;
+			color: #000000;
 			font-size: 36upx;
 			font-weight: bold;
 			flex: 1;
 		}
-		.back-icons{
+		.back-icons {
 			position: absolute;
 			left: 0;
+			top: 22upx;
 		}
 	}
 }
 
 .menu{
 	position: sticky;
-	top:178upx;
+	top:134upx;
 	z-index: 9999;
 	height: 88upx;
 	text-align: center;

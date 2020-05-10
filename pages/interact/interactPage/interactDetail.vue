@@ -1,7 +1,7 @@
 <template>
 	<view class="interact-detail">
 		<!-- 头部 -->
-		<view class="header">
+		<view class="header" :style="[{paddingTop: hasNotchInScreen ? '88upx': '44upx'}]">
 			<view class="header-content">
 				<uni-icons class="icons-back" type="back" color="#ffffff" size="24" @tap="goBack"></uni-icons>
 				<view class="header-title">互动详情</view>
@@ -274,7 +274,12 @@
 		top: 0;
 		z-index: 99;
 		background-color: #6b6b6b;
-		padding: 44px 20px 0 20px;
+		/*#ifdef MP-WEIXIN*/
+			padding: 44upx 200upx 0 40upx;
+		/*#endif*/
+		/*#ifdef APP-PLUS*/
+			padding: 88upx 40upx 0 40upx;
+		/*#endif*/
 
 		.header-content {
 			height: 45px;

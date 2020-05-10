@@ -189,15 +189,18 @@
 		top: 0;
 		z-index: 99;
 		background-color: #FFFFFF;
-		padding: 44px 20px 0 20px;
-
+		/*#ifdef MP-WEIXIN*/
+			padding: 44upx 40upx 0 40upx;
+		/*#endif*/
+		/*#ifdef APP-PLUS*/
+			padding: 88upx 40upx 0 40upx;
+		/*#endif*/
 		.header-content {
 			height: 90upx;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			position: relative;
-
 			.header-title {
 				text-align: center;
 				color: #000000;
@@ -205,10 +208,10 @@
 				font-weight: bold;
 				flex: 1;
 			}
-
-			.back-icons {
+			.back-icons{
 				position: absolute;
-				left: -8upx;
+				left: 0;
+				top: 22upx;
 			}
 		}
 	}
