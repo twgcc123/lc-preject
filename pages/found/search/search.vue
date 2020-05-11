@@ -1,6 +1,6 @@
 <template>
 	<view class="search">
-		<view class="navbar" :style="[{paddingTop: hasNotchInScreen ? '44px': '20px'}]">
+		<view class="navbar" :style="[{paddingTop: hasNotchInScreen ? '88upx': '44upx'}]">
 			<view class="navbar-left" @click="pageTo()">
 				<uni-icons color="#f3f3f3" type="arrowleft" size="18"></uni-icons>
 			</view>
@@ -43,12 +43,10 @@
 </template>
 
 <script>
-	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniSearchBar from '@/components/uni-search-bar/uni-search-bar.vue'
 	import WucTab from '@/components/wuc-tab/wuc-tab.vue'
 	export default {
 		components:{
-			uniIcons,
 			uniSearchBar,
 			WucTab
 		},
@@ -151,6 +149,7 @@
 .content{
 	margin-top: 72upx;
 	padding: 0 40upx;
+	background-color: #151619;
 	.recent{
 		color: #EEEEEE;
 		font-size: 36upx;

@@ -5,8 +5,6 @@
 			<view class="haed">
 				<text class="cancel" @tap="pageTo('/pages/assistant/assistant')">取消</text>
 				<text class="title">修改活动</text>
-				<!-- 				<text class="title" v-if="this.dataType !==''">创建{{this.dataType}}</text>
-				<text class="title" v-else>创建活动</text> -->
 				<text class="complete">完成</text>
 			</view>
 		</view>
@@ -105,7 +103,7 @@
 			<view class="limit-list" style="border-top: none" @tap="pageTo('/pages/assistant/assistantPage/assistantCreateSexData')">
 				<view class="dcse">
 					<image class="reat-icons" src="/static/assistant/xingbie.svg" mode=""></image>
-					<text style="color: #666666;">不限队员性别</text>
+					<text style="color: #666666;">{{gender}}</text>
 				</view>
 				<uni-icons class="search-icon" type="arrowright" color="#ACACAC" size="18"></uni-icons>
 			</view>
@@ -114,7 +112,7 @@
 			<view class="limit-list" style="border-top: none" @tap="pageTo('/pages/assistant/assistantPage/assistantCreateYearData')">
 				<view class="dcse">
 					<image class="reat-icons" src="/static/assistant/nianfen.svg" mode=""></image>
-					<text style="color: #666666;">不限队员出生年份</text>
+					<text style="color: #666666;">{{birth}}</text>
 				</view>
 				<uni-icons class="search-icon" type="arrowright" color="#ACACAC" size="18"></uni-icons>
 			</view>
@@ -137,7 +135,7 @@
 			<view class="limit-list">
 				<view class="dcse">
 					<image class="reat-icons" src="/static/assistant/naoling.svg" mode=""></image>
-					<text style="color: #666666;">15分钟前，提醒负责助理</text>
+					<text style="color: #666666;">{{startTime}}，提醒负责助理</text>
 				</view>
 				<uni-icons class="search-icon" type="arrowright" color="#ACACAC" size="18"></uni-icons>
 			</view>
@@ -168,6 +166,16 @@
 				dataHouer:"",
 				// 获取当前时间
 				newValueTime:"",
+				// 性别选择
+				gender:"不限队员性别",
+				// 年份选择
+				birth:"不限队员出生年份",
+				// 优居助理选择
+				zhuli:"",
+				// 开始时间提醒
+				startTime:"15分钟前",
+				
+				
 			}
 		},
 		onShow() {
@@ -187,14 +195,34 @@
 		
 		updated() {},
 		
+		mounted() {
+			// 选择活动类型
+			uni.$on('HuoDongType', data => {
+				this.HuoDongdesc = { ...data };
+				console.log(this.HuoDongdesc);
+			});
+			// 性别选择
+			uni.$on('sexType', data => {
+				this.gender = data;
+				console.log(this.gender);
+			});
+			// 互动类型
+			let _this = this;
+			uni.getStorage({
+				key: 'huoDongdataType',
+				success: function(res) {
+					let dataTypes = res.data.value;
+					_this.hudongdataTypes = dataTypes;
+				}
+			});
+		},
+		
 		methods: {
-			
 			pageTo(url) {
 				uni.navigateTo({
 					url: url
 				})
 			},
-			
 
 			// 弹出时间层
 			deadlineTime(){

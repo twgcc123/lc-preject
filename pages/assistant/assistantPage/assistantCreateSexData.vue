@@ -29,12 +29,7 @@
 </template>
 
 <script>
-	import uniIcons from '@/components/uni-icons/uni-icons.vue';
-
 	export default {
-		components: {
-			uniIcons,
-		},
 		props: {
 
 		},
@@ -82,9 +77,7 @@
 						this.current = i;
 						let sexType = this.items[i].gender
 						uni.$emit("sexType",sexType)
-						uni.navigateBack({
-							url: "/pages/assistant/assistantPage/assistantCreateHudongDetail"
-						})
+						uni.navigateBack({})
 						break;
 					}
 				}
