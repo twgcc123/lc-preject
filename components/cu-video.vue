@@ -17,6 +17,7 @@
 					class="video"
 					:poster="item.video_image"
 					@timeupdate="timeupdate"
+					:initial-time="timePaly"
 				>
 						<!-- preload -->
 					<!-- :poster="item.video_image" -->
@@ -35,11 +36,11 @@
 					<cover-view class="view-left-dcses">
 						<cover-view class="dcses-left"> 
 							<cover-image class="dcses-left-img" src="../static/youju/location.png" mode=""></cover-image>
-							<cover-view class="word">潮州</cover-view>
+							<cover-view class="word">{{item.city}}</cover-view>
 						</cover-view>
 						<cover-view class="dcses-right"> 
 							<cover-image class="dcses-right-img" src="../static/youju/jing.png" mode=""></cover-image>
-							<cover-view class="word">四季如春</cover-view>
+							<cover-view class="word">{{item.keyword}}</cover-view>
 						</cover-view>
 					</cover-view>
 				</cover-view>
@@ -56,14 +57,14 @@
 					style="position:relative;top:-20upx;"
 					:src="item.check ? '../static/youju/aixin.png' : '../static/youju/aixin_red.png' " 
 					class="img-left"  @click.stop ="tapLove(item)"></cover-image>
-					<cover-view class="right-text">2.3w</cover-view>
+					<cover-view class="right-text">{{item.comment_num}}</cover-view>
 					<cover-image src="/static/youju/pinglun.png" 
 					style="height: 80upx;" class="img-left" @click.stop="tapMsg"></cover-image>
-					<cover-view class="right-text">999</cover-view>
+					<cover-view class="right-text">{{item.transpond_num}}</cover-view>
 					
 					<cover-image src="../static/youju/zhuanfa.png" 
-					style="height: 76upx;" class="img-left" @click.stop="tapShare"></cover-image>
-					<cover-view class="right-text">369</cover-view>
+					style="height: 76upx;" class="img-left" @click.stop="tapShare($event,itme)"></cover-image>
+					<cover-view class="right-text">{{item.transpond_num}}</cover-view>
 				</cover-view>
 			</swiper-item>
 		</swiper>
@@ -74,6 +75,7 @@
 </template>
 <script>
 	import comComment from '@/pages/found/tuijian/comment.vue'
+	import appShare, { closeShare } from '@/js_sdk/zhouWei-APPshare/utils/share.js'
 	let play = false;
 export default {
 	components: {
@@ -82,7 +84,11 @@ export default {
 	props: {
 		video_list: {
 			type: Array,
-			default: {}
+			default: () => {}
+		},
+		timePaly:{
+			type:Number,
+			default:() => {}
 		}
 	},
 	data() {
@@ -94,17 +100,23 @@ export default {
 			play: false,
 			show_play:false,
 			current_index: 0,
-			show_comment: false
+			show_comment: false,
+			timepaly:0
 		};
 	},
 	created() {
 		setTimeout(()=>{
 			play = true;
-			this.videoPlay();
+			this.videoPlay();	
 		},1000)
+	},
+	mounted() {
+		this.videoCtx = uni.createVideoContext(`video_${item.id}`,this)
 	},
 	methods: {
 		timeupdate(event) {
+			uni.setStorageSync('time',event.detail.currentTime);
+			// console.log('77777',uni.getStorageSync('time'))
 			let t_w = parseInt(this.width);
 			this.duration = event.detail.duration;
 			this.time = event.detail.currentTime;
@@ -170,8 +182,20 @@ export default {
 			console.log(5, e);
 			this.show_comment = true
 		},
-		tapShare(e) {
-			console.log(6, e);
+		tapShare(e,item) {
+			let shareData = {
+			shareUrl:"https://kemean.com/",
+			shareTitle:item.title,
+			shareContent:item.desc,
+			shareImg:item.video_image,
+			}; 
+				shareData.appId = "wx27f2cebdaff69dec";
+				shareData.appPath = "pages/found/found";
+				shareData.appWebUrl = "https://kemean.com/";
+				shareData.type = 5;
+			appShare(shareData,res => {
+				console.log("分享成功回调",res);
+			});
 		},
 		tapLove(e) {
 			// console.log(this.video_list[this.current_index].check)

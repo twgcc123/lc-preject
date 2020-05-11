@@ -3,9 +3,9 @@
 		<index-header bgColor="bg-index-header" fixed="false" index="1" @headerSwitch="headerSwitch"></index-header>
 		<view v-if="navIndex == 1" class="list">
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scroll="scroll">
-				<view class="list-item" v-for="(item, index) in hotelList" @click="goDetail(index)" :key="index">
+				<view class="list-item" v-for="(item, index) in hotelList" @click="goDetail(item.id)" :key="index">
 					<view class="list-item-left">
-						<image class="list-item-left-video" src="../../static/youju/f3.jpg"></image>
+						<image class="list-item-left-video"  :src="item.video_image"></image>
 						<image class="list-item-left-play" src="../../static/youju/play.svg"></image>
 					</view>
 					<!-- @click="pageTo('/pages/found/youju/youju')" -->
@@ -15,51 +15,19 @@
 							<uni-rate class="rote-appraise" size="13" :value="item.appraise" disabled></uni-rate>
 							<text class="list-item-right-appraise-rote">{{ item.appraise }}分</text>
 						</view>
-						<view class="list-item-right-tip">{{ item.brief }}</view>
-						<view class="list-item-right-address" v-show="item.id == 1">台湾 日月潭</view>
-						<view class="list-item-right-address" v-show="item.id == 2">杭州西湖，桂林</view>
-						<view class="list-item-right-address" v-show="item.id == 3">广州白山，深圳欢乐谷</view>
-						<view class="list-item-right-address" v-show="item.id == 4">深圳西街，上海虎门</view>
-						<view class="list-item-right-address" v-show="item.id == 5">日月潭，西安</view>
+						<view class="list-item-right-tip">
+							<text class="list-item-right-tip-text" v-for="(tag,i) in item.slogan" :key="i">{{ tag}}</text>
+						</view>
+						<text class="list-item-right-address">台湾 日月潭</text>
 						<view class="list-item-right-scenery">
 							<!-- <image class="" src="../../static/youju/play.svg"></image>暂无 -->
 							<view class="scenery-tip">景</view>
-							<view class="scenery-dcse">日月潭</view>
+							<view class="scenery-dcse">{{item.community_tag[0]}}</view>
 						</view>
 						<view class="list-item-right-warm">
 							<!-- <image class="" src="../../static/youju/play.svg"></image>暂无 -->
 							<view class="scenery-tip">温</view>
-							<view class="scenery-dcse">温度特别温暖</view>
-						</view>
-					</view>
-				</view>
-				<view class="list-item" v-for="(item, index) in hotelList" @click="goDetail(index)" :key="index">
-					<view class="list-item-left">
-						<image class="list-item-left-video" src="../../static/youju/f4.jpg">
-							<image class="list-item-left-play" src="../../static/youju/play.svg"></image>
-					</view>
-					<!-- @click="pageTo('/pages/found/youju/youju')" -->
-					<view class="list-item-right">
-						<view class="list-item-right-title">{{ item.name }}</view>
-						<view class="list-item-right-appraise">
-							<uni-rate class="rote-appraise" size="13" :value="item.appraise" disabled></uni-rate>
-							<text class="list-item-right-appraise-rote">{{ item.appraise }}分</text>
-						</view>
-						<view class="list-item-right-tip">{{ item.brief }}</view>
-						<view class="list-item-right-address" v-show="item.id == 1">台湾 日月潭</view>
-						<view class="list-item-right-address" v-show="item.id == 2">杭州西湖，桂林</view>
-						<view class="list-item-right-address" v-show="item.id == 3">广州白山，深圳欢乐谷</view>
-						<view class="list-item-right-address" v-show="item.id == 4">深圳西街，上海虎门</view>
-						<view class="list-item-right-address" v-show="item.id == 5">日月潭，西安</view>
-						<view class="list-item-right-scenery">
-							<!-- <image class="" src="../../static/youju/play.svg"></image>暂无 -->
-							<view class="scenery-tip">景</view>
-							<view class="scenery-dcse">日月潭</view>
-						</view>
-						<view class="list-item-right-warm">
-							<!-- <image class="" src="../../static/youju/play.svg"></image>暂无 -->
-							<view class="scenery-tip">温</view>
-							<view class="scenery-dcse">温度特别温暖</view>
+							<view class="scenery-dcse">{{item.community_tag[1]}}</view>
 						</view>
 					</view>
 				</view>
@@ -67,7 +35,7 @@
 		</view>
 		<!-- 视频组件 -->
 		<view v-if="navIndex == 2" class="index">
-			<cu-video class="video" :video_list="videoList" :currentVideo="currentVideo" @changeVideo="changeVideo" />
+			<cu-video class="video" :timePaly=timePaly :video_list="videoList" :currentVideo="currentVideo" @changeVideo="changeVideo" />
 		</view>
 		<view v-if="navIndex == 3" style="width: 750upx;height: 100vh;overflow: hidden;">
 			<image style="width: 100%; height: 100%;" src="../../static/baiying/baiying.jpg"></image>
@@ -89,94 +57,7 @@
 			return {
 				navIndex: 2,
 				hotelList:[
-					{	
-						id:1,
-						image:"../../static/youju/s1-1.jpg",
-						name:"福田莲花城市",
-						appraise:5,
-						community_tag:[
-							{
-								id:1,
-								name:"疗养胜地"
-							},
-							{
-								id:2,
-								name:"治愈系酒店"
-							},						{
-								id:3,
-								name:"网红酒店"
-							}
-						],
-						address:"台湾 日月台",
-						scenery:"日月潭",
-						warm:"温度特别温暖"
-					},
-					{
-						id:2,
-						image:"../../static/youju/s2-4.jpg",
-						name:"龙岗鸿荣源公园大地",
-						appraise:5,
-						community_tag:[
-							{
-								id:1,
-								name:"公园社区"
-							},
-							{
-								id:2,
-								name:"网红居住地"
-							},						{
-								id:3,
-								name:"酒店试居住"
-							}
-						],
-						address:"深圳 大地",
-						scenery:"大地公园",
-						warm:"温度特别温暖"
-					},
-					{
-						id:3,
-						image:"../../static/youju/s3-4.jpg",
-						name:"龙华金苹果社区",
-						appraise:5,
-						community_tag:[
-							{
-								id:1,
-								name:"疗养胜地"
-							},
-							{
-								id:2,
-								name:"贵族社区"
-							},						{
-								id:3,
-								name:"金苹果社区"
-							}
-						],
-						address:"台湾 日月台",
-						scenery:"日月潭",
-						warm:"温度特别温暖"
-					},
-					{
-						id:4,
-						image:"../../static/youju/s4-1.jpg",
-						name:"南山万象城社区",
-						appraise:5,
-						community_tag:[
-							{
-								id:1,
-								name:"居住圣地"
-							},
-							{
-								id:2,
-								name:"景色社区"
-							},						{
-								id:3,
-								name:"网红居住地"
-							}
-						],
-						address:"台湾 日月台",
-						scenery:"日月潭",
-						warm:"温度特别温暖"
-					},
+				
 				],
 				scrollTop: 0, // 滚动
 				videoList: [],
@@ -186,10 +67,11 @@
 				// 时间戳
 				timestamp:'',
 				signature:'',
+				timePaly:0
 			};
 		},
 		onLoad() {
-			// this.getHotelList();
+			this.getOptimalList();
 			let timestamp = (new Date()).getTime()
 			let appid = 'bmdh00ecfbc943a124151'
 			let str= 'timestamp=' + timestamp + '&page=1' + '&type=1' + '&key=' + appid
@@ -213,31 +95,35 @@
 			/**
 			 * @desc 获取优居列表
 			 */
-			// async getHotelList() {
-			// 	console.log('请求接口');
-			// 	let res = await this.$http.request({
-			// 		method: 'get',
-			// 		url: '/api/Community/getList'
-			// 	});
-			// 	if (res.errno == 0) {
-			// 		// console.log(res)
-			// 		let hotelList = res.data.list;
-			// 		this.hotelList = hotelList;
-			// 		console.log(this.hotelList);
-			// 	}
-			// 	//  else {
-			// 	// 	uni.showToast({
-			// 	// 		title: 'res.errstr',
-			// 	// 		duration: 5000,
-			// 	// 		icon: 'loading'
-			// 	// 	});
-			// 	// }
-			// },
+			async getOptimalList() {
+				let param = this.$helper.setConfig('&page=' + 1);
+				let res = await this.$http.request({
+					method: 'post',
+					url: '/index/Lists/community_list',
+					data: {
+						signature: param.signature,
+						timestamp: param.timestamp,
+						page: '1',
+					}
+				});
+				 console.log('77777',res)
+				if(res.state == 10000){
+					
+				   this.hotelList=res.data
+				}
+				//  else {
+				// 	uni.showToast({
+				// 		title: 'res.errstr',
+				// 		duration: 5000,
+				// 		icon: 'loading'
+				// 	});
+				// }
+			},
 
 			goDetail(index) {
-				console.log(index); // id = 1
+				console.log('66666',index); // id = 1
 				uni.navigateTo({
-					url: `/pages/found/youju/youju?id=${index + 1}`
+					url: `/pages/found/youju/youju?id=${index}`
 				});
 			},
 
@@ -304,7 +190,7 @@
 				if (res.state == 10000) {
 					console.log(res);
 					let videoList = res.data;
-					console.log(videoList)
+					console.log('666666666',videoList)
 					this.videoList = videoList;
 				}
 				// else {
@@ -321,6 +207,11 @@
 			 * @desc 顶部导航栏切换
 			 */
 			headerSwitch(val) {
+				if(val==2){
+					if(uni.getStorageSync('time')){
+						 this.timePaly=uni.getStorageSync('time')
+					}
+				}
 				val == 0 ? this.pageTo('/pages/found/search/search') : (this.navIndex = val);
 			},
 			/**

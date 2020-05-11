@@ -19,11 +19,11 @@
 				 </view>
 				<view class="uni-form-item uni-column">
 					<view class="idnumber">身份证号</view>
-					<input class="uni-input" @confirm="idnumberF" confirm-type="done" type="idcard" placeholder="请输入身份证号" />
+					<input class="uni-input" @input="idnumberF" confirm-type="done" type="idcard" placeholder="请输入身份证号" />
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="idname">证件中的姓名</view>
-					<input class="uni-input" @confirm="idnameF" confirm-type="done" placeholder="与身份证件姓名一致" />
+					<input class="uni-input" @input="idnameF" confirm-type="done" placeholder="与身份证件姓名一致" />
 				</view>
 				<view class="submit" @tap="saveinfo">保存</view>
 					<!-- <button form-type="submit" class="submit">保存</button> -->
@@ -41,10 +41,11 @@ export default{
 		return{
 			title: '证件类型',
 			index:0,
-			array: ['身份证', '户口簿', '驾驶证', '护照','其他'],
+			array: ['身份证',],
 			idtype:"身份证",
 			idnumber:"",
 			idname:"",
+			xgID:null
 		}
 	},
 	methods:{
@@ -55,47 +56,44 @@ export default{
 			    case types === "0":
 			        this.idtype = "身份证";
 			        break;
-			    case types === "1":
-			        this.idtype = "户口簿";
-			        break;
-			    case types === "2":
-			         this.idtype = "驾驶证";
-			        break;
-				case types === "3":
-				     this.idtype = "护照";
-				    break;	
-			    default:
-			        this.idtype = "其他";
-			        break;
 			}
 		},
 		idnumberF(event){
 			this.idnumber = event.detail.value
+
 		},
 		idnameF(event){
 			this.idname = event.detail.value
+
 		},
-		saveinfo(){
-			if (this.idtype && this.idnumber != '' && this.idname != '') {
-				// const date = new Date();
-				let info = {
-					"id":new Date(),
-					"idtype": this.idtype,
-					"name":this.idname,
-					"idcard":this.idnumber,
-					"status":true,
-				}
-				uni.setStorage({
-				    key: 'storage_info',
-				    data: info,
-				    success: function () {
-				        console.log('success');
-						uni.showLoading({title: '加载中'})
-				    },
-				});	
-				uni.navigateTo({
-					url: "/pages/found/youju/roomDetailAddGuest"
-				})
+		async saveinfo(){
+			if (this.idnumber != '' && this.idname != '') {
+							let user=uni.getStorageSync('USERINFO')
+							let token=user.token
+						    let param = this.$helper.setConfig('&token=' + token + '&id_number=' + this.idnumber+'&type=1'+'&username='+this.idname);
+							let res = await this.$http.request({
+								method: 'post',
+								url: '/index/Lodger/set_lodger',
+								data: {
+									signature: param.signature,
+									timestamp: param.timestamp,
+									token:token,
+									id_number:this.idnumber,
+									type: '1',
+									username:this.idname,
+								
+								}
+							});
+							console.log(res)
+							if(res.state == 10000){
+								
+								  // uni.navigateTo({
+								  // 	url: "/pages/found/youju/roomDetailAddGuest"
+								  // })
+							
+						}
+					
+				
 			}
 		}
 	},
@@ -103,7 +101,7 @@ export default{
 	  
 	},
     onLoad () {
-   
+ 
     }
 }
 </script>

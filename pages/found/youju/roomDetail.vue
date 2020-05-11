@@ -1,21 +1,21 @@
 <template>
 <view class="detail">
 	<view class="room-detail">
-		<view class="header-title">订单详情</view>
-		<view class="detail-item" v-for="(item,index) in detailItem" :key="index">
+		<view class="header">订单详情</view>
+		<view class="detail-item" >
 			<view class="img">
-				<image :src="item.img_url" mode=""></image>
+				<image :src="detailItem.home_image" mode=""></image>
 			</view>
 			<view class="detail-item-text">
 				<view class="detail-item-text-info">
-					<view class="text-title">整住：{{item.room}}</view>
+					<view class="text-title">整住：{{detailItem.type}}</view>
 					<view class="text-money">
-						<text class="text-low-money" ref="price">￥{{item.low_price}}</text><text class="text-height-money">￥{{item.hight_price}}</text><text class="night"> / 晚</text>
+						<text class="text-low-money" ref="price">￥{{detailItem.sales_price}}</text><text class="text-height-money">￥{{detailItem.original_price}}</text><text class="night">/ 晚</text>
 					</view>
-				</view>
+				</view> 
 				<view class="detail-item-pj">
-					<uni-rate size="12" :value="rote" disabled></uni-rate>
-					<text class="rote">{{ item.rote }}星评价</text>
+					<uni-rate size="12" :value="appraise" disabled></uni-rate>
+					<text class="rote">{{ appraise }}星评价</text>
 				</view>
 			</view>
 		</view>
@@ -23,21 +23,21 @@
 		<view class="detail-time">
 			<view class="detail-time-item" style="text-align: left;">
 				<view class="title">入住日期</view>
-				<view class="into" v-for="item in detailData" :key="item.rid"> {{item.into}} </view>
+				<view class="into" > {{choiceDate[0].re}} </view>
 			</view>
 			<view class="detail-time-item">
 				<view class="title">退房日期</view>
-				<view class="out" v-for="item in detailData" :key="item.rid"> {{item.out}} </view>
+				<view class="out" > {{choiceDate[1].re}} </view>
 			</view>
 			<view class="detail-time-item" style="text-align: right;">
 				<view class="title">入住人数</view>
-				<view class="num" v-for="item in detailData" :key="item.rid"> {{item.num}} 位</view>
+				<view class="num" > 2 位</view>
 			</view>
 		</view>
 		<view class="line-throug"></view>
 		<view class="detail-money">
-			<text class="detail-money-ren">总额（人民币）</text>
-			<text class="detail-money-tall">￥{{totalMoney}}</text>
+			<text>总额（人民币）</text>
+			<text>￥{{detailItem.sales_price}}</text>
 		</view>
 		<view class="line-throug"></view>
 		<view class="detail-info">
@@ -49,8 +49,8 @@
 				<view class="" v-for="(item,index) in userinfo" :key="index" v-if="usnerinfo.length != 0">
 					<view class="user-item">
 						<!-- <text class="idtype">{{item.idtype}}</text> • -->
-						<text class="name">{{item.name}}</text>
-						<text class="idcard">{{item.idcard | hideIdcard}}</text>
+						<text class="name">{{item.id_number}}</text>
+						<text class="idcard">{{item.idcard}}</text>
 					</view>
 				</view>
 				<view class="" v-else>添加新的房客信息</view>
@@ -79,26 +79,15 @@
 			uniRate,
 			uniIcons
 		},
-		props:{
-			rote: {
-				type: String,
-				default: '4'
-			}
-		},
+	
 		data() {
 			return {
 				// 计算总价钱
 				totalMoney:0,
 				userinfo:[],
+				choiceDate:"",//入住时间
 				detailItem:[
-					{
-						"rid":"01",
-						"img_url":"../../../static/youju/fangjian.jpg",
-						"room":"1室1厅1阳1卫1床",
-						"low_price":"180",
-						"hight_price":"200",
-						"rote":"4",
-					},
+					
 				],
 				detailDcse:[
 					{	
@@ -121,16 +110,34 @@
 					}
 				],
 				detailData:[
-					{
-						"rid":"01",
-						"into":"12月1日",
-						"out":"12月1日",
-						"num":"2",
-					}
-				]
+				
+				],
+				appraise:uni.getStorageSync('appraise')
 			};
 		},
 		methods:{
+			//获取订单详情
+					async getPayList(id){
+						let user=uni.getStorageSync('USERINFO')
+						let token=user.token
+					    let param = this.$helper.setConfig('&token=' + token + '&id=' + id);
+						console.log(token,id,param.signature,param.timestamp)
+						let res = await this.$http.request({
+							method: 'post',
+							url: '/index/Confirm/order_particulars',
+							data: {
+								signature: param.signature,
+								timestamp: param.timestamp,
+								token:token,
+								id: id
+							}
+						});
+						if(res.state == 10000){
+						 console.log('888888',res)
+						 this.detailItem=res.data.house
+						 this.userinfo=res.data.lodger
+					}
+				},
 			 totalMoneys() {
 				 var totalMoney = 0
 				  this.detailItem.forEach((item) => {
@@ -169,7 +176,9 @@
 			// })  
 		},
 		
-		onLoad() {
+		onLoad :function(option) {
+			let did = (option.id = '' ? '1' : option.id);
+			this.getPayList(did);
 			setTimeout(function () {
 				uni.hideLoading();
 			}, 300);
@@ -180,6 +189,16 @@
 					// console.log(res.data);
 					let userinfo = res.data
 					that.userinfo = userinfo
+				}
+			});
+			//获取入住离店日期
+			uni.getStorage({
+				key: 'timeDate',
+				success: function (res) {
+					// console.log(res.data);
+					that.choiceDate=res.data
+					console.log('7777',that.choiceDate)
+					
 				}
 			});
 		} 

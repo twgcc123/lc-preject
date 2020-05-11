@@ -4,32 +4,33 @@
 		<view id="moments">
 			<view class="moments__post" v-for="(post, index) in posts" :key="index" :id="'post-' + index">
 				<view class="post-left" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')">
-					<image class="post_header" :src="post.header_image"></image>
+					<image class="post_header" :src="post.image_app"></image>
 				</view>
 				<view class="post_right">
 					<view class="post_title">
-						<text class="post-username">{{ post.username }}</text>
-						<view class="follow" @tap="openPopup">
-							<text>关注</text>
+						<text class="post-username">{{ post.nickname }}</text>
+						<view class="follow" @tap="openPopup(post.attention)">
+							<text>{{ post.attention === 0 ? '未关注' :(post.attention === 1?'已关注':'相互关注') }}</text>
 							<uni-icons color="#999999" type="arrowdown" size="14"></uni-icons>
 						</view>
 					</view>
 					<block v-if="post.type == 1">
 						<!--  -->
 						<view class="heart-sign" @click="pageTo('/pages/dynamic/heartSign')">
-							<image class="heart-sign-img" :src="post.content.images[0]"></image>
-							<view id="paragraph" class="heart-sign-text">{{ post.content.text }}</view>
+							<!-- <image class="heart-sign-img" :src="post.content.images[0]"></image> -->
+							<image class="heart-sign-img" src="/static/youju/s1-2.jpg"></image>
+							<view id="paragraph" class="heart-sign-text">{{ post.content.text }}你在凝望深渊时，深渊也在凝望你</view>
 						</view>
 					</block>
 					<block v-else>
-						<view id="paragraph" class="paragraph">{{ post.content.text }}</view>
+						<view id="paragraph" class="paragraph">{{ post.title }}</view>
 						<!-- 相册 -->
 						<view class="thumbnails">
 							<view 
-								:class="post.content.images.length === 1 ? 'my-gallery' : 'thumbnail'" 
-								v-for="(image, index_images) in post.content.images" 
+								:class="post.img_list.length === 1 ? 'my-gallery' : 'thumbnail'" 
+								v-for="(image, index_images) in post.img_list" 
 								:key="index_images" 
-								@tap="clickPic(post.content.images,index_images)"
+								@tap="clickPic(post.img_list,index_images)"
 							>
 								<image class="gallery_img" lazy-load mode="aspectFill" :src="image" :data-src="image"></image>
 							</view>
@@ -37,21 +38,21 @@
 						<!-- 视频 -->
 						<view class="thumbnails" v-if="post.content.video_url" @click="pageTo('/pages/found/youjuvedeo/youjuVideo?hideAvatar=true')">
 							<view class="my-gallery">
-								<image class="gallery_img" lazy-load mode="aspectFill" :src="post.content.video_image" :data-src="image"></image>
-								<image class="play_img" lazy-load mode="aspectFill" src="/static/youju/play.svg" :data-src="image"></image>
+								<image class="gallery_img" lazy-load mode="aspectFill" :src="post.video_url" :data-src="image"></image>
+								<image class="play_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image>
 							</view>
 						</view>
 					</block>
 					<view @tap="pageTo(`/pages/found/youju/youju?id=${index + 1}`)" class="address">
-						<text>{{ post.aear }}</text>
+						<text>{{ post.aear }}推荐心签</text>
 						<text v-if ="post.aear" class="yuans"></text>
 						<image v-if="post.type == 3" class="location" src="/static/dongtai/location.svg"></image>
-						<text>{{ post.address }}</text>
+						<text>{{ post.address }}某心居</text>
 					</view>
 					
 					<!-- 资料条 -->
 					<view class="toolbar">
-						<view class="timestamp">{{ post.timestamp }}</view>
+						<view class="timestamp">{{ post.add_time }}</view>
 						<view v-if="post.type == 3" class="right-detail" @click="pageTo('/pages/dynamic/eventDetail')">
 							查看详情
 							<uni-icons color="#333333" type="forward" size="12"></uni-icons>
@@ -61,7 +62,7 @@
 							<uni-icons color="#777" type="more-filled" size="22"></uni-icons>
 						</view>
 						
-						<view class="right-window" v-if="post.show_window">
+						<view class="right-window" >
 							<view class="like" @tap="like(index)">
 								<!-- <image src="../../static/dongtai/like.svg"></image> -->
 								<view class="" style="margin: 0 auto;">
@@ -109,7 +110,7 @@
 					<view class="popup-item popup-title">选择操作</view>
 					<view class="popup-item bottom-line" @tap="closePopup">投诉/举报</view>
 					<view class="popup-item bottom-line" @tap="closePopup">不看TA的动态</view>
-					<view class="popup-item popup-unfollow" @tap="closePopup">取消关注</view>
+					<view class="popup-item popup-unfollow" @tap="closePopup">{{attention == 0 ? '未关注' :(attention == 1?'已关注':'相互关注') }}</view>
 					<view class="popup-item popup-cancle" @tap="closePopup">取消</view>
 				</view>
 			</uni-popup>
@@ -119,7 +120,7 @@
 
 <script>
 import chatInput from '@/components/im-chat/chatinput.vue'; //input框
-import postData from '@/utils/index.post.data.js'; //朋友圈数据
+// import postData from '@/utils/index.post.data.js'; //朋友圈数据
 import uniPopup from '@/components/uni-popup/uni-popup.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
 export default {
@@ -130,7 +131,7 @@ export default {
 	},
 	data() {
 		return {
-			posts: postData, //模拟数据
+			posts:[] , //模拟数据
 			user_id: 4,
 			username: '小happy',
 
@@ -148,7 +149,8 @@ export default {
 
 			loadMoreText: '加载中...',
 			showLoadMore: false,
-			currentPost: 0
+			currentPost: 0,
+			attention:0
 		};
 	},
 	onLoad() {
@@ -160,6 +162,7 @@ export default {
 			}
 		});
 		uni.startPullDownRefresh();
+		this.getDynamicList();
 	},
 	onShow() {
 		uni.onWindowResize(res => {
@@ -191,15 +194,97 @@ export default {
 		}, 1000);
 	},
 	methods: {
+		//获取动态列表
+				async getDynamicList(id){
+					let param = this.$helper.setConfig('&page=' + 1);
+					console.log(param.signature,param.timestamp)
+					let res = await this.$http.request({
+						method: 'post',
+						url: '/index/Lists/dynamic_state_list',
+						data: {
+							signature: param.signature,
+							timestamp: param.timestamp,
+							page: 1,
+						}
+					});
+					if(res.state == 10000){
+				      console.log(res)
+					  this.posts=res.data
+					  this.posts.forEach(item=>{
+						  item.add_time=this.getFormattedTimeString(item.add_time)
+					  })
+					
+				}
+			},
 		clickPic(imgList,index) {
 			uni.setStorageSync("currentImg",imgList);
 			uni.setStorageSync("currentImgIndex",index);
 			this.pageTo('/pages/dynamic/imgPreview');
 		},
+		//时间转换
+		 getFormattedTimeString(timestamp) {
+		        // 补全为13位
+		        var arrTimestamp = (timestamp + '').split('');
+		        for (var start = 0; start < 13; start++) {
+		            if (!arrTimestamp[start]) {
+		                arrTimestamp[start] = '0';
+		            }
+		        }
+		        timestamp = arrTimestamp.join('') * 1;
+		     
+		        var minute = 1000 * 60;
+		        var hour = minute * 60;
+		        var day = hour * 24;
+		        var halfamonth = day * 15;
+		        var month = day * 30;
+		        var now = new Date().getTime();
+		        var diffValue = now - timestamp;
+		     
+		        // 如果本地时间反而小于变量时间
+		        if (diffValue < 0) {
+		            return '不久前';
+		        }
+		     
+		        // 计算差异时间的量级
+		        var monthC = diffValue / month;
+		        var weekC = diffValue / (7 * day);
+		        var dayC = diffValue / day;
+		        var hourC = diffValue / hour;
+		        var minC = diffValue / minute;
+		     
+		        // 数值补0方法
+		        var zero = function (value) {
+		            if (value < 10) {
+		                return '0' + value;
+		            }
+		            return value;
+		        };
+		     
+		        // 使用
+		        if (monthC > 12) {
+		            // 超过1年，直接显示年月日
+		            return (function () {
+		                var date = new Date(timestamp);
+		                return date.getFullYear() + '年' + zero(date.getMonth() + 1) + '月' + zero(date.getDate()) + '日';
+		            })();
+		        } else if (monthC >= 1) {
+		            return parseInt(monthC) + "月前";
+		        } else if (weekC >= 1) {
+		            return parseInt(weekC) + "周前";
+		        } else if (dayC >= 1) {
+		            return parseInt(dayC) + "天前";
+		        } else if (hourC >= 1) {
+		            return parseInt(hourC) + "小时前";
+		        } else if (minC >= 1) {
+		            return parseInt(minC) + "分钟前";
+		        }
+		        return '刚刚';
+		},
 		/**
 		 * @desc 打开弹窗
 		 */
-		openPopup() {
+		openPopup(attention) {
+			this.attention=attention
 			this.$refs.popup.open();
 		},
 		/**

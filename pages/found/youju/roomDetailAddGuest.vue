@@ -23,8 +23,8 @@
 					<view class="item" v-for="(item,index) in gusstInfo" :key="index">
 						<image class="check-img" @tap="checked(item)" :src="item.status == true ? '/static/youju/gou4.svg':'/static/youju/gou3.svg'"></image>
 						<view class="info">
-							<view class="name">{{item.name}}</view>
-							<view class="idcard">{{item.idtype}} • {{item.idcard | hideIdcard}} </view>
+							<view class="name">{{item.username}}</view>
+							<view class="idcard">{{item.type}} • {{item.id_number }} </view>
 						</view>
 						<view class="edit">
 							<uni-icons type="arrowright" color="#cccccc" size="18"></uni-icons>
@@ -82,6 +82,27 @@ export default {
 		};
 	},
 	methods:{
+		//添加乘客
+				async addPassengers(id){
+					let param = this.$helper.setConfig('&id=' + id);
+					console.log(param.signature,param.timestamp)
+					let res = await this.$http.request({
+						method: 'post',
+						url: '/index/Community/get_house_particulars',
+						header: {
+						'content-type': 'application/json'
+						},
+						data: {
+							signature: param.signature,
+							timestamp: param.timestamp,
+							id: id,
+						}
+					});
+					if(res.state == 10000){
+					
+					
+				}
+			},
 		upper: function(e) {
 			// console.log(e)
 		},
@@ -158,11 +179,24 @@ export default {
 	onReady() {
 		
 	},
-	onLoad() {
+	onLoad(option) {
+		console.log('88888',option)
 		setTimeout(function () {
 		    uni.hideLoading();
 		}, 300);
 		var that = this
+		uni.getStorage({
+			key: 'tenantInformation',
+			success: function (res) {
+				console.log(res);
+				that.gusstInfo=res.data.lodger
+				that.gusstInfo.forEach((item)=>{
+					item.status==false
+				})
+				
+				
+			}
+		});
 		uni.getStorage({
 		    key: 'storage_info',
 		    success: function (res) {
@@ -171,6 +205,7 @@ export default {
 				that.gusstInfo.push(infos)
 		    }
 		});
+	
 	}
 }
 </script>

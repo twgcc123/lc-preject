@@ -32,8 +32,8 @@
 			console.log('App Launch')
 			
 			// uni.onTabBarMidButtonTap(()=>{  
-			// 	console.log('11111') 
-			// 	 Vue.prototype.StatusBar
+			// 	// console.log('11111')  
+				
 			// });  
 			
 			// #ifndef MP-WEIXIN
