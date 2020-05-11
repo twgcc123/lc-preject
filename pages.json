@@ -373,7 +373,14 @@
 			"path": "pages/mine/mainPage/mineUsedInformation", // 常用信息
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "常用信息"
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineUsedInformationAddInfo", // 常用信息
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
 			}
 		},
 		{

@@ -88,7 +88,6 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-
 			.search {
 				flex: 1;
 				height: 90upx;

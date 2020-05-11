@@ -102,7 +102,7 @@
 					<view class="dcse">卡卷</view>
 					<text class="txt">会员卡优惠券</text>
 				</view>
-				<view class="s2" @tap="goDetail('/pages/found/youju/roomDetailAddGuest')">
+				<view class="s2" @tap="goDetail('/pages/mine/mainPage/mineUsedInformation')">
 					<image src="/static/nime/mineinfo.svg" mode=""></image>
 					<view class="dcse">常用信息</view>
 					<text class="txt">入住人、地址</text>

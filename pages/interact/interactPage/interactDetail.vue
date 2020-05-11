@@ -88,10 +88,10 @@
 			<view class="map">
 				<view class="map-name">
 					<view class="dcse">平峦山公园东北门</view>
-					<view class="txt">宝安区西乡街道桃源社区前进二路与宝...</view>
-				</view>
+					<view class="txt">宝安区西乡街道桃源社区前进二路与宝宝安区西乡街道桃源社区前进二路与宝...</view>
+				</view><!--@tap="pageTo('/pages/interact/interactPage/interactDetailMap')"-->
 				<view class="map-see" @tap="openLocation">
-					<image src="/static/hudong/dingwei.png" mode="">
+					<image src="/static/hudong/dingwei.png">
 						<view class="txt">查看</view>
 				</view>
 			</view>
@@ -182,13 +182,8 @@
 </template>
 
 <script>
-	import uniIcons from '@/components/uni-icons/uni-icons.vue';
-
 	export default {
-		name: 'interactDetail',
-		components: {
-			uniIcons
-		},
+		components: {},
 		data() {
 			return {
 				fold: true,
@@ -227,10 +222,10 @@
 			openLocation: function() {
 				uni.openLocation({
 					scale:5,
-					longitude: 113.979958,
-					latitude: 22.540135,
+					longitude: 114.034754,
+					latitude: 22.616932,
 					name: "深圳",
-					address: "深圳市南山世界之窗白沙路5号"
+					address: "深圳市北站高铁站",
 				})
 			},
 			pageTo(url) {
@@ -515,7 +510,7 @@
 		height: 144upx;
 		box-sizing: border-box;
 		border-radius: 12upx;
-
+		
 		.txt {
 			margin-top: 8upx;
 			color: rgba(153, 153, 153, 1);
@@ -533,7 +528,12 @@
 			}
 
 			.txt {
+				box-sizing:border-box;
 				margin-top: 4upx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				width: 530upx;
 			}
 		}
 

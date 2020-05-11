@@ -261,17 +261,19 @@ export default {
 		        };
 		     
 		        // 使用
-		        if (monthC > 12) {
+		        if (monthC > 1) {
 		            // 超过1年，直接显示年月日
 		            return (function () {
 		                var date = new Date(timestamp);
 		                return date.getFullYear() + '年' + zero(date.getMonth() + 1) + '月' + zero(date.getDate()) + '日';
 		            })();
-		        } else if (monthC >= 1) {
-		            return parseInt(monthC) + "月前";
-		        } else if (weekC >= 1) {
-		            return parseInt(weekC) + "周前";
-		        } else if (dayC >= 1) {
+		        } 
+				// else if (monthC >= 1) {
+		  //           return parseInt(monthC) + "月前";
+		  //       } else if (weekC >= 1) {
+		  //           return parseInt(weekC) + "周前";
+		  //       } 
+				else if (dayC >= 1) {
 		            return parseInt(dayC) + "天前";
 		        } else if (hourC >= 1) {
 		            return parseInt(hourC) + "小时前";

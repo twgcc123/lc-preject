@@ -91,7 +91,7 @@
 						<view class="dcse">平峦山公园东北门</view>
 						<view class="txt">宝安区西乡街道桃源社区前进二路与宝...</view>
 					</view>
-					<view class="map-see" @tap="pageTo('/pages/interact/interactPage/interactDetailMap')">
+					<view class="map-see">
 						<image src="/static/hudong/dingwei.png" mode="">
 						<view class="txt">查看</view>
 					</view>
