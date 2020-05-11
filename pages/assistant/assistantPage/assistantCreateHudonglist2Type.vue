@@ -52,8 +52,12 @@ export default {
 		},
 		
 		listType(item){
-			let dataType = item.value
-			uni.$emit('dataType',{msg:dataType})
+			let dataType = item
+			// uni.$emit('huoDongdataType',dataType)
+			uni.setStorage({
+			    key: 'huoDongdataType',
+			    data: dataType,
+			});
 			uni.navigateTo({
 				url: '/pages/assistant/assistantPage/assistantCreateHudongDetail'
 			});

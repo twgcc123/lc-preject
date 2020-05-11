@@ -31,7 +31,7 @@ http.request = function({ method = "GET", url, data, loadingStatus = true }) {
         reject(ret);
       },
       complete: res => {
-        // console.log("complete", res);
+        console.log("complete", res);
         if (res.statusCode === 200) {
           //成功
           uni.hideLoading();

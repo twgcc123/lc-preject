@@ -1,9 +1,12 @@
 <template>
 	<view class="person">
-		<view class="header">
-			<view class="" @tap="goBack"><uni-icons color="#707070" type="arrowleft" size="22"></uni-icons></view>
-			<view class="" @click="pageTo('/pages/interact/interactPage/moreAction')"><uni-icons color="#707070" type="more-filled" size="24"></uni-icons></view>
+		<view class="header" :style="[{ paddingTop: hasNotchInScreen ? '88upx' : '44upx' }]">
+			<view class="header-content">
+				<view class="" @tap="goBack"><uni-icons color="#333333" type="arrowleft" size="22"></uni-icons></view>
+				<view class="" @click="pageTo('/pages/interact/interactPage/moreAction')"><uni-icons color="#333333" type="more-filled" size="24"></uni-icons></view>
+			</view>
 		</view>
+		
 		<view class="container">
 			<!-- 头部数据 -->
 			<view class="person-info">
@@ -140,18 +143,27 @@ export default {
 	font-family: PingFangSC-regular;
 }
 .header {
-	padding: 88upx 32upx 0 18upx;
-	height: 178upx;
-	background-color: rgba(255, 255, 255, 0);
-	color: rgba(51, 51, 51, 1);
-	font-size: 36upx;
-	font-family: Arial;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	box-sizing: border-box;
+	position: sticky;
+	top: 0;
+	z-index: 99;
+	background-color: #ffffff;
+	/*#ifdef MP-WEIXIN*/
+	padding: 44upx 40upx 0 20upx;
+	/*#endif*/
+	/*#ifdef APP-PLUS*/
+	padding: 88upx 40upx 0 20upx;
+	/*#endif*/
+	.header-content{
+		height: 90upx;
+		background-color: rgba(255, 255, 255, 0);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		box-sizing: border-box;
+	}
 }
 .container {
+	margin-top: 10upx;
 	.person-info {
 		padding: 0 48upx;
 		display: flex;

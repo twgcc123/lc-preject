@@ -1,14 +1,14 @@
 <template>
 	<view class="roomOrderCenter">
 		<view class="order-status">
-<!-- 			<view>
+			<view>
 				<view class="title">待入住</view>
 				<view class="dcse">请在 <text> 12月10日14:00</text> 办理入住</view>
-			</view> -->
-			<view class="cont-pin">
+			</view>
+<!-- 			<view class="cont-pin">
 				<view class="title-pin"  @tap="goDetail('/pages/found/youju/roomOrderCenterScore')">评分</view>
 				<view class="dcse-pin">感谢您的入住，请对本次服务作出评分</view>
-			</view>
+			</view> -->
 		</view>
 		<view class="container">
 			<view class="room-order-box">

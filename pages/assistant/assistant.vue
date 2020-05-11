@@ -29,7 +29,7 @@
 		},
 		data() {
 			return {
-				activeTab: 0,
+				activeTab:0,
 				tabList: dataList.tabar,
 			}
 		},

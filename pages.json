@@ -310,21 +310,42 @@
 			"path": "pages/mine/mainPage/mineLianXiRen", // 联系人
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "联系人"
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineLianXiRrenTuijian", // 推荐关注
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineLianXiRrenAgree", // 亲友关系申请
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/mainPage/mineLianXiRrenQinyou", // 亲友关系申请
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/mine/mainPage/mineLifeRecord", // 人生记录
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "人生记录"
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/mine/mainPage/mineFaPiao", // 发票
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "发票"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -338,7 +359,7 @@
 			"path": "pages/mine/mainPage/mineFind", // 我的收藏
 			"style": {
 				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "我的收藏"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -471,7 +492,13 @@
 				"navigationBarTextStyle": "black"
 			}
 		},
-		
+		{
+			"path": "pages/assistant/assistantPage/selectHuoDongType", // 创建活动选择活动分类页面
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
 		// 登录页面
 		{
 			"path": "pages/login/login",

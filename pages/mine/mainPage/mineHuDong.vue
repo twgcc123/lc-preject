@@ -17,6 +17,13 @@
 				<view class="menu-">筛选</view>
 			</dropdown-menu>
 		</view> -->
+		
+		<view class="search-bar" style="background-color: #FFFFFF;">
+			<view class="search-all" v-for="(title, index) in searchBar" :key="index" @tap="choice(title, index)" :class="activeTitle == index ? 'active-title' : null">
+				<text class="tools-name">{{ title.title }}</text>
+				<text class="tools-icon"></text>
+			</view>
+		</view>
 
 		<view class="container">
 			<view class="swiper">
@@ -47,46 +54,65 @@
 		data() {
 			return {
 				value1: '0',
+				activeTitle:0,
 				huDongtData: interactData.hudongData, // js 关注数据
-				options1: [{
-						text: '全部状态',
-						value: '0'
+				searchBar: [
+					{
+						id: 1,
+						title: '全部状态'
 					},
 					{
-						text: '待开始',
-						value: '1'
+						id: 1,
+						title: '排序方式'
 					},
 					{
-						text: '进行中',
-						value: '2'
+						id: 1,
+						title: '地区选择'
 					},
 					{
-						text: '已完成',
-						value: '3'
-					},
-					{
-						text: '已取消',
-						value: '4'
-					},
-					{
-						text: '已失败',
-						value: '5'
+						id: 1,
+						title: '更多筛选'
 					}
 				],
-				value2: 'a',
-				option2: [{
-						text: '默认排序',
-						value: 'a'
-					},
-					{
-						text: '互动开始时间优先',
-						value: 'b'
-					},
-					{
-						text: '受理时间优先',
-						value: 'c'
-					},
-				]
+				// options1: [{
+				// 		text: '全部状态',
+				// 		value: '0'
+				// 	},
+				// 	{
+				// 		text: '待开始',
+				// 		value: '1'
+				// 	},
+				// 	{
+				// 		text: '进行中',
+				// 		value: '2'
+				// 	},
+				// 	{
+				// 		text: '已完成',
+				// 		value: '3'
+				// 	},
+				// 	{
+				// 		text: '已取消',
+				// 		value: '4'
+				// 	},
+				// 	{
+				// 		text: '已失败',
+				// 		value: '5'
+				// 	}
+				// ],
+				// value2: 'a',
+				// option2: [{
+				// 		text: '默认排序',
+				// 		value: 'a'
+				// 	},
+				// 	{
+				// 		text: '互动开始时间优先',
+				// 		value: 'b'
+				// 	},
+				// 	{
+				// 		text: '受理时间优先',
+				// 		value: 'c'
+				// 	},
+				// ]
 			}
 		},
 		onLoad() {
@@ -141,7 +167,7 @@
 			choice(item, index) {
 				console.log(index)
 				this.activeTitle = index
-			}
+			},
 		},
 	};
 </script>
@@ -163,15 +189,18 @@
 		top: 0;
 		z-index: 99;
 		background-color: #FFFFFF;
-		padding: 44px 20px 0 20px;
-
+		/*#ifdef MP-WEIXIN*/
+			padding: 44upx 40upx 0 40upx;
+		/*#endif*/
+		/*#ifdef APP-PLUS*/
+			padding: 88upx 40upx 0 40upx;
+		/*#endif*/
 		.header-content {
 			height: 90upx;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			position: relative;
-
 			.header-title {
 				text-align: center;
 				color: #000000;
@@ -179,10 +208,10 @@
 				font-weight: bold;
 				flex: 1;
 			}
-
-			.back-icons {
+			.back-icons{
 				position: absolute;
-				left: -8upx;
+				left: 0;
+				top: 22upx;
 			}
 		}
 	}
@@ -191,5 +220,55 @@
 		box-sizing: border-box;
 		align-items: center;
 		justify-content: space-around;
+	}
+	.search-bar {
+		// background-color: #FFFFFF;
+		padding: 0 20upx;
+		height: 90upx;
+		display: flex;
+		align-items: center;
+		.search-all,
+		.search-paixun,
+		.search-address,
+		.search-shaixun {
+			text-align: center;
+			display: flex;
+			width: 25%;
+			color: rgba(51, 51, 51, 1);
+			font-size: 28upx;
+			font-weight: 700;
+			box-sizing: border-box;
+			.tools-name {
+				flex: 1;
+				width: 90%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				// background-color: #FF9700;
+			}
+			.tools-icon {
+				display: inline-block;
+				width: 10%;
+				position: relative;
+				top: 14upx;
+				left: -6upx;
+				display: flex;
+				align-items: center;
+				margin-right: 8upx;
+				width: 0;
+				height: 0;
+				border-left: 8rpx solid transparent;
+				border-right: 8rpx solid transparent;
+				border-top: 8rpx solid #222;
+				font-size: 0;
+				line-height: 0;
+			}
+		}
+		.active-title {
+			color: #ff9533;
+			.tools-icon{
+				border-top: 8rpx solid #ff9533;
+			}
+		}
 	}
 </style>

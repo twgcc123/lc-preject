@@ -1,11 +1,11 @@
 <template>
 	<view class="content">
-		<view class="navbar" :style="[{top: hasNotchInScreen ? '44px': '20px'}]">
+		<view class="navbar" :style="[{top: hasNotchInScreen ? '88upx': '44upx'}]">
 			<view class="navbar-left" @click="pageTo()">
 				<uni-icons type="back" size="20"></uni-icons>
 			</view>
 			<view class="navbar-title">
-				<image class="navbar-title-avatar" src="../../static/hudong/c3.jpg"></image>
+				<image class="navbar-title-avatar" src="/static/hudong/c3.jpg"></image>
 				<text class="navbar-title-text">作者六个大字</text>
 			</view>
 			<view class="navbar-right" @click="pageTo('/pages/mine/mainPage/mineDailySign')">查看更多</view>
@@ -70,11 +70,13 @@
 .navbar{
 	width: 100%;
 	height: 88rpx;
-	padding: 0 30rpx;
+	padding: 0 30rpx 0 40upx;
 	display: flex;
 	position: sticky;
 	top: 40rpx;
+	z-index: 999;
 	justify-content: space-between;
+	background-color: #f3f3f3;
 	.navbar-left{
 		line-height: 88rpx;
 	}

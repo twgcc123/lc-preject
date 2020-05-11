@@ -98,7 +98,7 @@ export default{
 .order-score{
 	font-family: PingFangSC-bold;
 	background-color: #FFFFFF;
-	padding-bottom: 120upx;
+	padding-bottom: 150upx;
 	.container{
 		padding: 20upx 48upx;
 		.title{
@@ -174,7 +174,7 @@ export default{
 		}
 		.submi{
 			position: fixed;
-			bottom: 0;
+			bottom: 100upx;
 			z-index: 99;
 			width: 654upx;
 			height: 100upx;

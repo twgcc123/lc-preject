@@ -3,63 +3,63 @@
 	"list": [
 			{
 				"id": 2,
-				"image": "https://dimg04.c-ctrip.com/images/3C0d14000000w0s0d6318_D_265_265.jpg",
+				"image": "/static/youju/s1-1.jpg",
 				"content": "我是要成为海贼王的男人",
 				"user": {
 					"name": "北京密云不老屯优居",
-					"avatar": "https://avatars2.githubusercontent.com/u/24265249?s=40&v=4"
+					"avatar": "/static/youju/s1-2.jpg"
 				}
 			},{
 				"id": 3,
-				"image": "https://youimg1.c-ctrip.com/target/1001050000000m7lm4583_D_650_366.jpg",
+				"image": "/static/youju/f3.jpg",
 				"content": "我不是天生的王者，但我骨子里流动着不让我低头的血液",
 				"user": {
 					"name": "北京密云不老屯优居",
-					"avatar": "https://avatars2.githubusercontent.com/u/24265249?s=40&v=4"
+					"avatar": "static/youju/s1-4.jpg"
 				}
 			},{
 				"id": 4,
-				"image": "https://dimg07.c-ctrip.com/images/fd/tg/g1/M04/CB/99/CghzflWw7F2ATxCcABtxFWU_LNw686_C_300_400.jpg",
+				"image": "/static/youju/s1-3.jpg",
 				"content": "想要我的财宝吗？去吧，我把一切全都放在了那里——伟大航路",
 				"user": {
 					"name": "北京密云不老屯优居",
-					"avatar": "https://avatars2.githubusercontent.com/u/24265249?s=40&v=4"
+					"avatar": "/static/youju/s1-3.jpg"
 				}
 			},{
 				"id": 5,
-				"image": "https://youimg1.c-ctrip.com/target/10010a0000004tsqc8D4C_R_210_210.jpg",
+				"image": "/static/youju/f5.jpg",
 				"content": "一个人的死，对于这个世界来说不过是多了一座坟墓，但对于相依为命的人来说，却是整个世界都被坟墓掩埋",
 				"user": {
 					"name": "北京密云不老屯优居",
-					"avatar": "https://avatars2.githubusercontent.com/u/24265249?s=40&v=4"
+					"avatar": "/static/youju/s1-1.jpg"
 				}
 			},{
 				"id": 6,
-				"image": "https://dimg04.c-ctrip.com/images/3C0g14000000w2whyF1C1_D_265_265.jpg",
+				"image": "/static/youju/s1-1.jpg",
 				"content": "能够原谅女人谎言的才是男人",
 				"user": {
 					"name": "北京密云不老屯优居",
-					"avatar": "https://avatars2.githubusercontent.com/u/24265249?s=40&v=4"
+					"avatar": "/static/youju/s1-1.jpg"
 				}
 			},{
 				"id": 7,
-				"image": "https://dimg01.c-ctrip.com/images/fd/tg/g2/M0B/2E/5B/CghzgFW2JSiAFNUPAAMldopiNoU463_C_300_400.jpg",
+				"image": "/static/youju/s1-1.jpg",
 				"content": "将过去和羁绊全部丢弃,不要吝惜那为了梦想流下的泪水",
 				"user": {
 					"name": "北京密云不老屯优居",
-					"avatar": "https://avatars2.githubusercontent.com/u/24265249?s=40&v=4"
+					"avatar": "/static/youju/s1-4.jpg"
 				}
 			},{
 				"id": 8,
-				"image": "https://dimg07.c-ctrip.com/images/100h180000013qm0m8FCA_C_300_400.jpg",
+				"image": "/static/youju/s2-1.jpg",
 				"content": "我的左手吗？呵…我把它送给了新世界",
 				"user": {
 					"name": "北京密云不老屯优居",
-					"avatar": "https://avatars2.githubusercontent.com/u/24265249?s=40&v=4"
+					"avatar": "/static/youju/fangjian.jpg"
 				}
 			},{
 				"id": 9,
-				"image": "https://youimg1.c-ctrip.com/target/100j060000001znsd92EF_D_265_265.jpg",
+				"image": "/static/youju/s2-2.jpg",
 				"content": "我是要成为海贼王的男人",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -67,7 +67,7 @@
 				}
 			},{
 				"id": 11,
-				"image": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553493804218&di=27e261f4674ce10bf4b0d4a2e6cc20e1&imgtype=0&src=http%3A%2F%2Fi-7.vcimg.com%2Fcrop%2F877b27bbb05ed074e64d30b1ffb83774220677%2528600x%2529%2Fthumb.jpg",
+				"image": "/static/youju/s2-3.jpg",
 				"content": "想要我的财宝吗？去吧，我把一切全都放在了那里——伟大航路",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -76,7 +76,7 @@
 			},
 			{
 				"id": 12,
-				"image": "https://dimg01.c-ctrip.com/images/fd/tg/g2/M0B/2E/5B/CghzgFW2JSiAFNUPAAMldopiNoU463_C_300_400.jpg",
+				"image": "/static/youju/s2-1.jpg",
 				"content": "将过去和羁绊全部丢弃,不要吝惜那为了梦想流下的泪水",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -84,7 +84,7 @@
 				}
 			},{
 				"id": 13,
-				"image": "https://dimg07.c-ctrip.com/images/100h180000013qm0m8FCA_C_300_400.jpg",
+				"image": "/static/youju/s3-3.jpg",
 				"content": "我的左手吗？呵…我把它送给了新世界",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -92,7 +92,7 @@
 				}
 			},{
 				"id": 15,
-				"image": "https://dimg04.c-ctrip.com/images/3C0d14000000w0s0d6318_D_265_265.jpg",
+				"image": "/static/youju/s3-2.jpg",
 				"content": "我是要成为海贼王的男人",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -100,7 +100,7 @@
 				}
 			},{
 				"id": 3,
-				"image": "https://youimg1.c-ctrip.com/target/1001050000000m7lm4583_D_650_366.jpg",
+				"image": "/static/youju/s3-4.jpg",
 				"content": "我不是天生的王者，但我骨子里流动着不让我低头的血液",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -108,7 +108,7 @@
 				}
 			},{
 				"id": 4,
-				"image": "https://dimg07.c-ctrip.com/images/fd/tg/g1/M04/CB/99/CghzflWw7F2ATxCcABtxFWU_LNw686_C_300_400.jpg",
+				"image": "/static/youju/s3-4.jpg",
 				"content": "想要我的财宝吗？去吧，我把一切全都放在了那里——伟大航路",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -116,7 +116,7 @@
 				}
 			},{
 				"id": 5,
-				"image": "https://youimg1.c-ctrip.com/target/10010a0000004tsqc8D4C_R_210_210.jpg",
+				"image": "/static/youju/s4-1.jpg",
 				"content": "一个人的死，对于这个世界来说不过是多了一座坟墓，但对于相依为命的人来说，却是整个世界都被坟墓掩埋",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -124,7 +124,7 @@
 				}
 			},{
 				"id": 6,
-				"image": "https://dimg04.c-ctrip.com/images/3C0g14000000w2whyF1C1_D_265_265.jpg",
+				"image": "/static/youju/s4-2.jpg",
 				"content": "能够原谅女人谎言的才是男人",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -132,7 +132,7 @@
 				}
 			},{
 				"id": 7,
-				"image": "https://dimg01.c-ctrip.com/images/fd/tg/g2/M0B/2E/5B/CghzgFW2JSiAFNUPAAMldopiNoU463_C_300_400.jpg",
+				"image": "/static/youju/s4-3.jpg",
 				"content": "将过去和羁绊全部丢弃,不要吝惜那为了梦想流下的泪水",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -140,7 +140,7 @@
 				}
 			},{
 				"id": 8,
-				"image": "https://dimg07.c-ctrip.com/images/100h180000013qm0m8FCA_C_300_400.jpg",
+				"image": "/static/youju/s4-1.jpg",
 				"content": "我的左手吗？呵…我把它送给了新世界",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -148,7 +148,7 @@
 				}
 			},{
 				"id": 9,
-				"image": "https://youimg1.c-ctrip.com/target/100j060000001znsd92EF_D_265_265.jpg",
+				"image": "/static/youju/s5-1.jpg",
 				"content": "我是要成为海贼王的男人",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -157,7 +157,7 @@
 			},
 			{
 				"id": 12,
-				"image": "https://dimg01.c-ctrip.com/images/fd/tg/g2/M0B/2E/5B/CghzgFW2JSiAFNUPAAMldopiNoU463_C_300_400.jpg",
+				"image": "/static/youju/s5-2.jpg",
 				"content": "将过去和羁绊全部丢弃,不要吝惜那为了梦想流下的泪水",
 				"user": {
 					"name": "北京密云不老屯优居",
@@ -165,7 +165,7 @@
 				}
 			},{
 				"id": 13,
-				"image": "https://dimg07.c-ctrip.com/images/100h180000013qm0m8FCA_C_300_400.jpg",
+				"image": "/static/youju/s5-3.jpg",
 				"content": "我的左手吗？呵…我把它送给了新世界",
 				"user": {
 					"name": "北京密云不老屯优居",

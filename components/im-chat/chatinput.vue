@@ -111,12 +111,13 @@
 	.footer-center .input-text {
 		flex: 1;
 		background: #fff;
-		height: 60upx;
+		min-height: 80upx;
 		/* border: solid 1upx #ddd; */
 		/* padding: 10upx !important; */
 		font-family: verdana !important;
 		overflow: hidden;
-		border-radius: 15upx;
+		border-radius: 6upx;
+		padding: 20upx;
 	}
 	.footer-right .send-comment{
 		background-color: #333333;

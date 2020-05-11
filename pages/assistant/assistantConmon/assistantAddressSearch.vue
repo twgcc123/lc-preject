@@ -158,6 +158,7 @@ export default {
 			}
 			.search-input {
 				height: 72upx;
+				line-height: 72upx;
 				padding-left: 60upx;
 				font-size: 30upx;
 			}

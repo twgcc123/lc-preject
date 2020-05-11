@@ -6,24 +6,24 @@
 			<view class="tabbar-box">
 				<view class="tabbar-box-content">
 					<view class="tabbar-box-item" @click="pageTo('/pages/dynamic/writeHeartSign')">
-						<image class="box-image" src="../../static/add/release.png" mode="aspectFit"></image>
+						<image class="box-image" src="/static/add/release.png" mode="aspectFit"></image>
 						<text class="explain">写心签</text>
 						<text class="small-tip">心识智慧的记录</text>
 					</view>
 					<!-- @click="pageTo('/pages/add/publish')" -->
 					<view class="tabbar-box-item" @click="chooseImage">
-						<image class="box-image" src="../../static/add/video.png" mode="aspectFit"></image>
+						<image class="box-image" src="/static/add/video.png" mode="aspectFit"></image>
 						<text class="explain">记录人生</text>
 						<text class="small-tip">人生视频、图文</text>
 					</view>
 					<view class="tabbar-box-item">
-						<image class="box-image" src="../../static/add/qa.png" mode="aspectFit"></image>
+						<image class="box-image" src="/static/add/qa.png" mode="aspectFit"></image>
 						<text class="explain">发需求</text>
 						<text class="small-tip">找人帮忙找娱乐</text>
 					</view>
 				</view>
 				<view class="tabbar-close" @tap="goToPage('/pages/found/found')">
-					<image class="tabbar-close-icon" src="../../static/add/close.svg"></image>
+					<image class="tabbar-close-icon" src="/static/add/close.svg"></image>
 				</view>
 			</view>
 		</view>

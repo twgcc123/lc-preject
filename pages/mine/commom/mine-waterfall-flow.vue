@@ -10,17 +10,20 @@
 		>
 			<view class="pic">
 				<image class="image" mode="widthFix" :src="item.image" style="width: 100%; display: block;" ></image>
+				<view class="player">
+					<image src="/static/nime/player.svg" mode=""></image>
+				</view>
 			</view>
 			<view class="content">
-				<text>{{item.content}}</text>
+				<text class="world">{{item.content}}</text>
 				<view class="user">
-					<image src="../../../static/nime/landmark.png"></image>
+					<image src="/static/nime/dingwei0.svg"></image>
 					<text class="dcse">{{item.user.name}}</text>
 				</view>
 			</view>
 		</view>
 		<view class="loading" v-show="loading" :style="'top: ' + loadingTop + 'px'" >
-			<image src="../../../static/nime/loading.gif" style="width: 80upx; height: 80upx;"></image>
+			<image src="/static/nime/loading.gif" style="width: 80upx; height: 80upx;"></image>
 		</view>
 	</view>
 </template>
@@ -126,6 +129,24 @@
 	}
 	.flow-box .pic {
 		background: #f6f6f6;
+		position: relative;
+		.player{
+			position: absolute;
+			top: 20upx;
+			right: 20upx;
+			z-index: 3;
+			background-color: rgba(0,0,0,.35);
+			height: 48upx;
+			width: 48upx;
+			text-align: center;
+			line-height: 48upx;
+			border-radius: 50%;
+			image{
+				
+				height: 20upx;
+				width: 20upx;
+			}
+		}
 	}
 	.flow-box .content {
 		padding: 20upx;
@@ -135,8 +156,9 @@
 	}
 	.flow-box .content text {
 		width: 100%;
-		color: rgba(0, 0, 0, 1);
+		color: #000000;
 		font-size: 28upx;
+		font-weight: bold;
 		overflow : hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;
@@ -144,22 +166,23 @@
 		-webkit-box-orient: vertical;
 	}
 	.flow-box .user {
-		margin-top: 12upx;
+		margin-top: 16upx;
 		display: flex;
 		align-items: center;
 		font-size: 26upx;
 		color: #666;
 		image{
-			width: 30upx; 
-			height: 30upx; 
+			width: 24upx; 
+			height: 24upx; 
 			margin-right: 12upx;
+			color: #222222;
 		}
 		.dcse{
 			flex: 1;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			color: rgba(106, 106, 106, 1);
+			color: #6A6A6A;
 			font-size: 24upx;
 		}
 	}

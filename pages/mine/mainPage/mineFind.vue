@@ -1,35 +1,28 @@
 <template>
 	<view class="mine-find">
-		<view class="menu">
-			<mineFindHeader :tabList="tabList" :heightFlag="true" :activeTab="activeTab" @onClickTab="onClickTab"></mineFindHeader>
-		</view>
-		<!-- :style="{height:heightW+'px'}"  :style="{height:swiperHeight+'px'}" -->
-		<!--<view class="container">
-			<view class="content">
-				<swiper class="swiper" :current="activeTab" @change="swiperChange">
-					<swiper-item class="swiper-item">
-						<view>历史</view>
-					</swiper-item>
-					<swiper-item class="swiper-item">
-						<view>
-							<waterFallFlow :list="list" :loading="loading" @click="choose"></waterFallFlow>
-						</view>
-					</swiper-item>
-					<swiper-item class="swiper-item">
-						<view>点赞</view>
-					</swiper-item>
-				</swiper>
+		<!-- 头部  :style="[{paddingTop: hasNotchInScreen ? '88upx': '44upx'}]"-->
+		<view class="header" :style="[{ paddingTop: hasNotchInScreen ? '88upx' : '44upx' }]">
+			<view class="header-content">
+				<uni-icons class="back-icons" @tap="goBack" type="arrowleft" color="#565656" size="22"></uni-icons>
+				<view class="header-title">我的收藏</view>
 			</view>
-		</view> -->
+		</view>
+		
+		<view class="menu" :style="[{Top: hasNotchInScreen ? '178upx' : '134upx' }]">
+			<view class="menu-item" v-for="(item,index) in tabList" :key="index" @click="handlerMenu(index)">
+				<text :class="['menu-text',activeTab==index ? 'menu-item-active':null]">{{item.title}}</text>
+			</view>
+		</view>
+
 		<view class="container">
 			<view class="history" v-show="activeTab == 0">
-				历史
+				<mySign></mySign>
 			</view>
 			<view class="collcet"  v-show="activeTab == 1">
 				<waterFallFlow :list="list" :loading="loading" @chooseClick="choose"></waterFallFlow>
 			</view>
 			<view class="dianzan"  v-show="activeTab == 2">
-				点赞
+				<mineFindRoom></mineFindRoom>
 			</view>			
 		</view>
 	</view>
@@ -38,28 +31,38 @@
 <script>
 	// 瀑布流组件
 	import waterFallFlow from '../commom/mine-waterfall-flow.vue';
+	// 收藏房间组件
+	import mineFindRoom from '../commom/mineFindRoom.vue';
 	// 模拟 JSON 数据
 	const data = require('../../../static/mock/data.json');
 	// 头部导航
 	import mineFindHeader from "@/components/mineFindHeader"
+	import mySign from "@/components/mySign"
+	
 	export default {
 		name:"mineFind",
 		components: {
 			waterFallFlow,
-			mineFindHeader
+			mineFindHeader,
+			mySign,
+			mineFindRoom
 		},
 		data() {
 			return {
 				// menu
 				activeTab: 1,
 				tabList: [{
-						title: '历史'
+					
+						id:1,
+						title: '日签'
 					},
 					{
-						title: '收藏'
+						id:2,
+						title: '视频'
 					},
 					{
-						title: '点赞'
+						id:3,
+						title: '房间'
 					}
 				],
 				
@@ -73,6 +76,7 @@
 		},
 		onLoad() {
 			this.getList();
+			console.log(this.hasNotchInScreen)
 		}, 
 		onReachBottom() {
 			this.page++;
@@ -80,6 +84,14 @@
 			this.getList();
 		},
 		methods: {
+			
+			handlerMenu(index){
+				this.activeTab = index
+			},
+			
+			goBack(){
+				uni.navigateBack({})
+			},
 			//  menu ******* start
 			onClickTab(index) {
 				this.activeTab = index;
@@ -132,19 +144,91 @@
 </script>
 
 <style lang="less" scoped>
+.header {
+	position: sticky;
+	top: 0;
+	z-index: 99;
+	background-color: #ffffff;
+	/*#ifdef MP-WEIXIN*/
+	padding: 44upx 40upx 0 40upx;
+	/*#endif*/
+	/*#ifdef APP-PLUS*/
+	padding: 88upx 40upx 0 40upx;
+	/*#endif*/
+	.header-content {
+		height: 90upx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		position: relative;
+		.header-title {
+			text-align: center;
+			color: #000000;
+			font-size: 36upx;
+			font-weight: bold;
+			flex: 1;
+		}
+		.back-icons {
+			position: absolute;
+			left: 0;
+			top: 22upx;
+		}
+	}
+}
+
 .menu{
 	position: sticky;
-	top: 0rpx;
-	z-index: 99;
+	top:134upx;
+	z-index: 9999;
 	height: 88upx;
 	text-align: center;
 	background-color: #FFFFFF;
 	border-top: 1px solid #EEEEEE;
+	border-bottom: 1px solid #EEEEEE;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.menu-item{
+		display: flex;
+		align-items: center;
+		height: 88upx;
+		width: 20%;
+		box-sizing: border-box;
+		color: #888888;
+		text-align: center;
+		font-size: 34upx;
+		.menu-text{
+			display: inline-block;
+			width: 124upx;
+			text-align: center;
+			position: relative;
+		}
+		.menu-item-active{
+			color: #4F4F4F;
+			font-weight: bold;
+		}
+		.menu-item-active::after{
+			content: "";
+			position: absolute;
+			width: 50%;
+			height: 4px;
+			border-radius: 6upx;
+			background-color: #FF9502;
+			bottom: -16upx;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
 }
+
 .container{
 	display: flex;
 	flex-flow: column;
-	margin-top: 10upx;
+	// padding-top: 10upx;
+	background-color: #FFFFFF;
+	.collcet{
+		margin-top: 20upx;
+	}
 	// .content{
 	// 	flex: 1;
 	// 	height: 100%;

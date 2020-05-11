@@ -22,6 +22,7 @@
 		<div v-if="current == 2">
 			<!-- 百应 -->
 			<com-baiying> </com-baiying>
+			<!-- <com-video :show_video="showVideo" :videoList="videoList"></com-video> -->
 		</div>
 	</view>
 </template>

@@ -11,9 +11,9 @@
 			<view class="address" v-if="dataList.length !== 0">
 				<uni-icons type="location-filled" size="14" color="#333333"></uni-icons>
 				<text class="location" @tap="pageTo('/pages/assistant/assistantConmon/assistantAddressSearch')">
-					<text style="margin-right: 10upx;">深圳</text>
+					<text style="margin-right: 8upx;">深圳</text>
 					·
-					<text style="margin-left: 10upx;">{{addressData.title}}</text>
+					<text style="margin-left: 8upx;">{{addressData.title}}</text>
 				</text>
 				<uni-icons type="arrowright" size="14" color="#333333"></uni-icons>
 			</view>

@@ -21,7 +21,7 @@
 			</view>
 			<view class="box flexlr">
 				<text class="prel">APP版本</text>
-				<view class="prer">当前版本1.0.3</view>
+				<view class="prer">当前版本1.0.5</view>
 			</view>
 			<view class="clearMB flexlr">
 				<text class="prel">清除缓存</text>

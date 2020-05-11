@@ -51,7 +51,7 @@ export default {
 					"title":"深圳自在优居（南山1号）",
 					"status":"1",
 					"status_text":"已取消",
-					"img_url":"../../../static/youju/fangjian.jpg",
+					"img_url":"/static/youju/s2-4.jpg",
 					"in_data":"12月10日",
 					"out_data":"12月11日",
 					"in_week":"周二",
@@ -68,7 +68,7 @@ export default {
 					"title":"深圳桃园优居（南山3号）",
 					"status":"2",
 					"status_text":"待支付",
-					"img_url":"../../../static/youju/fangjian.jpg",
+					"img_url":"/static/youju/s1-1.jpg",
 					"in_data":"12月10日",
 					"out_data":"12月11日",
 					"in_week":"周二",
@@ -86,7 +86,7 @@ export default {
 					"title":"深圳福田九号公馆",
 					"status":"1",
 					"status_text":"已支付",
-					"img_url":"../../../static/youju/fangjian.jpg",
+					"img_url":"/static/youju/s2-3.jpg",
 					"in_data":"12月10日",
 					"out_data":"12月11日",
 					"in_week":"周二",
@@ -103,7 +103,7 @@ export default {
 					"title":"南山欢乐还岸2B",
 					"status":"2",
 					"status_text":"待支付",
-					"img_url":"../../../static/youju/fangjian.jpg",
+					"img_url":"/static/youju/s4-3.jpg",
 					"in_data":"12月10日",
 					"out_data":"12月11日",
 					"in_week":"周二",
@@ -153,6 +153,7 @@ export default {
 			.taddress{
 				color: rgba(51, 51, 51, 1);
 				font-size: 28upx;
+				font-weight: bold;
 			}
 			.tstatus{
 				color: rgba(174, 174, 178, 1);
