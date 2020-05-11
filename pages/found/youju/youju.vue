@@ -51,11 +51,11 @@
 			</view>
 		</view>
 		<!-- </view> -->
-
+     
 		<!-- 房源列表 -->
-		<view class="allList" v-if="reserve.length != 0||roomList.length != 0||advertising">
+		<view  class="allList" v-if="reserve.length != 0||roomList.length != 0">
 			<view class="room-list" :style="isIphoneX ? 'top:' + '688upx' : '668upx'">
-				<view v-if="roomList.length != 0">
+				<view v-if="roomList.length != 0" >
 					<view class="room-list-title">选择合心意的房间</view>
 					<view class="room-list-item" v-for="(item, index) in roomList" :key="index" @click="goDetail(item.id)">
 						<uni-swiper-dot :info="item.img_list" :current="current" field="content" :mode="mode" :dotsStyles="dotsStyles">
@@ -63,16 +63,6 @@
 								<swiper-item v-for="(img, i) in item.img_list" :key="i"><image class="swiper-item" :src="img"></image></swiper-item>
 							</swiper>
 						</uni-swiper-dot>
-						<!-- <view class="" >
-					 		<image class="swiper-item" src="http://bmdh.lcpower.cn/4f800202004261529045399.jpg"></image>
-					 	</view> -->
-						<!-- 	<view class="advertising-test" >
-					 		{{item.advert_name}}
-					 	</view>
-					 	<view class="advertising-check" >
-					 		立即查看
-					 	</view> -->
-
 						<view class="room-list-item-bottom">
 							<view class="room-list-item-name">{{ item.name }}</view>
 							<!--{{ item.name }}-->
@@ -108,9 +98,8 @@
 				</view>
 
 				<!-- 预定房源 -->
+				<view class="room-list-titles" v-if="reserve.length != 0">以下房型仅可预约</view>
 				<view class="reserve" v-if="reserve.length != 0">
-					<view class="room-list-titles">以下房型仅可预约</view>
-					
 					<view class="room-list-item" v-for="(item, index) in reserve" :key="index" @click="goDetail(item.id)">
 						<view class="text-description">当前房型可预约</view>
 						<view class="skip">预约专线</view>
@@ -157,7 +146,7 @@
 					</view>
 					<!-- 广告 -->
 					<view class="advertising-list" v-if="advertising">
-						<view class=""><image class="swiper-item" :src="advertising.image"></image></view>
+						<view class=""><image class="swiper-item" src="http://bmdh.lcpower.cn/4f800202004261529045399.jpg"></image></view>
 						<view class="advertising-test">{{ advertising.advert_name }}</view>
 						<view class="advertising-check" @click="goAdvertising(advertising.vice_title)">立即查看</view>
 					</view>
@@ -507,10 +496,10 @@ export default {
 			top: 685upx;
 			width: 100%;
 			.advertising-list {
-				border-radius: 20upx;
 				width: 100%;
 				position: relative;
 				margin-bottom: 40upx;
+				border-radius: 12upx;
 				.advertising-test {
 					position: absolute;
 					left: 50upx;
@@ -585,8 +574,7 @@ export default {
 			}
 
 			.room-list-titles {
-				position: absolute;
-				top: -44upx;
+				margin: 10upx 0upx 40upx 0upx;
 				color: rgba(186, 186, 186);
 				font-size: 28upx;
 			}

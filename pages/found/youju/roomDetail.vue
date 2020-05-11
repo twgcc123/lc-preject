@@ -10,12 +10,12 @@
 				<view class="detail-item-text-info">
 					<view class="text-title">整住：{{detailItem.type}}</view>
 					<view class="text-money">
-						<text class="text-low-money" ref="price">￥{{detailItem.sales_price}}</text><text class="text-height-money">￥{{item.hight_price}}</text><text class="night">/ 晚</text>
+						<text class="text-low-money" ref="price">￥{{detailItem.sales_price}}</text><text class="text-height-money">￥{{detailItem.original_price}}</text><text class="night">/ 晚</text>
 					</view>
-				</view>
+				</view> 
 				<view class="detail-item-pj">
-					<uni-rate size="12" :value="detailItem.appraise" disabled></uni-rate>
-					<text class="rote">{{ detailItem.appraise }}星评价</text>
+					<uni-rate size="12" :value="appraise" disabled></uni-rate>
+					<text class="rote">{{ appraise }}星评价</text>
 				</view>
 			</view>
 		</view>
@@ -79,12 +79,7 @@
 			uniRate,
 			uniIcons
 		},
-		props:{
-			rote: {
-				type: String,
-				default: '4'
-			}
-		},
+	
 		data() {
 			return {
 				// 计算总价钱
@@ -116,7 +111,8 @@
 				],
 				detailData:[
 				
-				]
+				],
+				appraise:uni.getStorageSync('appraise')
 			};
 		},
 		methods:{
@@ -140,15 +136,6 @@
 						 console.log('888888',res)
 						 this.detailItem=res.data.house
 						 this.userinfo=res.data.lodger
-						 uni.setStorage({
-						     key: 'tenantInformation',
-						     data: res.data,
-						     success: function () {
-						         console.log('success');
-						     }
-						 });
-							
-						
 					}
 				},
 			 totalMoneys() {

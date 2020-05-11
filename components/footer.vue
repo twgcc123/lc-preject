@@ -7,18 +7,18 @@
 				/晚
 			</view>
 			<view class="footer-left-rote">
-				<uni-rate class="item-rotes" size="12" :value="Number(rote)" disabled></uni-rate>
+				<uni-rate class="item-rotes" :value="appraise" size="12"  disabled></uni-rate>
 
-				<text class="footer-left-rote-num">{{ rote }}星评价</text>
+				<text class="footer-left-rote-num">{{ appraise }}星评价</text>
 			</view>
-			<view class="footer-left-detail" @click="pageTo('')">价格明细</view>
+			<view class="footer-left-detail" @click="pageTo('明细')">价格明细</view>
 		</view>
 		<view class="footer-right">
 			<view class="footer-right-chat">
 				<uni-icons class="footer-right-chat-icon" type="chat" size="20"></uni-icons>
 				沟通
 			</view>
-			<button class="footer-right-btn" @click="pageTo()">预订</button>
+			<button class="footer-right-btn" @click="pageTo('预定')">预订</button>
 		</view>
 	</view>
 </template>
@@ -30,15 +30,15 @@ export default {
 		uniRate,
 	},
 	props:{
+		// appraise: {
+		// 	type: String,
+		// 	default: ''
+		// },
 		old_price: {
 			type: String,
 			default: ''
 		},
 		new_price: {
-			type: String,
-			default: ''
-		},
-		rote: {
 			type: String,
 			default: ''
 		},
@@ -57,18 +57,29 @@ export default {
 	},
 	data() {
 		return {
-
+			appraise:0
 		};
 	},
+	created() {
+		this.appraise=uni.getStorageSync('appraise')
+	},
+
 	methods:{
 		/**
 		 * @desc 跳转页面
 		*/
-		pageTo(){
-			// console.log('44444',this.housingID)
+		pageTo(option){
+			if(option=='明细'){
 				uni.navigateTo({
-					url: `/pages/found/youju/roomDetail?id=${this.housingID}`
+					url: `/pages/found/youju/roomOrderPayExpenses`
 				});
+				}else{
+					uni.navigateTo({
+						url: `/pages/found/youju/roomDetail?id=${this.housingID}`
+					});
+				}
+			// console.log('44444',this.housingID)
+				
 
 		}
 	},

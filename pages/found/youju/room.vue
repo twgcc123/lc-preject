@@ -165,7 +165,7 @@
 			<view class="other-title">其他房间</view>
 			<SZqianggou ref="qianggou" index="2" :list2="otherlist"></SZqianggou>
 		</view>
-		<comFooter :old_price="originalPrice" :housingID='housingID' :new_price="salesPrice" :rote="appraise"  show_detail show_service></comFooter>
+		<comFooter :old_price="originalPrice" :housingID='housingID' :new_price="salesPrice"   show_detail show_service></comFooter>
 	</view>
 </template>
 
@@ -261,9 +261,9 @@
 								this.otherlist=res.data.directs
 								this.originalPrice=res.data.house.original_price
 								this.salesPrice=res.data.house.sales_price
-								this.appraise=res.data.house.appraise
-								this.housingID=res.data.house.id
-								console.log('888888',res)
+								// this.appraise=res.data.house.appraise
+								this.housingID=Number(res.data.house.id)
+								uni.setStorageSync('appraise', res.data.house.appraise);
 							
 						}
 					},
