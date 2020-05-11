@@ -23,7 +23,7 @@
 				<view class="lists" style="border-bottom: 2upx solid #f3f3f3;margin: 0 40upx;height:96upx;width: 100%;">
 					<view class="lists-left"> 证件类型 </view>
 					<view class="lists-right">
-						 <input class="inputs" v-model="name" name="userName" type="text" placeholder="选择证件类型" />
+						 <input class="inputs" name="userName" type="text" placeholder="选择证件类型" />
 					</view>
 				</view>
 			</view>
@@ -31,7 +31,7 @@
 				<view class="lists">
 					<view class="lists-left"> 证件号码 </view>
 					<view class="lists-right">
-						 <input class="inputs" v-model="name" name="userName" type="number" placeholder="请输入证件号码" />
+						 <input class="inputs" v-model="idcard" name="userName" type="number" placeholder="请输入证件号码" />
 					</view>
 				</view>
 			</view>
@@ -40,7 +40,7 @@
 				<view class="lists">
 					<view class="lists-left"> 手机号 </view>
 					<view class="lists-right">
-						 <input class="inputs" v-model="name" name="userName" type="number" placeholder="请输入手机号" />
+						 <input class="inputs" v-model="iphone" name="userName" type="number" placeholder="请输入手机号" />
 					</view>
 				</view>
 			</view>
@@ -53,7 +53,9 @@ export default{
 	name:"mineUsedInformation",
 	data(){
 		return{
-			
+			name:'',
+			idcard:'',
+			iphone:'',
 		}
 	},
 	methods:{
