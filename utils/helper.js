@@ -1,6 +1,7 @@
 import md5 from 'js-md5';
 
 const setConfig = function(param) {
+	console.log('666666',param)
 	let timestamp = new Date().getTime();
 	let appid = 'bmdh00ecfbc943a124151';
 	let str = 'timestamp=' + timestamp + param + '&key=' + appid;

@@ -2,12 +2,12 @@
 	<!-- v-if="show_video" -->
 	<div class="page">
 		<div class="cover-view-center">
-			<div :style="{ height: height, width: width }" ref="touch" @click="videoPlay(index)" @touchstart="ListTouchStart" @touchmove="ListTouchMove">
+			<div :style="{ height: height, width: width }" v-for="(item, idx) in videoList" :key="idx" ref="touch" @click="videoPlay(index)" @touchstart="ListTouchStart" @touchmove="ListTouchMove">
 				<div class="cover-view-right1" v-if="distanceX == 0">
 					<div class="img" style="height: 140upx;" @click.stop="tapAvater"></div>
 					<div class="img" @click.stop="tapLove"></div>
 					<div class="img" @click.stop="tapMsg"></div>
-					<div class="img" @click.stop="tapShare"></div>
+					<div class="img" @click.stop="tapShare($event,item)"></div>
 				</div>
 			</div>
 		</div>
@@ -40,11 +40,11 @@
 							<cover-view style="flex-direction: row;margin-bottom: 14upx;">
 								<cover-view style="text-align: center;flex-direction: row;background-color: rgba(0, 0, 0, 0.3);padding-top: 10upx; padding-bottom: 10upx;padding-left: 16upx;padding-right: 16upx;border-radius: 30upx;flex: 0.27;">
 									<cover-image class="left-location" src="../../static/youju/location.png"></cover-image>
-									<text class="left-address">潮州</text>
+									<text class="left-address">{{item.city}}</text>
 								</cover-view>
 								<cover-view style="text-align: center; flex-direction: row;background-color: rgba(0, 0, 0, 0.3);padding-top: 10upx; padding-bottom: 10upx;padding-left: 16upx;padding-right:16upx;border-radius: 30upx;margin-left: 25upx;flex: 0.5;" >
 									<cover-image class="left-location" src="../../static/youju/jing.png"></cover-image>
-									<text class="left-tip">深圳四季如春</text>
+									<text class="left-tip">{{item.keyword}}</text>
 								</cover-view>
 							</cover-view>
 						</cover-view>
@@ -59,18 +59,18 @@
 							
 							<cover-view @click.stop="tapLove" class="img" style="margin-top: 40upx;">
 								<cover-image class="right-icon" :src="item.check ? '../../static/youju/love.png' : '../../static/youju/love_red.png'"></cover-image>
-								<text class="mask-right-text">2.4w</text>
-								<text class="right-text">2.4w</text>
+								<text class="mask-right-text">{{item.favorite_num}}</text>
+								<text class="right-text">{{item.favorite_num}}</text>
 							</cover-view>
 							<cover-view class="img" @click.stop="tapMsg">
 								<cover-image class="right-icon" src="../../static/youju/comment.png"></cover-image>
-								<text class="mask-right-text">768</text>
-								<text class="right-text">768</text>
+								<text class="mask-right-text">{{item.comment_num}}</text>
+								<text class="right-text">{{item.comment_num}}</text>
 							</cover-view>
-							<cover-view class="img" @click.stop="tapShare">
+							<cover-view class="img" @click.stop="tapShare($event,itme)">
 								<image class="right-icon" src="../../static/youju/share.png"></image>
-								<text class="mask-right-text">768</text>
-								<text class="right-text">768</text>
+								<text class="mask-right-text">{{item.transpond_num}}</text>
+								<text class="right-text">{{item.transpond_num}}</text>
 							</cover-view>
 						</cover-view>
 					</block>
@@ -104,6 +104,7 @@ import chunleiVideo from '@/components/chunlei-video/chunlei-video.vue';
 import scrollMixins from '@/utils/scrollMixins';
 import config from '@/utils/config.js';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
+import appShare, { closeShare } from '@/js_sdk/zhouWei-APPshare/utils/share.js'
 // #ifdef APP-PLUS
 const BindingX = uni.requireNativePlugin('bindingx');
 const animation = weex.requireModule('animation');
@@ -151,6 +152,7 @@ export default {
 		this.doPause();
 	},
 	async created() {
+		console.log('233333',this.videoList)
 		// let timestamp = (new Date()).getTime()
 		// let appid = 'bmdh00ecfbc943a124151'
 		// let str= 'timestamp='+ timestamp +'&key=' + appid + '&page=1'+'&token=' + token + '&id=' + id 
@@ -229,13 +231,24 @@ export default {
 			});
 		},
 
-		tapShare(e) {
+		tapShare(e,item) {
+			console.log(e,item)
 			e.stopPropagation();
 			if (this.distanceX != 0) return;
-			uni.showToast({
-				icon: 'none',
-				title: `分享索引为${this.index}的视频`
+			let shareData = {
+				shareUrl:"https://kemean.com/",
+				shareTitle:item.title,
+				shareContent:item.desc,
+				shareImg:item.video_image,
+			};
+					
+					
+			shareData.mediaUrl =item.video_url;
+			shareData.type = 4;
+			appShare(shareData,res => {
+				console.log("分享成功回调",res);
 			});
+		
 		}
 	}
 };

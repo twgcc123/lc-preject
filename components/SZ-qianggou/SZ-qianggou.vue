@@ -3,8 +3,8 @@
 		<view v-for="(item, index) in list1" :key="item.index" class="swiper-tab-list" :id="index" v-show="index == 1">
 			<view class="list-item">
 				<view>
-					<view class="list-item-title">{{ item.title }}</view>
-					<view class="list-item-desc">{{ item.desc }}</view>
+					<view class="list-item-title">{{ item.attr[0].attr_name }}</view>
+					<view class="list-item-desc">{{ item.attr[0].attr_value }}</view>
 				</view>
 			</view>
 		</view>
@@ -12,13 +12,17 @@
 		<view v-for="(item, index) in list2" :key="item.index" class="swiper-tab-list2" :id="index" v-show="index == 2">
 			<view class="list2">
 				<view class="list2-item">
-					<image class="list2-item-img" :src="item.img"></image>
-					<view class="list2-item-room">{{ item.room }}</view>
-					<view class="list2-item-title">{{ item.title }}</view>
-					<view class="list2-item-price">{{ item.price }}</view>
+					<image class="list2-item-img" :src="item.home_image"></image>
+					<view class="list2-item-room">{{ item.type }}</view>
+					<view class="list2-item-title">{{ item.name }}</view>
+					<view class="list2-item-price">¥ {{ item.sales_price }}</view>
 					<view class="list2-rote">
-						<uni-rate class="scores" size="12" value="4" disabled></uni-rate>
-						<text class="list2-item-rate">{{ item.rote }}</text>
+						<uni-rate class="scores" size="12" :value="item.appraise" disabled></uni-rate>
+						<text class="list-item-right-rote" v-if="item.appraise == 1">一星评价</text>
+						<text class="list-item-right-rote" v-if="item.appraise == 2">二星评价</text>
+						<text class="list-item-right-rote" v-if="item.appraise == 3">三星评价</text>
+						<text class="list-item-right-rote" v-if="item.appraise == 4">四星评价</text>
+						<text class="list-item-right-rote" v-if="item.appraise == 5">五星评价</text>
 					</view>
 				</view>
 			</view>
@@ -46,6 +50,10 @@ export default {
 		return {
 			scrollLeft: 0 //滚动位置
 		};
+	},
+
+	mounted(){
+		console.log('888888812',this.list1)
 	}
 };
 </script>
@@ -62,7 +70,7 @@ export default {
 .swiper-tab-list2 {
 	display: inline-block;
 	width: 440upx;
-	overflow: hidden;
+	// overflow: hidden;
 	margin-right: 24upx;
 }
 
@@ -140,11 +148,17 @@ export default {
 	}
 }
 
-.list2-rote {
-	margin-top: 10upx;
-	line-height: 1 !important;
-	view,text{
-		line-height: 0 !important;
+.list2-rote{
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	.item-rotes {
+		height: 2upx;
+	}
+	.list-item-right-rote {
+		margin-left: 14upx;
+		color: rgba(85, 85, 85, 1);
+		font-size: 24upx;
 	}
 }
 

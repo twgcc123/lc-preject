@@ -5,10 +5,10 @@
 				<uni-cell class="containers" v-for="(item, index) in hotel_list" :key="item.id">
 					<view class="list-item">
 						<view class="list-item-left" @tap="palyVideo(index)">
-							<image class="list-item-left-video" :src="item.image"></image>
+							<image class="list-item-left-video" :src="item.video_image"></image>
 							<image class="list-item-left-play" src="../../static/youju/playbg.png"></image>
 						</view>
-						<view class="list-item-right" @click="pageTo(index)">
+						<view class="list-item-right" @click="pageTo(item.id)">
 							<text class="list-item-right-title">{{ item.name }}</text>
 							<view class="list-rote">
 								<uni-rate size="11" :value="item.appraise" disabled></uni-rate>
@@ -16,24 +16,20 @@
 							</view>
 
 							<view class="list-item-right-tip">
-								<text class="list-item-right-tip-text" v-for="(tag,i) in item.community_tag" :key="tag.id">{{ tag.name }}</text>
+								<text class="list-item-right-tip-text" v-for="(tag,i) in item.slogan" :key="i">{{ tag }}</text>
 							</view>
 
-							<text class="list-item-right-address" v-if="item.id == 1">台湾 日月潭</text>
-							<text class="list-item-right-address" v-if="item.id == 2">杭州西湖，桂林</text>
-							<text class="list-item-right-address" v-if="item.id == 3">广州白山，深圳欢乐谷</text>
-							<text class="list-item-right-address" v-if="item.id == 4">深圳西街，上海虎门</text>
-							<text class="list-item-right-address" v-if="item.id == 5">日月潭，西安</text>
+							<text class="list-item-right-address">台湾 日月潭</text>
 							<!-- <text class="list-item-right-address">{{ item.address ? 'item.address': '暂无' }}</text> -->
 							<view class="list-item-right-scenery">
 								<text class="list-item-right-scenery-img">景</text>
-								<text class="list-item-right-scenery-text" style="width: 446upx;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;">日月潭</text>
+								<text class="list-item-right-scenery-text" style="width: 446upx;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;">{{item.community_tag[0]}}</text>
 								<!-- <image class="list-item-right-scenery-img" src="../../static/youju/play.svg"></image> -->
 								<!-- <text class="list-item-right-scenery-text">{{ item.scenery ? 'item.scenery': '暂无' }}</text> -->
 							</view>
 							<view class="list-item-right-warm">
 								<text class="list-item-right-warm-img">温</text>
-								<text class="list-item-right-warm-text" style="width: 446upx;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;">特别温度</text>
+								<text class="list-item-right-warm-text" style="width: 446upx;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient: vertical;">{{item.community_tag[1]}}</text>
 								<!-- <image class="list-item-right-warm-img" src="../../static/youju/play.svg"></image> -->
 								<!-- <text class="list-item-right-warm-text">{{ item.warm ? 'item.warm' : '暂无'}}</text> -->
 							</view>
@@ -111,6 +107,7 @@
 			// this.height = `${ heightUpx - (88 + 88 + 54 + tabarHeight) }upx`;
 			this.height = heightUpx - (88 + 88 + 54 + tabarHeightUpx) + "upx";
 			console.log(this.height)
+			console.log('88888',this.hotel_list)
 		},
 
 		methods: {

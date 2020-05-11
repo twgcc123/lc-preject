@@ -682,6 +682,7 @@
 				"navigationBarTextStyle": "black",
 				"navigationStyle": "custom"
 			}
+			
         }
     ],
 	"globalStyle": {
@@ -714,6 +715,7 @@
 				"selectedIconPath": "static/tabbar/guanzhuactive.png",
 				"text": "动态"
 			},
+			
 			{
 				"pagePath": "pages/add/add",
 				"iconPath": "static/tabbar/add.png",
@@ -733,6 +735,7 @@
 				"selectedIconPath": "static/tabbar/meactive.png"
 			}
 		]
+		
 	},
 	"condition": { //模式配置，仅开发期间生效
 		"current": 0, //当前激活的模式(list 的索引项)
