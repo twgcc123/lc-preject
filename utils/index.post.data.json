@@ -1,0 +1,141 @@
+{
+
+	"dataList": [
+		{
+			"id": 6,
+			"add_time": 1587031258,
+			"title": "优居社区准备筹备《元宵佳节》，欢迎各位前来赴会哦~",
+			"img_list": ["http://bmdh.lcpower.cn/104d0202004261530419692.jpg",
+				"http://bmdh.lcpower.cn/ee24f202004261530417793.jpg"
+			],
+			"video_id": 16,
+			"user_id": 2,
+			"nickname": "给生活比个耶",
+			"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg",
+			"shequ_id": 0,
+			"video_url": "http://bmdh.lcpower.cn/e9085202005091057097857.mp4",
+			"video_image": "http://bmdh.lcpower.cn/e9085202005091057097857.mp4?vframe/jpg/offset/0",
+			"type": 2,
+			"attention": 0,
+			"c_name": "四川雅安优居",
+			"comment": [{
+				"id": 1,
+				"rid": "6",
+				"user_id": 2,
+				"desc": "这个好",
+				"is_show": 1,
+				"ip": "119.123.3.143",
+				"add_time": 1587107829,
+				"nickname": "给生活比个耶",
+				"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg"
+			}],
+			"like": [{
+				"user_id": 2,
+				"nickname": "给生活比个耶"
+			}]
+		},
+		{
+			"id": 8,
+			"add_time": 1587030185,
+			"title": "这里是标题",
+			"img_list": ["http://bmdh.lcpower.cn/104d0202004261530419692.jpg",
+				"http://bmdh.lcpower.cn/ee24f202004261530417793.jpg"
+			],
+			"video_id": 0,
+			"user_id": 2,
+			"nickname": "给生活比个耶",
+			"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg",
+			"shequ_id": 0,
+			"type": 2,
+			"attention": 0,
+			"video_url": "",
+			"video_image": "",
+			"c_name": "南宁优居",
+			"comment": [],
+			"like": []
+		},
+		{
+			"id": 1,
+			"add_time": 1588992058,
+			"interaction_id": 0,
+			"c_name": "四川雅安优居",
+			"img_list": ["http://bmdh.lcpower.cn/10208202004261533104464.jpg",
+				"http://bmdh.lcpower.cn/89dbc202004261533109644.jpg"
+			],
+			"desc": "这里好多人下象棋，有没有人来围观的？",
+			"location": "深圳自在社区地标广场",
+			"recommend": 1,
+			"user_id": 1,
+			"nickname": "super",
+			"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg",
+			"shequ_id": 7,
+			"type": 3
+		},
+		{
+			"id": 4,
+			"add_time": 1587030185,
+			"title": "南宁最炫民族风，南宁的美食，南宁的男普，你都有欣赏吗？",
+			"img_list": ["http://bmdh.lcpower.cn/104d0202004261530419692.jpg",
+				"http://bmdh.lcpower.cn/ee24f202004261530417793.jpg", "http://bmdh.lcpower.cn/104d0202004261530419692.jpg",
+				"http://bmdh.lcpower.cn/ee24f202004261530417793.jpg", "http://bmdh.lcpower.cn/104d0202004261530419692.jpg",
+				"http://bmdh.lcpower.cn/ee24f202004261530417793.jpg"
+			],
+			"video_id": 0,
+			"user_id": 2,
+			"nickname": "南宁罗志祥",
+			"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg",
+			"shequ_id": 0,
+			"type": 2,
+			"attention": 0,
+			"video_url": "",
+			"video_image": "",
+			"c_name": "南宁优居",
+			"comment": [],
+			"like": []
+		},
+		{
+			"id": 4,
+			"add_time": 1586918469,
+			"desc": "Hey，你好2020，请多多关照",
+			"is_recommend": 0,
+			"user_id": 2,
+			"nickname": "给生活比个耶",
+			"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg",
+			"shequ_id": 0,
+			"type": 1,
+			"attention": 0,
+			"comment": [],
+			"like": [],
+			"c_name": "深圳市优居"
+		},
+		{
+			"id": 1,
+			"add_time": 1586916522,
+			"desc": "Hey，你好2020，请多多关照。",
+			"is_recommend": 0,
+			"user_id": 1,
+			"nickname": "super",
+			"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg",
+			"shequ_id": 7,
+			"type": 1,
+			"attention": 0,
+			"comment": [{
+				"id": 2,
+				"hid": "1",
+				"user_id": 2,
+				"desc": "这里是评论内容",
+				"is_show": 1,
+				"ip": "119.123.1.164",
+				"add_time": 1586933035,
+				"nickname": "给生活比个耶",
+				"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg"
+			}],
+			"like": [{
+				"user_id": 2,
+				"nickname": "给生活比个耶"
+			}],
+			"c_name": "城市优居"
+		}
+	]
+
+}

@@ -1,13 +1,12 @@
 <template>
-	<!-- 数据类型 1=心签 ，2=人生记录，3=活动广告 -->
 	<view class="dynamic-container">
+		
 		<view class="headers" :style="[{ paddingTop: hasNotchInScreen ? '88upx' : '40upx' }]"><view class="header-title">动态</view></view>
-
+		
 		<view id="moments">
 			<view class="moments__post" v-for="(post, index) in posts" :key="index" :id="'post-' + index">
 				<view class="post-left" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')"><image class="post_header" :src="post.image_app"></image></view>
 				<view class="post_right">
-					
 					<view class="post_title">
 						<text class="post-username">{{ post.nickname }}</text>
 						<view class="follow" @click.stop="openPopup(post)">
@@ -16,98 +15,101 @@
 						</view>
 					</view>
 
-					<!-- 心签 -->
 					<block v-if="post.type == 1">
+						<!--  -->
 						<view class="heart-sign" @click="pageTo('/pages/dynamic/heartSign')">
-							<view class="heart-sign-time">
-								<text class="type-number">05</text>
-								<text class="type-hanzi">五月</text>
-							</view>
-							<view id="paragraph" class="heart-sign-text">{{ post.desc }}</view>
+							<!-- <image class="heart-sign-img" :src="post.content.images[0]"></image> -->
+							<image class="heart-sign-img" src="/static/youju/s1-2.jpg"></image>
+							<view id="paragraph" class="heart-sign-text">{{ post.desc }}你在凝望深渊时，深渊也在凝望你</view>
 						</view>
 					</block>
 
-					<!-- 人生记录 -->
-					<block v-if="post.type == 2">
+					<block v-else>
+						<view id="paragraph" class="paragraph">{{ post.title }}</view>
+						
 						<!-- 相册 -->
-						<view class=""  v-if="!post.video_url">
-							<view id="paragraph" class="paragraph">{{ post.title }}</view>
-							<view class="thumbnails" v-if="post.img_list.length !== 0">
-								<view
-									:class="post.img_list.length === 1 ? 'my-gallery' : 'thumbnail'"
-									v-for="(image, index_images) in post.img_list"
-									:key="index_images"
-									@tap="clickPic(post.img_list, index_images)"
-								>
-									<image class="gallery_img" lazy-load mode="aspectFill" :src="image" :data-src="image"></image>
-								</view>
+						<view class="thumbnails">
+							<view
+								:class="post.img_list.length === 1 ? 'my-gallery' : 'thumbnail'"
+								v-for="(image, index_images) in post.img_list"
+								:key="index_images"
+								@tap="clickPic(post.img_list, index_images)"
+							>
+								<image class="gallery_img" lazy-load mode="aspectFill" :src="image" :data-src="image"></image>
 							</view>
 						</view>
-
+						
 						<!-- 视频 -->
-						<view class="" v-else>
-							<view id="paragraph" class="paragraph">{{ post.title }}</view>
-							<view class="thumbnails" @click="pageTo('/pages/found/youjuvedeo/youjuVideo?hideAvatar=true')">
-								<view class="my-gallery">
-									<image class="gallery_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image>
-									<!-- <image class="play_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image> -->
-								</view>
+						<view class="thumbnails" v-if="post.content.video_url " @click="pageTo('/pages/found/youjuvedeo/youjuVideo?hideAvatar=true')">
+							<view class="my-gallery">
+								<image class="gallery_img" lazy-load mode="aspectFill" :src="post.video_url" :data-src="image"></image>
+								<image class="play_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image>
 							</view>
 						</view>
 					</block>
-					
 					
 					<view @tap="pageTo(`/pages/found/youju/youju?id=${index + 1}`)" class="address">
-						<text> <text v-if="post.type == 1">推荐心签<text class="yuans"></text></text>{{ post.c_name}}</text>
+						<text>{{ post.aear }}推荐心签</text>
+						<text v-if="post.aear" class="yuans"></text>
+						<image v-if="post.type == 3" class="location" src="/static/dongtai/location.svg"></image>
+						<text v-if=" post.c_name !== ''" >{{ post.c_name }}某心居</text>
 					</view>
-					
-					 <!-- 底部评论 -->
-					 <view class="toolbar">
-					 	<view class="timestamp">{{ post.add_time }}</view>
-					 	<view v-if="post.type == 3" class="right-detail" @click="pageTo('/pages/dynamic/eventDetail')">
-					 		查看详情
-					 		<uni-icons color="#333333" type="forward" size="12"></uni-icons>
-					 	</view>
-						
-						<!-- 控制点赞和评论区域的出现 -->
-					 	<view v-else class="right-dot" @tap="show_win(index, false)">
-					 		<!-- <image src="/static/dongtai/dot.svg"></image> -->
-					 		<uni-icons color="#777" type="more-filled" size="22"></uni-icons>
-					 	</view>
-					 
-						<!-- 点赞和评论区弹窗-->
-					 	<view v-if="post.type !== 3" class="right-window">
-					 		<view class="like" @tap="like(index)">
-					 			<!-- <image src="/static/dongtai/like.svg"></image> -->
-					 			<view class="" style="margin: 0 auto;">
-					 				<uni-icons color="#fff" type="heart" size="17"></uni-icons>
-					 				<text class="like-text">{{ post.islike === 0 ? '赞' : '取消赞' }}</text>
-					 			</view>
-					 		</view>
-					 		<view class="line" style="background-color: #BBB;height: 32upx;width: 2upx;margin-top: 5upx;"></view>
-					 		<view class="comment" @tap="comment(index)">
-					 			<!-- <image src="/static/dongtai/comment.svg"></image> -->
-					 			<view class="" style="margin: 0 auto;">
-					 				<uni-icons color="#fff" type="chat" size="17"></uni-icons>
-					 				<text class="comment-text">评论</text>
-					 			</view>
-					 		</view>
-					 	</view>
-					 </view>
-					 
-					 
-					 
-					
+
+					<!-- 资料条 -->
+					<view class="toolbar">
+						<view class="timestamp">{{ post.add_time }}</view>
+						<view v-if="post.type == 3" class="right-detail" @click="pageTo('/pages/dynamic/eventDetail')">
+							查看详情
+							<uni-icons color="#333333" type="forward" size="12"></uni-icons>
+						</view>
+						<view v-else class="right-dot" @tap="show_win(index, true)">
+							<!-- <image src="/static/dongtai/dot.svg"></image> -->
+							<uni-icons color="#777" type="more-filled" size="22"></uni-icons>
+						</view>
+
+						<view class="right-window">
+							<view class="like" @tap="like(index)">
+								<!-- <image src="/static/dongtai/like.svg"></image> -->
+								<view class="" style="margin: 0 auto;">
+									<uni-icons color="#fff" type="heart" size="17"></uni-icons>
+									<text class="like-text">{{ post.islike === 0 ? '赞' : '取消赞' }}</text>
+								</view>
+							</view>
+							<view class="line" style="background-color: #BBB;height: 32upx;width: 2upx;margin-top: 5upx;"></view>
+							<view class="comment" @tap="comment(index)">
+								<!-- <image src="/static/dongtai/comment.svg"></image> -->
+								<view class="" style="margin: 0 auto;">
+									<uni-icons color="#fff" type="chat" size="17"></uni-icons>
+									<text class="comment-text">评论</text>
+								</view>
+							</view>
+						</view>
+					</view>
+
+					<!-- 赞／评论区 -->
+					<view class="post-footer" v-if="post.like.length > 0">
+						<view class="footer_content" style="margin-top: 0;">
+							<!-- <image class="liked" src="../../static/dongtai/zan.svg"></image> -->
+							<uni-icons color="#777" type="hand-thumbsup" size="14"></uni-icons>
+							<text class="nickname" v-for="(user, index_like) in post.like" :key="index_like">{{ user.username }}</text>
+						</view>
+						<view class="footer_content" v-for="(comment, comment_index) in post.comments.comment" :key="comment_index" @tap="reply(index, comment_index)">
+							<text class="comment-nickname">
+								{{ comment.username }} :
+								<text class="comment-content">{{ comment.content }}</text>
+							</text>
+						</view>
+					</view>
 				</view>
+				<!-- 结束 post -->
 			</view>
 
-			
-
-
-
-
-
-
+			<!-- 评论键盘输入框 -->
+			<view class="foot" v-show="showInput">
+				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
+				<!-- <chat-input @send-message="send_comment" @blur="blur" :placeholder="input_placeholder"></chat-input> -->
+			</view>
+			<view class="uni-loadmore" v-if="showLoadMore">{{ loadMoreText }}</view>
 			<!-- 弹窗 -->
 			<uni-popup ref="popup" type="bottom">
 				<view class="popup">
@@ -128,6 +130,7 @@ import chatInput from '@/components/im-chat/chatinput.vue'; //input框
 import uniPopup from '@/components/uni-popup/uni-popup.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
 const dataList = require('@/utils/index.post.data.json');
+
 
 export default {
 	components: {
@@ -170,8 +173,9 @@ export default {
 		});
 		uni.startPullDownRefresh();
 		this.getDynamicList();
-
-		console.log(dataList.dataList);
+		
+		console.log(dataList.dataList)
+		
 	},
 	onShow() {
 		uni.onWindowResize(res => {
@@ -218,11 +222,11 @@ export default {
 			});
 			if (res.state == 10000) {
 				console.log(res.data);
-
-				// this.posts = res.data;
-				// this.posts.forEach(item => {
-				// 	item.add_time = this.getFormattedTimeString(item.add_time);
-				// });
+				
+				this.posts = res.data;
+				this.posts.forEach(item => {
+					item.add_time = this.getFormattedTimeString(item.add_time);
+				});
 			}
 		},
 		clickPic(imgList, index) {
@@ -281,7 +285,7 @@ export default {
 			// 	return parseInt(monthC) + '月前';
 			// } else if (weekC >= 1) {
 			// 	return parseInt(weekC) + '周前';
-			// }
+			// } 
 			else if (dayC >= 1) {
 				return parseInt(dayC) + '天前';
 			} else if (hourC >= 1) {
@@ -291,18 +295,19 @@ export default {
 			}
 			return '刚刚';
 		},
-
+		
 		// 打开弹窗
 		openPopup(post) {
+			console.log(post)
 			this.attention = post.attention;
 			this.$refs.popup.open();
 		},
-
+		
 		// 关闭弹窗
 		closePopup() {
 			this.$refs.popup.close();
 		},
-
+		
 		show_win(index, flag) {
 			this.posts[this.currentPost].show_window = false;
 			this.currentPost = index;
@@ -314,21 +319,21 @@ export default {
 			if (this.posts[index].islike === 0) {
 				this.posts[index].islike = 1;
 				this.posts[index].like.push({
-					uid: this.posts.comment.user_id,
-					username: ',' + this.posts.comment.nickname
+					uid: this.user_id,
+					username: ',' + this.username
 				});
 			} else {
 				this.posts[index].islike = 0;
 				this.posts[index].like.splice(
 					this.posts[index].like.indexOf({
-						uid: this.posts.comment.user_id,
-						username: ',' + this.posts.comment.nickname
+						uid: this.user_id,
+						username: ',' + this.username
 					}),
 					1
 				);
 			}
 		},
-
+		
 		comment(index) {
 			this.show_win(index, false);
 			this.showInput = true; //调起input框
@@ -361,7 +366,7 @@ export default {
 				})
 				.exec();
 		},
-
+		
 		reply(index, comment_index) {
 			this.is_reply = true; //回复中
 			this.showInput = true; //调起input框
@@ -371,11 +376,11 @@ export default {
 			this.comment_index = comment_index; //评论索引
 			this.focus = true;
 		},
-
+		
 		blur: function() {
 			this.init_input();
 		},
-
+		
 		send_comment: function(message) {
 			if (this.is_reply) {
 				var reply_username = this.posts[this.index].comments.comment[this.comment_index].username;
@@ -391,14 +396,14 @@ export default {
 			});
 			this.init_input();
 		},
-
+		
 		init_input() {
 			this.showInput = false;
 			this.focus = false;
 			this.input_placeholder = '评论';
 			this.is_reply = false;
 		},
-
+		
 		pageTo(url) {
 			uni.navigateTo({
 				url: url
@@ -453,43 +458,21 @@ export default {
 .heart-sign {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
-	padding: 10upx;
+	padding: 16upx;
 	margin-top: 8upx;
-	border-radius: 4upx;
+	background-color: #f1f1f1;
 	box-sizing: border-box;
 	text-overflow: ellipsis;
-	background-color: #f7f7f7;
-	.heart-sign-time {
-		width: 86upx;
-		height: 80upx;
-		margin-right: 20upx;
-		background-color: #ffffff;
-		display: flex;
-		flex-flow: column;
-		text-align: center;
-		justify-content: center;
-		text {
-			color: #000000;
-			font-size: 28upx;
-		}
-		.type-number {
-			font-weight: 900 !important;
-		}
-		.type-hanzi {
-			font-weight: normal;
-		}
+	.heart-sign-img {
+		width: 68upx;
+		height: 68upx;
 	}
 	.heart-sign-text {
-		font-size: 32upx;
-		color: #000000;
-		width: 400upx;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		font-size: 26upx;
+		margin-left: 10upx;
+		line-height: 68upx;
 	}
 }
-
 .liked {
 	position: relative;
 	margin-right: 10upx;
@@ -525,6 +508,7 @@ export default {
 .follow text {
 	margin-right: 10upx;
 	font-size: 28upx;
+
 }
 .paragraph {
 	color: #000000;

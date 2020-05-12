@@ -32,7 +32,7 @@
 						<cover-view class="cover-view-left" :style="isIphoneX ? 'bottom:' + '190upx': '128upx'">
 							<cover-view style="flex-direction: row;">
 								<text class="left-title">@{{ item.nickname }}</text>
-								<text class="left-follow">已关注</text>
+								<text class="left-follow" style="height: 50px width:50px;background-color: #0000FF;"  @click.stop="followStatus($event,item)">已关注</text>
 							</cover-view>
 
 							<text class="left-text">{{ item.desc }}</text>
@@ -215,7 +215,12 @@ export default {
 			this.videoList[this.index].check = !this.videoList[this.index].check;
 			this.videoList = [...this.videoList];
 		},
-
+		
+		followStatus(e,item){
+			e.stopPropagation();
+			console.log("点赞" + e , item)
+		},
+		
 		tapAvater(e) {
 			e.stopPropagation();
 			console.log('this.index:',this.index)
