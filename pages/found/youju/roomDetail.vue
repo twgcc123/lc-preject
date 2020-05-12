@@ -211,6 +211,9 @@
 	}
 </script>
 
+
+
+
 <style  lang="less" scoped>
 	.detail{
 		background-color: #FFFFFF;

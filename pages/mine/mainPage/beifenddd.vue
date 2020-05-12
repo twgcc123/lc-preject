@@ -106,10 +106,7 @@ export default{
 	bottom: 108upx;
 	left: 50%;
 	transform: translateX(-50%);
-	
-	
 }
 
-
-
 </style>
+
