@@ -2,7 +2,7 @@
 <view class="add-guset-info">
 	<view class="container">
 		<view class="add-tip">
-			<view class="title">新增入住人</view>
+			<view class="title">{{EditorsSave?'修改入住人':'新增入住人'}}</view>
 			<view class="dcse">请如实填写入住人信息。</view>
 		</view>
 		<view class="add-info">
@@ -19,13 +19,13 @@
 				 </view>
 				<view class="uni-form-item uni-column">
 					<view class="idnumber">身份证号</view>
-					<input class="uni-input" @input="idnumberF" confirm-type="done" type="idcard" placeholder="请输入身份证号" />
+					<input class="uni-input"  v-model="identity.idnumber"  @input="idnumberF" confirm-type="done" type="idcard" placeholder="请输入身份证号" />
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="idname">证件中的姓名</view>
-					<input class="uni-input" @input="idnameF" confirm-type="done" placeholder="与身份证件姓名一致" />
+					<input class="uni-input" v-model="identity.idname" @input="idnameF" confirm-type="done" placeholder="与身份证件姓名一致" />
 				</view>
-				<view class="submit" @tap="saveinfo">保存</view>
+				<view class="submit" @tap="saveinfo(EditorsSave?'编辑':'新增')">保存</view>
 					<!-- <button form-type="submit" class="submit">保存</button> -->
 			<!-- </form> -->
 		</view>
@@ -42,10 +42,14 @@ export default{
 			title: '证件类型',
 			index:0,
 			array: ['身份证',],
+			identity:{
+				idnumber:'',
+				idname:'',
+			},
 			idtype:"身份证",
-			idnumber:"",
-			idname:"",
-			xgID:null
+			xgID:null,
+			EditorsSave:false,
+			amendID:''
 		}
 	},
 	methods:{
@@ -59,39 +63,71 @@ export default{
 			}
 		},
 		idnumberF(event){
-			this.idnumber = event.detail.value
+			console.log(event)
+			this.identity.idnumber = event.detail.value
 
 		},
 		idnameF(event){
-			this.idname = event.detail.value
+			console.log(event)
+			this.identity.idname = event.detail.value
 
 		},
-		async saveinfo(){
-			if (this.idnumber != '' && this.idname != '') {
-							let user=uni.getStorageSync('USERINFO')
-							let token=user.token
-						    let param = this.$helper.setConfig('&token=' + token + '&id_number=' + this.idnumber+'&type=1'+'&username='+this.idname);
-							let res = await this.$http.request({
-								method: 'post',
-								url: '/index/Lodger/set_lodger',
-								data: {
-									signature: param.signature,
-									timestamp: param.timestamp,
-									token:token,
-									id_number:this.idnumber,
-									type: '1',
-									username:this.idname,
-								
-								}
-							});
-							console.log(res)
-							if(res.state == 10000){
-								
-								  // uni.navigateTo({
-								  // 	url: "/pages/found/youju/roomDetailAddGuest"
-								  // })
+		async saveinfo(data){
+			console.log(data)
+			if (this.identity.idnumber != '' && this.identity.idname != '') {
+				let user=uni.getStorageSync('USERINFO')
+				let token=user.token
+				if(data=='编辑'){
+					let param = this.$helper.setConfig('&token=' + token + '&id_number=' + this.identity.idnumber+'&type=1'+'&username='+this.identity.idname+'&id='+this.amendID);
+						let res = await this.$http.request({
+							method: 'post',
+							url: '/index/Lodger/set_lodger',
+							data: {
+								signature: param.signature,
+								timestamp: param.timestamp,
+								token:token,
+								id_number:this.identity.idnumber,
+								type: '1',
+								username:this.identity.idname,
+								id:this.amendID
 							
-						}
+							}
+						});
+						console.log(res)
+						if(res.state == 10000){
+							
+							  uni.navigateTo({
+							  	url: "/pages/found/youju/roomDetailAddGuest"
+							  })
+						
+					}
+				}else{
+					console.log(122121)
+					let param = this.$helper.setConfig('&token=' + token + '&id_number=' + this.identity.idnumber+'&type=1'+'&username='+this.identity.idname);
+						let res = await this.$http.request({
+							method: 'post',
+							url: '/index/Lodger/set_lodger',
+							data: {
+								signature: param.signature,
+								timestamp: param.timestamp,
+								token:token,
+								id_number:this.identity.idnumber,
+								type: '1',
+								username:this.identity.idname,
+							
+							}
+						});
+						console.log(res)
+						if(res.state == 10000){
+							
+							  uni.navigateTo({
+							  	url: "/pages/found/youju/roomDetailAddGuest"
+							  })
+						
+					}
+				}
+							
+						   
 					
 				
 			}
@@ -100,9 +136,28 @@ export default{
 	computed: {
 	  
 	},
+	onUnload() {
+		 uni.removeStorageSync('identity_information');
+	},
+	onHide(){
+		 uni.removeStorageSync('identity_information');
+	},
+	
+	created() {
+	
+	},
     onLoad () {
- 
+	if(uni.getStorageSync('identity_information')){
+		console.log(uni.getStorageSync('identity_information'))
+		this.EditorsSave=true
+		var identity_information=uni.getStorageSync('identity_information')
+		this.amendID=identity_information.id
+	   this.$set(this.identity,'idnumber',identity_information.id_number)
+	   this.$set(this.identity,'idname',identity_information.username)
+	}else{
+		this.EditorsSave=false
     }
+}
 }
 </script>
 

@@ -31,7 +31,7 @@
 			</view>
 			<view class="detail-time-item" style="text-align: right;">
 				<view class="title">入住人数</view>
-				<view class="num" > 2 位</view>
+				<view class="num" > {{guestNub}} 位</view>
 			</view>
 		</view>
 		<view class="line-throug"></view>
@@ -49,8 +49,9 @@
 				<view class="" v-for="(item,index) in userinfo" :key="index" v-if="usnerinfo.length != 0">
 					<view class="user-item">
 						<!-- <text class="idtype">{{item.idtype}}</text> • -->
+						<text class="idcard">{{item.username}}</text>
 						<text class="name">{{item.id_number}}</text>
-						<text class="idcard">{{item.idcard}}</text>
+						
 					</view>
 				</view>
 				<view class="" v-else>添加新的房客信息</view>
@@ -65,7 +66,7 @@
 			</view>
 		</view>
 	</view>
-	<payFooter :price="totalMoney" night="1" ></payFooter>
+	<payFooter :price="detailItem.sales_price" night="1" ></payFooter>
 </view>
 </template>
 
@@ -112,7 +113,8 @@
 				detailData:[
 				
 				],
-				appraise:uni.getStorageSync('appraise')
+				appraise:uni.getStorageSync('appraise'),
+				guestNub:''
 			};
 		},
 		methods:{
@@ -135,15 +137,11 @@
 						if(res.state == 10000){
 						 console.log('888888',res)
 						 this.detailItem=res.data.house
-						 this.userinfo=res.data.lodger
 					}
 				},
 			 totalMoneys() {
 				 var totalMoney = 0
-				  this.detailItem.forEach((item) => {
-					  totalMoney += Number(item.low_price)
-				  })
-				this.totalMoney = totalMoney
+				this.totalMoney += Number(detailItem.sales_price)
 			  },
 			  // more(id){
 				 //  console.log(id)
@@ -175,9 +173,15 @@
 			// 	console.log(this.usnerinfo)
 			// })  
 		},
+		onUnload() {
+			 uni.removeStorageSync('storage_saveinfo');
+		},
+		onHide(){
+			 uni.removeStorageSync('storage_saveinfo');
+		},
 		
 		onLoad :function(option) {
-			let did = (option.id = '' ? '1' : option.id);
+			var did=uni.getStorageSync('housing');
 			this.getPayList(did);
 			setTimeout(function () {
 				uni.hideLoading();
@@ -186,9 +190,11 @@
 			uni.getStorage({
 				key: 'storage_saveinfo',
 				success: function (res) {
-					// console.log(res.data);
+					console.log('77777',res.data);
 					let userinfo = res.data
 					that.userinfo = userinfo
+					that.guestNub=that.userinfo.length
+					console.log(that.guestNub)
 				}
 			});
 			//获取入住离店日期
@@ -213,16 +219,17 @@
 		background-color: #FFFFFF;
 	}
 	.room-detail{
-		padding: 24upx 48upx;
-		.header-title{
-			margin-top: 24upx;
+		padding: 20upx 40upx;
+		.header{
 			color: #444444;
-			font-size: 56upx;
-			font-weight: bold;
+			font-size: 44upx;
+			// font-weight: 500;
+			text-align: left;
+			margin-bottom: 20upx;
 		}
 		.detail-item{
 			display: flex;
-			margin-top: 58upx;
+			margin-top: 20upx;
 			image{
 				width: 224upx;
 				height: 152upx;
@@ -233,39 +240,37 @@
 				margin-left: 20upx;
 				.text-title{
 					color: rgba(16, 16, 16, 1);
-					font-size: 28upx;
+					font-size: 24upx;
 				}
 				.text-money{
-					margin:18upx 0;
+					margin:6upx 0;
 					.text-low-money{
 						color: rgba(51, 51, 51, 1);
-						font-size: 32upx;
+						font-size: 26upx;
 						margin-right: 10upx;
 						font-weight: bold;
 					}
 					.text-height-money{
 						color: rgba(153, 153, 153, 1);
-						font-size: 24upx;
+						font-size: 22upx;
 						text-decoration: line-through;
 						margin-right: 5upx;
 					}
 					.night{
 						color: rgba(153, 153, 153, 1);
-						font-size: 24upx;
-						color: #666666;
-						font-weight: bold;
+						font-size: 22upx;
 					}
 				}
 				.detail-item-pj{
 					display: flex;
 					align-items: center;
-					font-size: 24upx;
 					.uni-rate{
 						margin-top: 3upx;
 					}
 					.rote{
 						margin-left: 10upx;
 						color: rgba(85, 85, 85, 1);
+						font-size: 22upx;
 					}
 				}
 			}
@@ -277,26 +282,22 @@
 				text-align: center;
 				.title{
 					color: rgba(102, 102, 102, 1);
-					font-size: 30upx;
+					font-size: 22upx;
 					margin-bottom: 15upx;
 				}
 				.into,.out,.num{
 					color: rgba(0, 0, 0, 1);
-					font-size: 36upx;
-					font-weight: bold;
+					font-size: 28upx;
 				}
 			}
 		}
 		.detail-money{
+			padding: 6upx 0;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			color: rgba(51, 51, 51, 1);
-			font-size: 36upx;
-			.detail-money-tall{
-				font-weight: bold;
-				color: #000000;
-			}
+			font-size: 28upx;
 		}
 		.detail-info{
 			.info{
@@ -305,11 +306,9 @@
 				font-size: 28upx;
 				.dese{ 
 					color: rgba(51, 51, 51, 1);
-					font-size: 36upx;
 				}
 				.choose{
 					color: rgba(236, 154, 68, 1);
-					font-size: 36upx;
 				}
 			}
 			.info-add{
@@ -327,7 +326,7 @@
 		.tip{
 			margin-top: 12upx;
 			color: rgba(102, 102, 102, 1);
-			font-size: 28upx;
+			font-size: 24upx;
 			.works{
 				font-weight: bold;
 			}
@@ -340,9 +339,9 @@
 		margin-bottom: 150upx;
 	}
 	.line-throug{
-		height: 2upx;
+		height: 1upx;
 		width: 100%;
 		background-color: #DDDDDD;
-		margin: 48upx 0;
+		margin: 20upx 0;
 	}
 </style>

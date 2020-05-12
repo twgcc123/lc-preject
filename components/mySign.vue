@@ -4,8 +4,8 @@
 			<view class="list-item" v-for="(item,index) in signList" :key="index">
 				<view class="list-item-top">
 					<view class="list-item-top-left">
-						<image class="list-item-top-left-avatar" :src="item.avatar"></image>
-						<view class="list-item-top-left-nikename">{{ item.username }}</view>
+						<image class="list-item-top-left-avatar" :src="item.image_app"></image>
+						<view class="list-item-top-left-nikename">{{ item.nickname }}</view>
 					</view>
 					<view class="list-item-top-right">
 						<image class="list-item-top-right-dot" src="/static/dongtai/dot_black.svg"></image>
@@ -20,9 +20,9 @@
 				</view>
 				<view class="list-item-bottom-bar">
 					<view class="list-item-bottom-bar-left">
-						<text class="list-item-bottom-bar-left-comment">0 评论</text>
-						<text class="list-item-bottom-bar-left-zan">0 点赞</text>
-						<text class="list-item-bottom-bar-left-conllect">0 收藏</text>
+						<text class="list-item-bottom-bar-left-comment">{{item.comment_num}} 评论</text>
+						<text class="list-item-bottom-bar-left-zan">{{item.look_num}}点赞</text>
+						<text class="list-item-bottom-bar-left-conllect">{{item.favorite_num}} 收藏</text>
 					</view>
 					<view class="list-item-bottom-bar-right">
 						<view class="list-item-bottom-bar-right-imgbox" @tap="tapZan(item)">
@@ -37,10 +37,10 @@
 					</view>
 				</view>
 				<view class="list-item-bottom-date">
-					<view class="list-item-bottom-date-time">{{ item.time }}</view>
+					<view class="list-item-bottom-date-time">{{ item.character_time }}</view>
 					<view class="list-item-bottom-public">
 						<image class="list-item-bottom-public-icon" src="/static/dongtai/head.svg"></image>
-						<view class="list-item-bottom-public-text">私密</view>
+						<view class="list-item-bottom-public-text">{{ item.access==0?'公开':(item.access==1?'仅亲友可见':'私密') }}</view>
 					</view>
 				</view>
 			</view>
@@ -109,12 +109,33 @@
 			};
 		},
 		methods:{
-			tapZan(item){
-				item.is_zan = !item.is_zan;
+	 	tapZan(item){
+				
+				let token=uni.getStorageSync('token')
+								let param = this.$helper.setConfig('&token='+token+'&id=' + item.id);
+									let res =  this.$http.request({
+										method: 'post',
+										url: '/users/Mycollection/get_sign_favorite_list',
+										data: {
+											signature: param.signature,
+											timestamp: param.timestamp,
+											token:token,
+											id:item.id,
+										
+										}
+									});
+									console.log(res)
+									if(res.state == 10000){
+				                    console.log(res)
+								
+									
+								}
+				
 			},
 			tapCollect(item){
 				item.is_collect = !item.is_collect;
-			}
+			},
+		
 		}
 	}
 </script>

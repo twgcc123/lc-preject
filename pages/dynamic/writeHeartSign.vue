@@ -1,7 +1,7 @@
 <template>
 	<view class="container" :style="[{paddingBottom: isIphoneX ? '42px': '8px'}]">
 		<view class="navbar" :style="[{paddingTop: hasNotchInScreen ? '44px' : '20px'}]">
-			<view class="navbar-icon" @click="pageTo()">
+			<view class="navbar-icon" @click="back()">
 				<uni-icons type="closeempty" size="24"></uni-icons>
 			</view>
 			<view class="navbar-title">写心签</view>
@@ -92,11 +92,12 @@
 			closePopup() {
 				this.$refs.popup.close();
 			},
+			back(){
+				console.log("00000")
+				uni.navigateBack({})
+			},
 			pageTo(url){
-				if(!url){
-					uni.navigateBack();
-					return;
-				}
+			
 				uni.navigateTo({
 					url: url
 				})
@@ -121,6 +122,7 @@
 		background-color: #FFFFFF;
 		.navbar-icon{
 			padding-left: 40upx;
+			z-index: 5;
 			// position: relative;
 		}
 		.navbar-title{
