@@ -21,7 +21,7 @@
 		</view>
 		<view class="line-throug"></view>
 		<view class="detail-time">
-			<view class="detail-time-item" style="text-align: left;">
+			<view class="detail-time-item">
 				<view class="title">入住日期</view>
 				<view class="into" > {{choiceDate[0].re}} </view>
 			</view>
@@ -29,7 +29,7 @@
 				<view class="title">退房日期</view>
 				<view class="out" > {{choiceDate[1].re}} </view>
 			</view>
-			<view class="detail-time-item" style="text-align: right;">
+			<view class="detail-time-item">
 				<view class="title">入住人数</view>
 				<view class="num" > 2 位</view>
 			</view>
@@ -43,7 +43,7 @@
 		<view class="detail-info">
 			<view class="info">
 				<text class="dese">房客信息</text>
-				<text class="choose" @tap="pageTo('/pages/found/youju/roomDetailAddGuest')">修改</text>
+				<text class="choose" @tap="pageTo('/pages/found/youju/roomDetailAddGuest')">选择</text>
 			</view>	
 			<view class="info-add">
 				<view class="" v-for="(item,index) in userinfo" :key="index" v-if="usnerinfo.length != 0">
@@ -204,6 +204,9 @@
 		} 
 	}
 </script>
+
+
+
 
 <style  lang="less" scoped>
 	.detail{
