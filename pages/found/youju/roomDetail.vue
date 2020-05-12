@@ -21,7 +21,7 @@
 		</view>
 		<view class="line-throug"></view>
 		<view class="detail-time">
-			<view class="detail-time-item">
+			<view class="detail-time-item" style="text-align: left;">
 				<view class="title">入住日期</view>
 				<view class="into" > {{choiceDate[0].re}} </view>
 			</view>
@@ -29,7 +29,7 @@
 				<view class="title">退房日期</view>
 				<view class="out" > {{choiceDate[1].re}} </view>
 			</view>
-			<view class="detail-time-item">
+			<view class="detail-time-item" style="text-align: right;">
 				<view class="title">入住人数</view>
 				<view class="num" > 2 位</view>
 			</view>
