@@ -3,16 +3,16 @@
 		<block v-if="type === '1'">
 			<view class="sign" :style="[{width: width,height: height,marginTop: marginTop}]">
 				<view class="sign-left">
-					<view class="sign-left-top">{{ sign.time }}</view>
-					<view class="sign-left-bottom">{{ sign.mark == 1 ? '原创' : '引用'}}</view>
+					<view class="sign-left-top">{{ sign.character_time }}</view>
+					<view class="sign-left-bottom">{{ sign.is_original == 1 ? '原创' : '引用'}}</view>
 				</view>
 				<view class="sign-middle">
-					<view class="sign-middle-content">{{ sign.content }}</view>
+					<view class="sign-middle-content">{{ sign.desc }}</view>
 				</view>
 				<view class="sign-right">
-					<view class="sign-right-top">{{ sign.title }}</view>
+					<!-- <view class="sign-right-top">{{ sign.desc }}</view> -->
 					<view class="sign-right-bottom">
-						<text class="sign-right-bottom-name">{{ sign.author }}</text><text class="sign-right-bottom-text">说</text>
+						<text class="sign-right-bottom-name">{{ sign.title }}</text><text class="sign-right-bottom-text">说</text>
 					</view>
 				</view>
 			</view>
@@ -20,11 +20,11 @@
 		<block v-else>
 			<view class="sign2" :style="[{width: width,height: height,marginTop: marginTop}]">
 				<view class="sign-left2">
-					<view class="sign-left-top2">{{ sign.time }}</view>
-					<view class="sign-left-bottom2">{{ sign.mark == 1 ? '原创' : '引用'}}</view>
+					<view class="sign-left-top2">{{ sign.character_time }}</view>
+					<view class="sign-left-bottom2">{{ sign.is_original == 1 ? '原创' : '引用'}}</view>
 				</view>
 				<view class="sign-middle2">
-					<view class="sign-middle-content2">{{ sign.content }}</view>
+					<view class="sign-middle-content2">{{ sign.desc }}</view>
 				</view>
 				<view class="sign-right2">
 					<view class="sign-right-top2">{{ sign.title }}</view>

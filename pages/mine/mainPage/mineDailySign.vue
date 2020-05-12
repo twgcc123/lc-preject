@@ -15,7 +15,7 @@
 			<scroll-view class="swiper-tab" scroll-x :scroll-left="scrollLeft" @scroll='scroll' :scroll-with-animation="true">
 				<view class="swiper-tab-list" v-for="(item,index) in signList" :key="item.id">
 					<view class="swiper-tab-list-item">
-						<!-- <heart-sign :sign="item" marginTop="188rpx" width="594rpx" height="936rpx"></heart-sign> -->
+						<heart-sign :sign="item" marginTop="188rpx" width="594rpx" height="936rpx"></heart-sign>
 					</view>
 				</view>
 			</scroll-view>
