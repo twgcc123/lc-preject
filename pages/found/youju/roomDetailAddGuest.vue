@@ -21,12 +21,12 @@
 			>
 				<view class="scroll-view-item">
 					<view class="item" v-for="(item,index) in gusstInfo" :key="index">
-						<image class="check-img" @tap="checked(item)" :src="item.status == true ? '/static/youju/gou4.svg':'/static/youju/gou3.svg'"></image>
+						<image class="check-img" @tap="checked(index)"  :src="item.status == true ? '/static/youju/gou4.svg':'/static/youju/gou3.svg'"></image>
 						<view class="info">
 							<view class="name">{{item.username}}</view>
 							<view class="idcard">{{item.type}} • {{item.id_number }} </view>
 						</view>
-						<view class="edit">
+						<view class="edit" @click="skipTo(item)">
 							<uni-icons type="arrowright" color="#cccccc" size="18"></uni-icons>
 						</view>
 					</view>
@@ -53,27 +53,7 @@ export default {
 				"content":"根据有关部门规定，所有在中国预订住宿的旅客都必须提供以下信息。作为中国居民，您的信息将由爸妈都好存储并处理。完成本次预订，您同意爸妈都好向中国政府披露您的信息而不向您提供进一步通知。"
 			},
 			gusstInfo:[
-				{
-					"id":"01",
-					"status":true,
-					"idtype":"身份证",
-					"name":"梅西",
-					"idcard":"450866666600044636"
-				},
-				{
-					"id":"02",
-					"status":false,
-					"idtype":"户口簿",
-					"name":"贝克汉姆",
-					"idcard":"4508811698014611"
-				},
-				{
-					"id":"03",
-					"status":true,
-					"idtype":"身份证",
-					"name":"李白",
-					"idcard":"1102102000103366"
-				},
+	
 			],
 			scrollTop: 0,
 			old: {
@@ -82,27 +62,38 @@ export default {
 		};
 	},
 	methods:{
-		//添加乘客
-				async addPassengers(id){
-					let param = this.$helper.setConfig('&id=' + id);
-					console.log(param.signature,param.timestamp)
-					let res = await this.$http.request({
-						method: 'post',
-						url: '/index/Community/get_house_particulars',
-						header: {
-						'content-type': 'application/json'
-						},
-						data: {
-							signature: param.signature,
-							timestamp: param.timestamp,
-							id: id,
-						}
-					});
-					if(res.state == 10000){
-					
+		//房客信息列表
+		async tenantList(id){
+			let user=uni.getStorageSync('USERINFO')
+			let token=user.token
+				let param = this.$helper.setConfig('&token=' + token + '&id=' + id);
+				console.log(param.signature,param.timestamp)
+				let res = await this.$http.request({
+					method: 'post',
+					url: '/index/Confirm/order_particulars',
+					data: {
+						signature: param.signature,
+						timestamp: param.timestamp,
+						token:token,
+						id: id,
+					}
+				});
+				console.log('11111',res)
+				if(res.state == 10000){
+		        this.gusstInfo=res.data.lodger
+				for (var i = 0; i < this.gusstInfo.length; i++) {
+					if(this.gusstInfo[i].type=='1'){
+						console.log(22121)
+						this.gusstInfo[i].type='身份证'
+						this.$set(this.gusstInfo[i],'status',false)
+					}
 					
 				}
-			},
+				console.log('1111',this.gusstInfo)
+				
+				
+			}
+		},
 		upper: function(e) {
 			// console.log(e)
 		},
@@ -125,9 +116,24 @@ export default {
 		},
 		
 		// 选中客人信息
-		checked(item){
-			item.status = !item.status
+		checked(index){
+
+			if(this.gusstInfo[index].status==false){
+				this.$set(this.gusstInfo[index], 'status', true)
+			}else{
+				this.$set(this.gusstInfo[index], 'status', false)
+			}
+			
+			// this.gusstInfo[index].status=!this.gusstInfo[index].status
+
 		},
+	skipTo(item){
+		console.log(item)
+		uni.setStorageSync('identity_information', item);
+		uni.navigateTo({
+			url: `/pages/found/youju/roomDetailAddGuestInfo`
+		});
+	},
 		
 		goBack(){
 			uni.navigateBack()
@@ -141,19 +147,23 @@ export default {
 					obj.push(item)
 				}
 			})
-			console.log(obj)
-			if(obj.length != 0) {
-				uni.setStorage({
-				    key: 'storage_saveinfo',
-				    data: obj,
-				    success: function () {
-				        console.log('success');
-						uni.showLoading({title: '加载中'})
-				    },
-				});	
-				uni.navigateTo({url:"./roomDetail"})
+			console.log('12212121',obj)
+		if(obj.length > 2){
+				uni.showToast({title: '不能超过两位',duration: 2000});
+			}else if(obj.length<0){
+				uni.showToast({title: '最少选择一位',duration: 2000});
+			}else{
+					uni.setStorage({
+					    key: 'storage_saveinfo',
+					    data: obj,
+					    success: function () {
+					        console.log('success');
+							uni.showLoading({title: '加载中'})
+					    },
+					});	
+					uni.navigateTo({url:"./roomDetail"})
 			}
-			uni.showToast({title: '至少选择一位',duration: 2000});
+			
 		},
 		// 怎加客人信息
 		addGuset(){
@@ -185,18 +195,8 @@ export default {
 		    uni.hideLoading();
 		}, 300);
 		var that = this
-		uni.getStorage({
-			key: 'tenantInformation',
-			success: function (res) {
-				console.log(res);
-				that.gusstInfo=res.data.lodger
-				that.gusstInfo.forEach((item)=>{
-					item.status==false
-				})
-				
-				
-			}
-		});
+	 var did=uni.getStorageSync('housing');
+	 this.tenantList(did)
 		uni.getStorage({
 		    key: 'storage_info',
 		    success: function (res) {

@@ -68,14 +68,15 @@ export default{
 			});
 			console.log(res)
 			if(res.state == 10000){
-				// uni.setStorageSync('USERINFO',);
-				uni.setStorage({
-				    key: 'USERINFO',
-				    data: res.data.user,
-				    success: function () {
-				        console.log('success');
-				    }
-				});
+				uni.setStorageSync('USERINFO',res.data.user);
+				uni.setStorageSync('token',res.data.user.token);
+				// uni.setStorage({
+				//     key: 'USERINFO',
+				//     data: res.data.user,
+				//     success: function () {
+				//         console.log('success');
+				//     }
+				// });
 				this.$token = res.data.user.token;
 				this.switchTab('/pages/mine/mine');
 			}

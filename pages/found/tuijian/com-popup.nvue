@@ -30,6 +30,9 @@
 			<view class="uni-form-item uni-column footer-left">
 				<input class="uni-input" adjust-position="false" @focus="onFocus" @blur="onBlur" type="text" @confirm="sendMessge" v-model="content" :focus="focus" placeholder="请文明评论,说点好听的～" />
 			</view>
+				<view class="footer-right">
+						<view id='msg-type' class="send-comment" @tap="sendMessge">发送</view>
+					</view>
 		</view>
 	</view>
 </template>
@@ -342,5 +345,13 @@
 		border-radius: 30upx;
 		color: #333 !important;
 		margin: 0 10upx;
+	}
+	.footer-right {
+		width: 120upx;
+		height: 80upx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #1482D1;
 	}
 </style>

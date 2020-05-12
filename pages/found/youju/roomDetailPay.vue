@@ -19,13 +19,11 @@
 				type: String,
 				default: ''
 			},
-			night: {
-				type: String,
-				default: ''
-			},
+		
 		},
 		data() {
 			return {
+			  night:uni.getStorageSync('inAll')
 			};
 		},
 		methods:{
@@ -42,6 +40,10 @@
 				// });	
 				
 			}
+		},
+		onLoad() {
+
+		
 		}
 	}
 </script>

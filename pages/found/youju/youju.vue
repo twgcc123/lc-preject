@@ -146,7 +146,7 @@
 					</view>
 					<!-- 广告 -->
 					<view class="advertising-list" v-if="advertising">
-						<view class=""><image class="swiper-item" src="http://bmdh.lcpower.cn/4f800202004261529045399.jpg"></image></view>
+						<view class=""><image class="swiper-item" :src="advertising.image"></image></view>
 						<view class="advertising-test">{{ advertising.advert_name }}</view>
 						<view class="advertising-check" @click="goAdvertising(advertising.vice_title)">立即查看</view>
 					</view>
@@ -204,6 +204,7 @@ export default {
 	onLoad: function(option) {
 		console.log('9999999', option);
 		let did = (option.id = '' ? '1' : option.id);
+		console.log('8888',did)
 		// 头部调用
 		// this.getRoomHeader(did);
 		// 房间列表调用
@@ -226,8 +227,10 @@ export default {
 	// },
 
 	methods: {
+
 		//获取社区详情
 		async getCommunityList(id) {
+			console.log('44444',id)
 			let param = this.$helper.setConfig('&id=' + id);
 			let res = await this.$http.request({
 				method: 'post',
@@ -238,6 +241,7 @@ export default {
 					id: id
 				}
 			});
+			console.log('777777',res)
 			if (res.state == 10000) {
 				console.log('3333333333333333333333', res);
 				this.house = res.data.community;

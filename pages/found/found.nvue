@@ -58,6 +58,7 @@
 		onLoad() {
 			this.getVideoList();
 			this.getHotelList();
+			this.ceshi();
 		},
 		onShow() {
 			uni.setStorage({
@@ -140,6 +141,14 @@
 					})
 				}) 
 				return promise
+			},
+			ceshi(){
+				uni.getStorage({
+				    key: 'USERINFOe',
+				    success: function (res) {
+				        console.log('5555',res);
+				    }
+				});
 			},
 			goDetail(id){
 				console.log(id) // id = 1

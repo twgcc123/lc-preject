@@ -12,13 +12,14 @@
 			</view>
 		</view>
 		<view class="content">
-			<scroll-view class="swiper-tab" scroll-x :scroll-left="scrollLeft" :scroll-with-animation="true">
+			<scroll-view class="swiper-tab" scroll-x :scroll-left="scrollLeft" @scroll='scroll' :scroll-with-animation="true">
 				<view class="swiper-tab-list" v-for="(item,index) in signList" :key="item.id">
 					<view class="swiper-tab-list-item">
-						<heart-sign :sign="item" marginTop="188rpx" width="594rpx" height="936rpx"></heart-sign>
+						<!-- <heart-sign :sign="item" marginTop="188rpx" width="594rpx" height="936rpx"></heart-sign> -->
 					</view>
 				</view>
 			</scroll-view>
+			
 		</view>
 		
 		<!-- 底部tabbar -->
@@ -66,9 +67,35 @@ export default{
 			]
 		}
 	},
+	onLoad() {
+		this.getSignList()
+	},
 	methods:{
 		onClickTab(index) {
 			this.activeTab = index;
+		},
+		scroll(e){
+			console.log(e)
+		},
+		//获取心签列表
+		async getSignList() {
+	        let token=uni.getStorageSync('token')
+			let param = this.$helper.setConfig('&token=' + token+'&page=1');
+			let res = await this.$http.request({
+				method: 'post',
+				url: '/users/Hearttosign/heart_to_sign_list',
+				data: {
+					signature: param.signature,
+					timestamp: param.timestamp,
+					token: token,
+					page:'1'
+				}
+			});
+			console.log('777777',res)
+			if (res.state == 10000) {
+				this.signList=res.data
+		
+			}
 		},
 		/**
 		 * 跳转页面

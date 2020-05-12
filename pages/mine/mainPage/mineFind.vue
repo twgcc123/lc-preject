@@ -77,6 +77,9 @@
 		onLoad() {
 			this.getList();
 			console.log(this.hasNotchInScreen)
+			this.myFavorite();
+			this.myApartmentList()
+			this.myvodioList()
 		}, 
 		onReachBottom() {
 			this.page++;
@@ -84,6 +87,63 @@
 			this.getList();
 		},
 		methods: {
+			//获取我的收藏日签列表
+			async myFavorite() {
+				let token=uni.getStorageSync('token');
+				let param = this.$helper.setConfig('&token='+token+'&page='+'1');
+				let res = await this.$http.request({
+					method: 'post',
+					url: '/users/Mycollection/get_sign_favorite_list',
+					data: {
+						signature: param.signature,
+						timestamp: param.timestamp,
+						token: token,
+						page: '1'
+					}
+				});
+				if (res.state == 10000) {
+					console.log('3333333333333333333333', res);
+					
+				}
+			},
+			//获取我的收藏视频列表
+			async myvodioList() {
+				let token=uni.getStorageSync('token');
+				let param = this.$helper.setConfig('&token='+token+'&page='+'1');
+				let res = await this.$http.request({
+					method: 'post',
+					url: '/users/Mycollection/get_house_favorite_list',
+					data: {
+						signature: param.signature,
+						timestamp: param.timestamp,
+						token: token,
+						page: '1'
+					}
+				});
+				if (res.state == 10000) {
+					console.log('3333333333333333333333', res);
+					
+				}
+			},
+			//获取我的收藏房间列表
+			async myApartmentList() {
+				let token=uni.getStorageSync('token');
+				let param = this.$helper.setConfig('&token='+token+'&page='+'1');
+				let res = await this.$http.request({
+					method: 'post',
+					url: '/users/Mycollection/get_sign_favorite_list',
+					data: {
+						signature: param.signature,
+						timestamp: param.timestamp,
+						token: token,
+						page: '1'
+					}
+				});
+				if (res.state == 10000) {
+					console.log('3333333333333333333333', res);
+					
+				}
+			},
 			
 			handlerMenu(index){
 				this.activeTab = index

@@ -219,7 +219,7 @@
 			console.log('9999999',option)
 			let did = (option.id = '' ? '1' : option.id);
 			this.getParticularsList(did);
-	
+	       uni.setStorageSync('housing', did);
 		},
 		methods:{
 		
@@ -236,6 +236,8 @@
 				        console.log('success');
 				    }
 				});
+			 uni.setStorageSync('inAll', dayCount);
+			 console.log(dayCount)
 				console.log(choiceDate[0].re + '  到 ' + choiceDate[1].re)
 				console.log(choiceDate[0].re + '  到 ' + choiceDate[1].re + '  共 ' + dayCount + ' 晚');
 			},
@@ -256,6 +258,7 @@
 								}
 							});
 							if(res.state == 10000){
+								console.log(res)
 								this.room=res.data.house;
 								this.detailList=res.data.house.details_attr
 								this.otherlist=res.data.directs
@@ -264,6 +267,7 @@
 								// this.appraise=res.data.house.appraise
 								this.housingID=Number(res.data.house.id)
 								uni.setStorageSync('appraise', res.data.house.appraise);
+							
 							
 						}
 					},
