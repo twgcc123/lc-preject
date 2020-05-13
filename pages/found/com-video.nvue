@@ -58,7 +58,7 @@
 							</cover-view>
 							
 							<cover-view @click.stop="tapLove(item)" class="img" style="margin-top: 40upx;">
-								<cover-image class="right-icon" :src="isShow1==0? '../../static/youju/love.png' : '../../static/youju/love_red.png'"></cover-image>
+								<cover-image class="right-icon" :src="item.video_likenum==0? '../../static/youju/love.png' : '../../static/youju/love_red.png'"></cover-image>
 								<text class="mask-right-text">{{item.favorite_num}}</text>
 								<text class="right-text">{{item.favorite_num}}</text>
 							</cover-view>
@@ -281,9 +281,12 @@ export default {
 							console.log('55555',res)
 							 this.isShow1=res.data.data.isShow
 							  if(this.isShow1==1){
-								  item.favorite_num+=Number(1)
+								  let favorite_num=Number(item.favorite_num)
+								  item.favorite_num=favorite_num+=Number(1)
+								  item.video_likenum=1
 							  }else{
 								  item.favorite_num--
+								   item.video_likenum=0
 							  }
 						}
 						resolve()

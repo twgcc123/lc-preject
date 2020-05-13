@@ -1,19 +1,20 @@
 <template>
 	<view class="know-list">
-		<view v-for="(item, index) in list" :key="index" >
-			<view class="may-nowk-title">{{item.title}}</view>
-			<view class="list" v-for="(user, index) in item.user" :key="index" >
+		<!-- 新的关注 -->
+		<view>
+			<view class="may-nowk-title">可能认识</view>
+			<view class="list" v-for="(item, index) in list" :key="index" >
 				<view class="list-left" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')">
-					<image class="advada_img" :src="user.advada_img"></image>
+					<image class="advada_img" :src="item.image_app"></image>
 				</view>
 				<view class="list-right">
-					<text class="name" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')">{{ user.name }}</text>
-					<view class="" @tap="guanzhu(user)">
-						<view class="guanzhu0" v-if="user.status">
-							<text style="font-size: 36upx;font-weight: normal;">+</text>
-							<text>关注</text>
+					<text class="name" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')">{{ item.nickname }}</text>
+					<view class="" @tap="guanzhu(item)">
+						<view :class="[item.attention=='0'?'guanzhu0':'guanzhu1']" >
+							<text v-if="item.attention=='0'" style="font-size: 36upx;font-weight: normal;">+</text>
+							<text @clcik.stop="switchState(item.attention)">{{item.attention=='0' ? '关注' :(item.attention=='2' ? '相互关注':'已关注')}}</text>
 						</view>
-						<view class="guanzhu1" v-else>已关注</view>
+						<!-- <view class="guanzhu1" v-else>已关注</view> -->
 					</view>
 				</view>
 			</view>
@@ -39,6 +40,31 @@ export default {
 				url: url
 			});
 		},
+		async switchState(item){
+			var is_show=item.attention==0?1:0
+			let user=uni.getStorageSync('USERINFO')
+			 let token=user.token
+							let param = this.$helper.setConfig('&token='+token+'&userby_id=' + item.user_id+'&is_show='+is_show);
+								let res = await this.$http.request({
+									method: 'post',
+									url: '/index/Video/video_attention',
+									data: {
+										signature: param.signature,
+										timestamp: param.timestamp,
+										token:token,
+										userby_id:e.user_id,
+										is_show:is_show
+									
+									}
+								});
+								console.log(res)
+								if(res.state == 10000){
+			                    item.attention=res.data
+								// this.$set(e,'video_attention',res.data)
+							
+								
+							}
+		}
 		
 	}
 };

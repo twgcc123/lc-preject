@@ -13,8 +13,8 @@
 		<view class="agree-list">
 			<view class="list-item" v-for="(item,index) in list" :key="index" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')">
 				<view class="list-left">
-					<image :src="item.advada_img" mode=""></image>
-					<text>{{item.name}}</text>
+					<image :src="item.image_app" mode=""></image>
+					<text>{{item.nickname}}</text>
 				</view>
 				<view class="list-right">
 					<text class="agree" v-if="item.status == 0">同意</text>
@@ -72,12 +72,34 @@ export default {
 		goBack(){
 			uni.navigateBack({})
 		},
+		async getApplyList() {
+		    let token=uni.getStorageSync('token')
+			let param = this.$helper.setConfig('&token=' + token);
+			let res = await this.$http.request({
+				method: 'post',
+				url: '/users/Linkman/new_family_list',
+				data: {
+					signature: param.signature,
+					timestamp: param.timestamp,
+					token: token
+				}
+			});
+			console.log('55555',res)
+			if (res.state == 10000) {
+				this.list=res.data
+			   
+			}
+		
+		},
 		
 		pageTo(url) {
 			uni.navigateTo({
 				url: url
 			});
 		},
+	},
+	onLoad(){
+		this.getApplyList();
 	}
 };
 </script>

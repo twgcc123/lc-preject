@@ -28,7 +28,7 @@
 				src="/static/youju/play.svg"></cover-image>
 				
 				<cover-view class="cover-view-left">
-					<cover-view class="view-left-text">@ {{ item.nickname }} <view class="guanzhu-text" @click.stop="attention(item)">{{ isShow == '0'?'关注':'已关注' }}</view></cover-view>
+					<cover-view class="view-left-text">@ {{ item.nickname }} <view class="guanzhu-text" @click.stop="attention(item)">{{ item.video_attention == '0'?'关注':'已关注' }}</view></cover-view>
 					<cover-view class="view-left-text-content">
 						<cover-view class="text-content-text">{{ item.desc }}</cover-view>
 						<!-- <cover-view class="text-content-text">这是一个“普通”的示范，示范了内容的字体间隔、段落。如果最多，可以拥有3行这是一个“普通”的示范，示范了内容的字体间隔、段落。如果最多，可以拥有3行</cover-view> -->
@@ -55,7 +55,7 @@
 					<cover-view class="right-follow">+</cover-view>
 					<cover-image 
 					style="position:relative;top:-20upx;"
-					:src="isShow1==0 ? '../static/youju/aixin.png' : '../static/youju/aixin_red.png' " 
+					:src="item.video_likenum==0 ? '../static/youju/aixin.png' : '../static/youju/aixin_red.png' " 
 					class="img-left"  @click.stop ="tapLove(item)"></cover-image>
 					<cover-view class="right-text">{{item.comment_num}}</cover-view>
 					<cover-image src="/static/youju/pinglun.png" 
@@ -185,7 +185,7 @@ export default {
 			this.show_comment = true
 		},
 		async attention(e){
-		var is_show=this.isShow==0?1:0
+		var is_show=e.video_attention==0?1:0
 		let user=uni.getStorageSync('USERINFO')
 		 let token=user.token
 						let param = this.$helper.setConfig('&token='+token+'&userby_id=' + e.user_id+'&is_show='+is_show);
@@ -203,7 +203,8 @@ export default {
 							});
 							console.log(res)
 							if(res.state == 10000){
-		                    this.isShow=res.data
+		                    // e.video_attention=res.data
+							this.$set(e,'video_attention',res.data)
 						
 							
 						}
@@ -223,12 +224,12 @@ export default {
 				console.log("分享成功回调",res);
 			});
 		},
-		async tapLove(e) {
+		async tapLove(item) {
 			   let user=uni.getStorageSync('USERINFO')
 			   console.log(user)
 			    let token=user.token
 				console.log(token)
-				let param = this.$helper.setConfig('&token='+token+'&id=' + e.id);
+				let param = this.$helper.setConfig('&token='+token+'&id=' + item.id);
 					let res = await this.$http.request({
 						method: 'post',
 						url: '/index/Video/video_likenum',
@@ -236,7 +237,7 @@ export default {
 							signature: param.signature,
 							timestamp: param.timestamp,
 							token:token,
-							id:e.id
+							id:item.id
 						
 						}
 					});
@@ -244,11 +245,15 @@ export default {
 					if(res.state == 10000){
                          this.isShow1=res.data.isShow
 						if(this.isShow1==1){
-							 e.favorite_num+=Number(1)
+							let favorite_num=Number(item.favorite_num)
+							 item.favorite_num=favorite_num+=Number(1)
+							 item.video_likenum=1
 						}else{
-							 e.favorite_num--
+									item.favorite_num--
+									item.video_likenum=0
+									
+														   
 						}
-						 console.log(e.comment_num)
 				
 					
 				}

@@ -1,15 +1,17 @@
 <template>
 	<view class="know-list">
-		<view v-for="(item, index) in lists" :key="index">
-			<view class="may-nowk-title" v-if="item.title">{{ item.title }}</view>
-			<view class="list" v-for="(user, index) in item.user" :key="index" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')">
-				<view class="list-left"><image class="advada_img" :src="user.advada_img"></image></view>
+		
+			<view class="may-nowk-title" v-if="item.title">全部关注</view>
+			<view class="list" v-for="(user, index) in lists" :key="index" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')">
+				<view class="list-left"><image class="advada_img" :src="user.image_app"></image></view>
 				<view class="list-right">
-					<text class="name">{{ user.name }} <text v-if = "user.beizhu !== ''">（{{user.beizhu}}）</text></text>
-					<view class="guanxi">{{ user.guanxi }}</view>
+					<text class="name">{{ user.nickname }} 
+					<text v-if = "user.remark_name !== ''">（{{user.remark_name}}）</text>
+					</text>
+					<view class="guanxi">{{ user.attention=='1' ? '已关注':( user.attention=='2'?'相互关注':'亲友') }}</view>
 				</view>
 			</view>
-		</view>
+		
 	</view>
 </template>
 

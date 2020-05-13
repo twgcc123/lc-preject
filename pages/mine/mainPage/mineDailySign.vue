@@ -18,7 +18,7 @@
 						<heart-sign :sign="item" marginTop="188rpx" width="594rpx" height="936rpx"></heart-sign>
 					</view>
 				</view>
-			</scroll-view>
+			</scroll-view> 
 			
 		</view>
 		

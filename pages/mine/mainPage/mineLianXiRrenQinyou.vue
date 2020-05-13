@@ -8,7 +8,6 @@
 			</view>
 		</view>
 
-		<!-- 推荐关注的人 -->
 		<view class="may-know">
 			<qinyouList :lists="lists"></qinyouList>
 		</view>
@@ -26,7 +25,7 @@ export default {
 	},
 	data() {
 		return {
-			lists:data.qinRenList
+			lists:[]
 		};
 	},
 
@@ -34,7 +33,29 @@ export default {
 		goBack(){
 			uni.navigateBack({})
 		},
+		async getRelatives() {
+		    let token=uni.getStorageSync('token')
+			let param = this.$helper.setConfig('&token=' + token);
+			let res = await this.$http.request({
+				method: 'post',
+				url: '/users/Linkman/family_list',
+				data: {
+					signature: param.signature,
+					timestamp: param.timestamp,
+					token: token
+				}
+			});
+			if (res.state == 10000) {
+				console.log('6666',res)
+				this.lists=res.data
+			
+			}
+		},
+	},
+	onLoad(){
+		this.getRelatives();
 	}
+	
 };
 </script>
 

@@ -28,7 +28,7 @@
 					<text class="dcse-title">亲友关系申请</text>
 				</view>
 				<view class="shen_right">
-					<text class="number">5</text>
+					<text class="number">{{applyNub}}</text>
 					<uni-icons style="position: relative;top: 4upx;" type="arrowright" color="#dddddd" size="15"></uni-icons>
 				</view>
 			</view>
@@ -95,11 +95,53 @@ export default {
 				}
 			],
 			list:data.mineLianXiRen,
-			lists:data.qinyouList
+			lists:data.qinyouList,
+			applyNub:'' 
 		};
 	},
 
 	methods: {
+		//获取新的关注数据列表
+		async getAttention() {
+		    let token=uni.getStorageSync('token')
+			let param = this.$helper.setConfig('&token=' + token);
+			let res = await this.$http.request({
+				method: 'post',
+				url: '/users/Linkman/new_attention',
+				data: {
+					signature: param.signature,
+					timestamp: param.timestamp,
+					token: token
+				}
+			});
+			console.log('777777',res)
+			if (res.state == 10000) {
+				this.list=res.data.userList
+		         this.applyNub=Number(res.data.newNum) 
+				 console.log(this.applyNub,res.data.newNum)
+			}
+		},
+		//获取已关注数据列表
+		async getApplied() {
+		    let token=uni.getStorageSync('token')
+			let param = this.$helper.setConfig('&token=' + token);
+			let res = await this.$http.request({
+				method: 'post',
+				url: '/users/Linkman/already_attention',
+				data: {
+					signature: param.signature,
+					timestamp: param.timestamp,
+					token: token
+				}
+			});
+			console.log('6666',res)
+			if (res.state == 10000) {
+				console.log('6666',res)
+				this.lists=res.data
+				console.log('6666',res)
+				console.log('1111',this.lists)
+			}
+		},
 		handlerMenu(index) {
 			this.activeTab = index;
 		},
@@ -111,6 +153,10 @@ export default {
 				url: url
 			});
 		},
+	},
+	onLoad(){
+		this.getAttention();
+		this.getApplied();
 	}
 };
 </script>
