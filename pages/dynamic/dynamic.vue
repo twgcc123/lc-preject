@@ -7,11 +7,11 @@
 			<view class="moments__post" v-for="(post, index) in posts" :key="index" :id="'post-' + index">
 				<view class="post-left" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')"><image class="post_header" :src="post.image_app"></image></view>
 				<view class="post_right">
-					
 					<view class="post_title">
 						<text class="post-username">{{ post.nickname }}</text>
 						<view class="follow" @click.stop="openPopup(post)">
-							<text>{{ post.attention == 0 ? '未关注' : post.attention == 1 ? '已关注' : '相互关注' }}</text>
+							<text v-if="post.type !== 3">{{ post.attention == 0 ? '未关注' : post.attention == 1 ? '已关注' : '相互关注' }}</text>
+							<text v-else>推荐动态</text>
 							<image style="height: 22upx;width: 22upx; margin-top: 8upx;" src="/static/dongtai/arrow_buttom.svg" mode=""></image>
 						</view>
 					</view>
@@ -30,7 +30,7 @@
 					<!-- 人生记录 -->
 					<block v-if="post.type == 2">
 						<!-- 相册 -->
-						<view class=""  v-if="!post.video_url">
+						<view class="" v-if="!post.video_url">
 							<view id="paragraph" class="paragraph">{{ post.title }}</view>
 							<view class="thumbnails" v-if="post.img_list.length !== 0">
 								<view
@@ -55,58 +55,90 @@
 							</view>
 						</view>
 					</block>
-					
-					
-					<view @tap="pageTo(`/pages/found/youju/youju?id=${index + 1}`)" class="address">
-						<text> <text v-if="post.type == 1">推荐心签<text class="yuans"></text></text>{{ post.c_name}}</text>
-					</view>
-					
-					 <!-- 底部评论 -->
-					 <view class="toolbar">
-					 	<view class="timestamp">{{ post.add_time }}</view>
-					 	<view v-if="post.type == 3" class="right-detail" @click="pageTo('/pages/dynamic/eventDetail')">
-					 		查看详情
-					 		<uni-icons color="#333333" type="forward" size="12"></uni-icons>
-					 	</view>
+
+					<!-- 人生记录 推荐动态-->
+					<block v-if="post.type == 3">
+						<view class="dongtai-tuijian">
+							<view class="">
+								<!-- 相册 -->
+								<view class="" v-if="!post.video_url">
+									<view id="paragraph" class="paragraph dotai-paragraph">{{ post.desc }}</view>
+									<view class="thumbnails" v-if="post.img_list.length !== 0">
+										<view
+											:class="post.img_list.length === 1 ? 'my-gallery' : 'thumbnail'"
+											v-for="(image, index_images) in post.img_list"
+											:key="index_images"
+											@tap="clickPic(post.img_list, index_images)"
+										>
+											<image class="gallery_img" lazy-load mode="aspectFill" :src="image" :data-src="image"></image>
+										</view>
+									</view>
+								</view>
 						
+								<!-- 视频 -->
+								<view class="" v-else>
+									<view id="paragraph" class="paragraph">{{ post.title }}</view>
+									<view class="thumbnails" @click="pageTo('/pages/found/youjuvedeo/youjuVideo?hideAvatar=true')">
+										<view class="my-gallery">
+											<image class="gallery_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image>
+											<!-- <image class="play_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image> -->
+										</view>
+									</view>
+								</view>
+							</view>
+							<view class="address-location">
+								<uni-icons type="location-filled" size="14" color="#7D6D49"></uni-icons>
+								<text class="location-title">{{ post.location }}</text>
+							</view>
+						</view>
+					</block>
+
+					<view v-if="post.type !== 3" @tap="pageTo(`/pages/found/youju/youju?id=${index + 1}`)" class="address">
+						<text>
+							<text v-if="post.type == 1">
+								推荐心签
+								<text class="yuans"></text>
+							</text>
+							<text v-if="post.c_name !== ''">{{ post.c_name }}</text>
+						</text>
+					</view>
+
+					<!-- 底部评论 -->
+					<view class="toolbar">
+						<view class="timestamp">{{ post.add_time }}</view>
+						<view v-if="post.type == 3" class="right-detail" @click="pageTo('/pages/dynamic/eventDetail')">
+							查看详情
+							<uni-icons color="#333333" type="forward" size="12"></uni-icons>
+						</view>
+
 						<!-- 控制点赞和评论区域的出现 -->
-					 	<view v-else class="right-dot" @tap="show_win(index, false)">
-					 		<!-- <image src="/static/dongtai/dot.svg"></image> -->
-					 		<uni-icons color="#777" type="more-filled" size="22"></uni-icons>
-					 	</view>
-					 
+						<view v-else class="right-dot" @tap="show_win(index, false)">
+							<!-- <image src="/static/dongtai/dot.svg"></image> -->
+							<uni-icons color="#777" type="more-filled" size="22"></uni-icons>
+						</view>
+
 						<!-- 点赞和评论区弹窗-->
-					 	<view v-if="post.type !== 3" class="right-window">
-					 		<view class="like" @tap="like(index)">
-					 			<!-- <image src="/static/dongtai/like.svg"></image> -->
-					 			<view class="" style="margin: 0 auto;">
-					 				<uni-icons color="#fff" type="heart" size="17"></uni-icons>
-					 				<text class="like-text">{{ post.islike === 0 ? '赞' : '取消赞' }}</text>
-					 			</view>
-					 		</view>
-					 		<view class="line" style="background-color: #BBB;height: 32upx;width: 2upx;margin-top: 5upx;"></view>
-					 		<view class="comment" @tap="comment(index)">
-					 			<!-- <image src="/static/dongtai/comment.svg"></image> -->
-					 			<view class="" style="margin: 0 auto;">
-					 				<uni-icons color="#fff" type="chat" size="17"></uni-icons>
-					 				<text class="comment-text">评论</text>
-					 			</view>
-					 		</view>
-					 	</view>
-					 </view>
-					 
-					 
-					 
-					
+						<view v-if="post.type !== 3" class="right-window" v-show="show_window">
+							<view class="like" @tap="like(index)">
+								<!-- <image src="/static/dongtai/like.svg"></image> -->
+								<view class="" style="margin: 0 auto;">
+									<uni-icons color="#fff" type="heart" size="17"></uni-icons>
+									<text class="like-text">{{ post.islike === 0 ? '赞' : '取消赞' }}</text>
+								</view>
+							</view>
+							<view class="line" style="background-color: #BBB;height: 32upx;width: 2upx;margin-top: 5upx;"></view>
+							
+							<view class="comment" @tap="comment(index)">
+								<!-- <image src="/static/dongtai/comment.svg"></image> -->
+								<view class="" style="margin: 0 auto;">
+									<uni-icons color="#fff" type="chat" size="17"></uni-icons>
+									<text class="comment-text">评论</text>
+								</view>
+							</view>
+						</view>
+					</view>
 				</view>
 			</view>
-
-			
-
-
-
-
-
 
 			<!-- 弹窗 -->
 			<uni-popup ref="popup" type="bottom">
@@ -138,7 +170,6 @@ export default {
 	data() {
 		return {
 			posts: dataList.dataList, //模拟数据
-
 			user_id: 4,
 			username: '小happy',
 
@@ -170,9 +201,27 @@ export default {
 		});
 		uni.startPullDownRefresh();
 		this.getDynamicList();
-
-		console.log(dataList.dataList);
+		
+		let dongtaiData = dataList.dataList;
+		
+		// for(let i in dongtaiData){
+		//   dongtaiData[i].show_window = false;
+		// }
+		
+		let addObj = {
+			show_window:false
+		}
+		dongtaiData.forEach(item =>{
+			return Object.assign(item,addObj);
+		})
+		this.posts = dongtaiData
+		console.log(this.posts)
 	},
+	
+	onReady() {
+		
+	},
+	
 	onShow() {
 		uni.onWindowResize(res => {
 			//监听窗口尺寸变化,窗口尺寸不包括底部导航栏
@@ -270,7 +319,7 @@ export default {
 			};
 
 			// 使用
-			if (monthC > 12) {
+			if (monthC > 1) {
 				// 超过1年，直接显示年月日
 				return (function() {
 					var date = new Date(timestamp);
@@ -302,13 +351,16 @@ export default {
 		closePopup() {
 			this.$refs.popup.close();
 		},
-
-		show_win(index, flag) {
+		
+		// 控制点赞和评论区域的显示
+		show_win(index,flag) {
+			console.log(index,flag)
 			this.posts[this.currentPost].show_window = false;
 			this.currentPost = index;
-			this.posts[this.currentPost].show_window = flag;
+			this.posts[this.currentPost].show_window = !this.posts[this.currentPost].show_window;
 		},
 
+		// 点赞
 		like(index) {
 			this.show_win(index, false);
 			if (this.posts[index].islike === 0) {
@@ -328,14 +380,16 @@ export default {
 				);
 			}
 		},
-
+		
+		// 评论
 		comment(index) {
 			this.show_win(index, false);
 			this.showInput = true; //调起input框
 			this.focus = true;
 			this.index = index;
 		},
-
+		
+		// 点击弹出键盘
 		adjust() {
 			//当弹出软键盘发生评论动作时,调整页面位置pageScrollTo
 			return;
@@ -823,4 +877,29 @@ export default {
 	font-size: 30upx;
 	color: #999;
 }
+
+// 推荐动态
+.dongtai-tuijian{
+	background-color: #f7f7f7;
+	padding: 20upx;
+	margin-bottom: 20upx;
+	margin-top: 20upx;
+	.dotai-paragraph{
+		font-size: 32upx;
+		color: #333333;
+	}
+	.address-location{
+		margin-top: 16upx;
+		color: rgba(125, 109, 73, 1);
+		font-size: 28upx;
+		.location-title{
+			margin-left: 10upx;
+		}
+	}
+}
+	
+
+
+
+
 </style>
