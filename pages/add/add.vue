@@ -11,7 +11,7 @@
 						<text class="small-tip">心识智慧的记录</text>
 					</view>
 					<!-- @click="pageTo('/pages/add/publish')" -->
-					<view class="tabbar-box-item" @click="chooseImage">
+					<view class="tabbar-box-item" @tap="chooseImage">
 						<image class="box-image" src="/static/add/video.png" mode="aspectFit"></image>
 						<text class="explain">记录人生</text>
 						<text class="small-tip">人生视频、图文</text>
@@ -61,12 +61,20 @@ export default {
 		},
 		chooseImage(){
 			const that = this;
-			uni.chooseMedia({
+			uni.chooseImage({
 			    count: 6, //默认9
+				// sourceType:['album', 'camera'],
 			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-			    sourceType: ['album'], //从相册选择
 			    success: function (res) {
 			        console.log(JSON.stringify(res.tempFilePaths));
+					let tempFilePaths = JSON.stringify(res.tempFilePaths)
+					uni.setStorage({
+					    key: 'tempFilePaths_key',
+					    data: tempFilePaths,
+					    success: function () {
+					       console.log("已经选择照片")
+					    }
+					});
 					that.pageTo('/pages/add/publish');
 			    }
 			});

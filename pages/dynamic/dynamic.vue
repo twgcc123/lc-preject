@@ -5,7 +5,7 @@
 
 		<view id="moments">
 			<view class="moments__post" v-for="(post, index) in posts" :key="index" :id="'post-' + index">
-				<view class="post-left" @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')"><image class="post_header" :src="post.image_app"></image></view>
+				<view class="post-left"><image @tap="pageTo('/pages/interact/interactPage/interactPersonaHome')" class="post_header" :src="post.image_app"></image></view>
 				<view class="post_right">
 					<view class="post_title">
 						<text class="post-username">{{ post.nickname }}</text>
@@ -49,7 +49,7 @@
 							<view id="paragraph" class="paragraph">{{ post.title }}</view>
 							<view class="thumbnails" @click="pageTo('/pages/found/youjuvedeo/youjuVideo?hideAvatar=true')">
 								<view class="my-gallery">
-									<image class="gallery_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image>
+									<image class="gallery_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="post.video_image"></image>
 									<!-- <image class="play_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image> -->
 								</view>
 							</view>
@@ -74,13 +74,13 @@
 										</view>
 									</view>
 								</view>
-						
+
 								<!-- 视频 -->
 								<view class="" v-else>
 									<view id="paragraph" class="paragraph">{{ post.title }}</view>
-									<view class="thumbnails" @click="pageTo('/pages/found/youjuvedeo/youjuVideo?hideAvatar=true')">
+									<view class="thumbnails">
 										<view class="my-gallery">
-											<image class="gallery_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image>
+											<image @click="pageTo('/pages/found/youjuvedeo/youjuVideo?hideAvatar=true')" class="gallery_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image>
 											<!-- <image class="play_img" lazy-load mode="aspectFill" :src="post.video_image" :data-src="image"></image> -->
 										</view>
 									</view>
@@ -92,10 +92,10 @@
 							</view>
 						</view>
 					</block>
-
-					<view v-if="post.type !== 3" @tap="pageTo(`/pages/found/youju/youju?id=${index + 1}`)" class="address">
-						<text>
-							<text v-if="post.type == 1">
+					<!-- @tap="pageTo(`/pages/found/youju/youju?id=${index + 1}`)" -->
+					<view v-if="post.type !== 3 && post.c_name !== '' " class="address">
+						<text @tap="pageToYouju(post.c_id)">
+							<text v-if="post.type == 1 && post.c_name !== ''">
 								推荐心签
 								<text class="yuans"></text>
 							</text>
@@ -112,22 +112,18 @@
 						</view>
 
 						<!-- 控制点赞和评论区域的出现 -->
-						<view v-else class="right-dot" @tap="show_win(index, false)">
-							<!-- <image src="/static/dongtai/dot.svg"></image> -->
-							<uni-icons color="#777" type="more-filled" size="22"></uni-icons>
-						</view>
+						<view v-else class="right-dot" @tap="show_win(index, false)"><uni-icons color="#777" type="more-filled" size="22"></uni-icons></view>
 
 						<!-- 点赞和评论区弹窗-->
-						<view v-if="post.type !== 3" class="right-window" v-show="show_window">
+						<view v-if="post.type !== 3" class="right-window" v-show="post.show_window">
 							<view class="like" @tap="like(index)">
-								<!-- <image src="/static/dongtai/like.svg"></image> -->
 								<view class="" style="margin: 0 auto;">
 									<uni-icons color="#fff" type="heart" size="17"></uni-icons>
-									<text class="like-text">{{ post.islike === 0 ? '赞' : '取消赞' }}</text>
+									<text class="like-text">{{ post.is_likenum === 0 ? '赞' : '取消赞' }}</text>
 								</view>
 							</view>
 							<view class="line" style="background-color: #BBB;height: 32upx;width: 2upx;margin-top: 5upx;"></view>
-							
+
 							<view class="comment" @tap="comment(index)">
 								<!-- <image src="/static/dongtai/comment.svg"></image> -->
 								<view class="" style="margin: 0 auto;">
@@ -137,8 +133,27 @@
 							</view>
 						</view>
 					</view>
+
+					<!-- 赞／评论区 -->
+					<!-- 					<view class="post-footer" v-if="post.like.length > 0">
+						<view class="footer_content" style="margin-top: 0;">
+							<uni-icons color="#777" type="hand-thumbsup" size="14"></uni-icons>
+							<text class="nickname" v-for="(user, index_like) in post.like" :key="index_like">{{ user.username }}</text>
+						</view>
+						<view class="footer_content" v-for="(comment, comment_index) in post.comments.comment" :key="comment_index" @tap="reply(index, comment_index)">
+							<text class="comment-nickname">
+								{{ comment.username }} :
+								<text class="comment-content">{{ comment.content }}</text>
+							</text>
+						</view>
+					</view> -->
 				</view>
 			</view>
+			<!-- 评论键盘输入框 -->
+			<!-- 			<view class="foot" v-show="showInput">
+				<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
+			</view>
+			<view class="uni-loadmore" v-if="showLoadMore">{{ loadMoreText }}</view> -->
 
 			<!-- 弹窗 -->
 			<uni-popup ref="popup" type="bottom">
@@ -169,7 +184,7 @@ export default {
 	},
 	data() {
 		return {
-			posts: dataList.dataList, //模拟数据
+			posts: [], //模拟数据
 			user_id: 4,
 			username: '小happy',
 
@@ -201,27 +216,21 @@ export default {
 		});
 		uni.startPullDownRefresh();
 		this.getDynamicList();
-		
-		let dongtaiData = dataList.dataList;
-		
-		// for(let i in dongtaiData){
-		//   dongtaiData[i].show_window = false;
+
+		// let dongtaiData = dataList.dataList;
+		// let addObj = {
+		// 	show_window:false
 		// }
-		
-		let addObj = {
-			show_window:false
-		}
-		dongtaiData.forEach(item =>{
-			return Object.assign(item,addObj);
-		})
-		this.posts = dongtaiData
-		console.log(this.posts)
+		// dongtaiData.forEach(item =>{
+		// 	return Object.assign(item,addObj);
+		// })
+
+		// this.posts = dongtaiData
+		// console.log(this.posts)
 	},
-	
-	onReady() {
-		
-	},
-	
+
+	onReady() {},
+
 	onShow() {
 		uni.onWindowResize(res => {
 			//监听窗口尺寸变化,窗口尺寸不包括底部导航栏
@@ -249,6 +258,7 @@ export default {
 		setTimeout(function() {
 			//初始化数据
 			uni.stopPullDownRefresh(); //停止下拉刷新
+			this.getDynamicList(); // 刷新的时候  再次调用接口数据
 		}, 1000);
 	},
 	methods: {
@@ -267,18 +277,23 @@ export default {
 			});
 			if (res.state == 10000) {
 				console.log(res.data);
-
-				// this.posts = res.data;
-				// this.posts.forEach(item => {
-				// 	item.add_time = this.getFormattedTimeString(item.add_time);
-				// });
+				let dongtaiDatas = res.data;
+				let addObj = { show_window: false };
+				dongtaiDatas.forEach(item => {
+					item.add_time = this.getFormattedTimeString(item.add_time);
+					return Object.assign(item, addObj);
+				});
+				this.posts = dongtaiDatas;
 			}
 		},
+
+		// 照片预览组件
 		clickPic(imgList, index) {
 			uni.setStorageSync('currentImg', imgList);
 			uni.setStorageSync('currentImgIndex', index);
 			this.pageTo('/pages/dynamic/imgPreview');
 		},
+
 		//时间转换
 		getFormattedTimeString(timestamp) {
 			// 补全为13位
@@ -328,10 +343,10 @@ export default {
 			}
 			//  else if (monthC >= 1) {
 			// 	return parseInt(monthC) + '月前';
-			// } else if (weekC >= 1) {
-			// 	return parseInt(weekC) + '周前';
 			// }
-			else if (dayC >= 1) {
+			else if (weekC >= 1) {
+				return parseInt(weekC) + '周前';
+			} else if (dayC >= 1) {
 				return parseInt(dayC) + '天前';
 			} else if (hourC >= 1) {
 				return parseInt(hourC) + '小时前';
@@ -351,18 +366,27 @@ export default {
 		closePopup() {
 			this.$refs.popup.close();
 		},
-		
+
 		// 控制点赞和评论区域的显示
-		show_win(index,flag) {
-			console.log(index,flag)
-			this.posts[this.currentPost].show_window = false;
+		show_win(index) {
+			// console.log(index,flag)
+			// this.posts[this.currentPost].show_window = false;
 			this.currentPost = index;
 			this.posts[this.currentPost].show_window = !this.posts[this.currentPost].show_window;
+			// this.posts.show_window = !this.posts.show_window;
+			console.log(index);
+			console.log(this.posts[this.currentPost].show_window);
 		},
+
+		// show_win(index, flag) {
+		// 	this.posts[this.currentPost].show_window = false;
+		// 	this.currentPost = index;
+		// 	this.posts[this.currentPost].show_window = flag;
+		// },
 
 		// 点赞
 		like(index) {
-			this.show_win(index, false);
+			this.show_win();
 			if (this.posts[index].islike === 0) {
 				this.posts[index].islike = 1;
 				this.posts[index].like.push({
@@ -380,7 +404,7 @@ export default {
 				);
 			}
 		},
-		
+
 		// 评论
 		comment(index) {
 			this.show_win(index, false);
@@ -388,7 +412,7 @@ export default {
 			this.focus = true;
 			this.index = index;
 		},
-		
+
 		// 点击弹出键盘
 		adjust() {
 			//当弹出软键盘发生评论动作时,调整页面位置pageScrollTo
@@ -457,6 +481,13 @@ export default {
 			uni.navigateTo({
 				url: url
 			});
+		},
+		
+		// 跳转到优居社区
+		pageToYouju(id){
+			uni.navigateTo({
+				url:`/pages/found/youju/youju?id=${id}`
+			})
 		}
 	}
 };
@@ -661,7 +692,7 @@ export default {
 	margin-right: 12upx;
 }
 .address {
-	margin-top: 16upx;
+	margin-top: 18upx;
 	color: #44617b;
 	font-size: 28upx;
 	display: inline-block;
@@ -879,27 +910,22 @@ export default {
 }
 
 // 推荐动态
-.dongtai-tuijian{
+.dongtai-tuijian {
 	background-color: #f7f7f7;
 	padding: 20upx;
 	margin-bottom: 20upx;
 	margin-top: 20upx;
-	.dotai-paragraph{
+	.dotai-paragraph {
 		font-size: 32upx;
 		color: #333333;
 	}
-	.address-location{
+	.address-location {
 		margin-top: 16upx;
 		color: rgba(125, 109, 73, 1);
 		font-size: 28upx;
-		.location-title{
+		.location-title {
 			margin-left: 10upx;
 		}
 	}
 }
-	
-
-
-
-
 </style>

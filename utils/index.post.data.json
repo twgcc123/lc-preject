@@ -32,7 +32,8 @@
 			"like": [{
 				"user_id": 2,
 				"nickname": "给生活比个耶"
-			}]
+			}],
+			"show_window":false
 		},
 		
 		{
@@ -53,7 +54,8 @@
 			"video_image": "",
 			"c_name": "南宁优居",
 			"comment": [],
-			"like": []
+			"like": [],
+			"show_window":false
 		},
 		
 		{
@@ -71,7 +73,8 @@
 			"nickname": "super",
 			"image_app": "http://bmdh.lcpower.cn/d71e5689616349c78712676ebe3c5126%21400x400.jpeg",
 			"shequ_id": 7,
-			"type": 3
+			"type": 3,
+			"show_window":false
 		},
 		
 		{
@@ -94,7 +97,8 @@
 			"video_image": "",
 			"c_name": "南宁优居",
 			"comment": [],
-			"like": []
+			"like": [],
+			"show_window":false
 		},
 		{
 			"id": 4,
@@ -109,7 +113,8 @@
 			"attention": 2,
 			"comment": [],
 			"like": [],
-			"c_name": "深圳市优居"
+			"c_name": "深圳市优居",
+			"show_window":false
 		},
 		{
 			"id": 1,
@@ -137,7 +142,8 @@
 				"user_id": 2,
 				"nickname": "给生活比个耶"
 			}],
-			"c_name": "城市优居"
+			"c_name": "城市优居",
+			"show_window":false
 		}
 	]
 

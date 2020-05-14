@@ -12,9 +12,24 @@
 				<view :class="TabCur == index ? 'tabline': ''"></view>
 			</view>
 		</view>
-		<view class="list">
+		<view class="list" v-show="TabCur == 0">
 			<view class="list-item" v-for="(item,index) in dataList" :key="index">
-				{{ item.title }}
+				# <text @tap="chooseType(item)">{{ item.title }}</text>
+			</view>
+		</view>
+		<view class="list" v-show="TabCur == 1">
+			<view class="list-item" v-for="(item,index) in dataList1" :key="index">
+				# <text @tap="chooseType(item)">{{ item.title }}</text>
+			</view>
+		</view>
+		<view class="list" v-show="TabCur == 2">
+			<view class="list-item" v-for="(item,index) in dataList2" :key="index">
+				# <text @tap="chooseType(item)">{{ item.title }}</text>
+			</view>
+		</view>
+		<view class="list" v-show="TabCur == 3">
+			<view class="list-item" v-for="(item,index) in dataList3" :key="index">
+				# <text @tap="chooseType(item)">{{ item.title }}</text>
 			</view>
 		</view>
 	</view>
@@ -32,10 +47,33 @@
 				tabList: ['我的', '推荐','特色','话题'],
 				dataList:[
 					{
-						title: '# 赏樱之地'
+						title: '赏樱之地'
 					},
 					{
-						title: '# 四季如春'
+						title: '四季如春'
+					}
+				],
+				dataList1:[
+					{
+						title: '赏樱之地11'
+					},
+					{
+						title: '四季如春22'
+					}
+				],
+				dataList2:[
+					{
+						title: '赏樱之地33'
+					},
+					{
+						title: '四季如春33'
+					}
+				],dataList3:[
+					{
+						title: '赏樱之地44'
+					},
+					{
+						title: '四季如春'
 					}
 				]
 			};
@@ -55,6 +93,11 @@
 				uni.navigateTo({
 					url: url
 				})
+			},
+			chooseType(item){
+				let chooseTypeTags = item
+				uni.$emit("chooseTypeTags",chooseTypeTags)
+				uni.navigateBack({});
 			}
 		}
 	}

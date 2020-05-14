@@ -5,12 +5,9 @@
 </template>
 
 <script>
-import uniIcons from "@/components/uni-icons/uni-icons.vue"
 export default {
 	name:"goBack",
-	components: {
-		uniIcons,
-	},
+	components: {},
 	props:{
 		types:{
 			type:String,

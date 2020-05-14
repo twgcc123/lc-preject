@@ -3,14 +3,14 @@
 		<view class="content">
 			<view class="content-top">
 				<textarea class="content-textarea" v-model="title" adjust-position="false" placeholder="请输入标题" />
-				<image class="content-image" src="../../static/hudong/c1.jpg"></image>
+				<image class="content-image" src="/static/hudong/c1.jpg"></image>
 			</view>
 			<view class="content-footer">
 				<view class="content-footer-left" @click="pageTo('/pages/add/tags')">
 					<text> # </text>
-					<text>标签</text>
+					<text>{{label}}</text>
 				</view>
-				<view class="content-footer-right">选封面</view>
+				<view class="content-footer-right" @tap="selectCoverPage">选封面</view>
 			</view>
 		</view>
 		<view class="menus">
@@ -37,9 +37,10 @@
 			</view>
 			<view class="footer-btn">
 				<button class="footer-btn-left">草稿</button>
-				<button class="footer-btn-right">发布</button>
+				<button class="footer-btn-right" @tap="sbmit()">发布</button>
 			</view>
 		</view>
+		
 		<!-- 弹窗 -->
 		<uni-popup ref="popup1" type="bottom">
 			<view class="popup">
@@ -95,7 +96,6 @@
 		data() {
 			return {
 				paths: [],
-				title: '',
 				checked: false,
 				menuList:[
 					{
@@ -119,17 +119,66 @@
 						rightText: '昵称123456',
 					},
 				],
+				
+				/**
+				 *   后台数据字段
+				**/ 
+				tempFilePaths:[], // 选择上传的相册
+				token:'',  //token
+				title: '', // 标题输入的内容
+				label:"标签", // 选择的标签
+				author_id:'',  //原创作者ID
+				link_type:'', // 关联类型 0=清除链接，1=预约助理体验社区，2=详情页，3=优居社区，4=房间
+				link_id:'',  // 关联id
+				access:'',  //0=公开，1=仅亲友可见，2=私密
+				status:'', // 0=发布，1=草稿
+				lat:'', //地图定位经度
+				lng:'', //地图定位纬度
+				img_list:'', //图片（注：如果是上传视频，此字段赋空值，如果没有上传视频则必须赋值）
+				video_url:'', //视频地址（注：如果是上传图片，此字段赋空值，如果没有上传图片则必须赋值）
+				video_image:'', //视频封面（注：如果是上传图片，此字段赋空值，如果没有上传图片则必须赋值）
+				province:'', //省
+				city:'', //市
+				district:'', //详细地址
+				id:'', //人生记录id（新增的时候此参数为空）
+				
+				hasLocation: false,
+				location: {},
+				locationAddress: ''
+				
 			};
 		},
 		onLoad() {
+			// 获取token
+			this.token = uni.getStorageSync('token');
+			
+			// 进入页面加载已经选择的照片
+			uni.getStorage({
+			    key: 'tempFilePaths_key',
+			    success: function (res) {
+			        console.log("传过来的相册" + res.data);
+					this.tempFilePaths = res.data
+			    }
+			});
+			
+			// 获取标签选择内容
+			uni.$on('chooseTypeTags', data => {
+				this.label = data.title
+				console.log(data.title )
+			});
 			
 		},
+		
+		mounted() {
+	
+		},
+		
 		methods:{
 			radioChange(){
 				this.checked = !this.checked;
 			},
 			onClick(index){
-				index == 0 ? this.pageTo('/pages/add/citylist') : 
+				index == 0 ? this.chooseLocation() : 
 				index == 1 ? this.openPopup(1): 
 				index == 2 ? this.openPopup(2): this.pageTo('/pages/add/authors');
 			},
@@ -153,6 +202,70 @@
 				uni.navigateTo({
 					url: url
 				});
+			},
+			/**
+			 * @desc 发布照片或者视频
+			 */
+			async release() {
+				let param = this.$helper.setConfig('&token='+ token +'&title=' + item.user_id + '&img_list='+tempFilePaths);
+				let res = await this.$http.request({
+					method: 'post',
+					url: '/users/Publish/record_the_life',
+					data: {
+						signature: param.signature,
+						timestamp: param.timestamp,
+						token:token,
+						img_list:tempFilePaths
+				
+					}
+				});
+		
+				if (res.state == 10000) {
+				
+				}
+			},
+			// 选择封面
+			selectCoverPage(){
+				const that = this;
+				uni.chooseImage({
+				    count: 1,
+				    sizeType: ['original', 'compressed'], 
+				    success: function (res) {
+				      
+				    }
+				});
+			},
+			// 选择位置  保存地址和经纬度
+			chooseLocation: function () {
+				uni.chooseLocation({
+					success: (res) => {
+						this.hasLocation = true,
+							this.location = this.formatLocation(res.longitude, res.latitude),
+							this.lat = res.longitude
+							this.lng = res.latitude
+							this.menuList[0].title = res.address
+							console.log(this.lat)
+							console.log(this.lng)
+							console.log(this.menuList[0].title)
+					}
+				})
+			},
+			
+			formatLocation(longitude, latitude) {
+				if (typeof longitude === 'string' && typeof latitude === 'string') {
+					longitude = parseFloat(longitude)
+					latitude = parseFloat(latitude)
+				}
+				longitude = longitude.toFixed(2)
+				latitude = latitude.toFixed(2)
+				return {
+					longitude: longitude.toString().split('.'),
+					latitude: latitude.toString().split('.')
+				}
+			},
+			// 点击发布按钮
+			sbmit(){
+				this.release()
 			}
 		}
 	}
@@ -186,8 +299,9 @@
 			font-size: 28upx;
 			line-height: 48upx;
 			.content-footer-left{
-				width: 120upx;
+				padding:0 12upx;
 				height: 48upx;
+				line-height: 48upx;
 				border-radius: 6upx;
 				background-color: #23262F;
 			}

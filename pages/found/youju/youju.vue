@@ -253,7 +253,6 @@ export default {
 						item.lables = item.label.split('|');
 					});
 				}
-
 				console.log('1111111111111111111', this.roomList);
 			}
 		},
